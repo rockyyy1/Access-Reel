@@ -37,7 +37,6 @@ C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Windows.System.Projection.dll
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Windows.Widgets.Projection.dll
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll
-C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.WindowsAppRuntime.Release.Net.dll
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\ar\Microsoft.Maui.Controls.resources.dll
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\ca\Microsoft.Maui.Controls.resources.dll
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\cs\Microsoft.Maui.Controls.resources.dll
@@ -175,3 +174,8 @@ C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\qualifiers.txt.intermediate
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\MultipleQualifiersPerDimensionFound.txt
 C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\ProjectArchitectures.txt
+C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\AccessReel.sourcelink.json
+C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\HtmlAgilityPack.dll
+C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.IO.RecyclableMemoryStream.dll
+C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\Microsoft.Windows.Management.Deployment.Projection.dll
+C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\mauiimage.outputs
