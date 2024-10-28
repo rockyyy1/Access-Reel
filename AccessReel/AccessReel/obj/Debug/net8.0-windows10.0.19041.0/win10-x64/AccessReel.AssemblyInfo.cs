@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AccessReel")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+545dae1f45637fa667c57dc5ca64d3599b432e86")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+a31a970e791227cca2929365efb5823c110e6b23")]
 [assembly: System.Reflection.AssemblyProductAttribute("AccessReel")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AccessReel")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
