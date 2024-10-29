@@ -49,5 +49,10 @@ namespace AccessReel
                 Debug.WriteLine(title + "\n" + paragraph + "\n\n");
             }
         }
+
+        private void BtnListPage_Clicked(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new NavigationPage(new ListPage());
+        }
     }
 }
