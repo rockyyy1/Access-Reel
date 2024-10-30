@@ -29,13 +29,13 @@
     <AppXManifest Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-10-30T04:51:00.204</Modified>
+      <Modified>2024-10-30T06:11:48.776</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2024-10-29T17:07:10.785</Modified>
+      <Modified>2024-10-30T05:42:50.291</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AccessReel.runtimeconfig.json">
       <PackagePath>AccessReel.runtimeconfig.json</PackagePath>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AccessReel.dll">
       <PackagePath>AccessReel.dll</PackagePath>
-      <Modified>2024-10-30T04:50:59.914</Modified>
+      <Modified>2024-10-30T06:11:48.466</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>AccessReel.exe</PackagePath>
-      <Modified>2024-10-30T04:50:59.918</Modified>
+      <Modified>2024-10-30T06:11:48.471</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>
@@ -287,7 +287,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AccessReel.deps.json">
       <PackagePath>AccessReel.deps.json</PackagePath>
-      <Modified>2024-10-29T17:07:10.374</Modified>
+      <Modified>2024-10-30T05:42:50.113</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\Adam\.nuget\packages\microsoft.windows.sdk.net.ref\10.0.19041.44\lib\net8.0\Microsoft.Windows.SDK.NET.dll">
       <PackagePath>Microsoft.Windows.SDK.NET.dll</PackagePath>

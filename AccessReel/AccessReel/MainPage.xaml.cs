@@ -50,9 +50,12 @@ namespace AccessReel
             }
         }
 
-        private void BtnListPage_Clicked(object sender, EventArgs e)
+        private void FlyoutMenu_Clicked(object sender, EventArgs e)
         {
-            App.Current.MainPage = new NavigationPage(new ListPage());
+            if (Application.Current.MainPage is FlyoutMenu flyoutPage)
+            {
+                flyoutPage.IsPresented = true;
+            }
         }
     }
 }

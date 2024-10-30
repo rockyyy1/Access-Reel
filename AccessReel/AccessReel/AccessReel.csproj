@@ -64,6 +64,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="FlyoutMenu.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="ListPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

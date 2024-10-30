@@ -23,6 +23,14 @@ public partial class ListPage : ContentPage
         CVArticles.ItemTemplate = DTMovieArticle;
         CVArticles.ItemsSource = l;
     }
+
+    private void BtnFlyoutMenu_Clicked(object sender, EventArgs e)
+    {
+        if(Application.Current.MainPage is FlyoutMenu flyoutPage)
+        {
+            flyoutPage.IsPresented = true;
+        }
+    }
 }
 
 

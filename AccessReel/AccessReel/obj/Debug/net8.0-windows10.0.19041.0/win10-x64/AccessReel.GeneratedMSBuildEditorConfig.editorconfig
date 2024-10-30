@@ -31,6 +31,12 @@ build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
+[F:/GitHub/Access-Reel/AccessReel/AccessReel/FlyoutMenu.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.FlyoutMenu.xaml
+build_metadata.AdditionalFiles.TargetPath = FlyoutMenu.xaml
+build_metadata.AdditionalFiles.RelativePath = FlyoutMenu.xaml
+
 [F:/GitHub/Access-Reel/AccessReel/AccessReel/ListPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.ListPage.xaml

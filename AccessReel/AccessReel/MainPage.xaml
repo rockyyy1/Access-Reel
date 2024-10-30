@@ -5,9 +5,11 @@
              x:Class="AccessReel.MainPage">
 
     <ScrollView>
+        
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
+            <Button x:Name="FlyoutMenu" Text="Menu" Clicked="FlyoutMenu_Clicked"/>
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"
@@ -24,10 +26,7 @@
                 Style="{StaticResource SubHeadline}"
                 SemanticProperties.HeadingLevel="Level2"
                 SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-            
-            <!-- Temp Buttons -->
-            <Button x:Name="BtnListPage" Text="ListPage" Clicked="BtnListPage_Clicked"/>
-            
+                        
         </VerticalStackLayout>
     </ScrollView>
 
