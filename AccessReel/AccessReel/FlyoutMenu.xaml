@@ -10,10 +10,13 @@
         
         <ContentPage Title="Flyout Menu">
             <StackLayout>
-                <Label Text="Test Flyout Menu"/>
-                <Button x:Name="BtnCloseMenu" Text="Close Page" Clicked="BtnCloseMenu_Clicked"/>
-                <Button x:Name="BtnListPage" Text="ListPage" Clicked="BtnListPage_Clicked"/>
-                <Button x:Name="BtnMainPage" Text="MainPage" Clicked="BtnMainPage_Clicked"/>
+                <Button x:Name="BtnCloseMenu" Text="Close Menu" Clicked="BtnCloseMenu_Clicked" HorizontalOptions="End"/>
+                <Button x:Name="BtnHomePage" Text="Home" Clicked="BtnHomePage_Clicked" HorizontalOptions="Fill" />
+                <Button x:Name="BtnNewsPage" Text="News" Clicked="BtnNewsPage_Clicked" HorizontalOptions="Fill"/>
+                <Button x:Name="BtnReviewPage" Text="Reviews" Clicked="BtnReviewPage_Clicked"/>
+                <Button x:Name="BtnFilmsPage" Text="Films" Clicked="BtnFilmsPage_Clicked" />
+                <Button x:Name="BtnTrailers" Text="Trailers" Clicked="BtnTrailers_Clicked" />
+                <Button x:Name="BtnInterviews" Text="Interviews" Clicked="BtnInterviews_Clicked"/>
             </StackLayout>
         </ContentPage>
     </FlyoutPage.Flyout>

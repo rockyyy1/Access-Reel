@@ -7,20 +7,45 @@ public partial class FlyoutMenu : FlyoutPage
 		InitializeComponent();
 	}
 
-    private void BtnListPage_Clicked(object sender, EventArgs e)
+    private void BtnCloseMenu_Clicked(object sender, EventArgs e)
     {
-        Detail = new NavigationPage(new ListPage());
         IsPresented = false;
     }
 
-    private void BtnMainPage_Clicked(object sender, EventArgs e)
+    private void BtnHomePage_Clicked(object sender, EventArgs e)
     {
         Detail = new NavigationPage(new MainPage());
         IsPresented = false;
     }
 
-    private void BtnCloseMenu_Clicked(object sender, EventArgs e)
+    private void BtnNewsPage_Clicked(object sender, EventArgs e)
     {
+        Detail = new NavigationPage(new ListPage("News"));
+        IsPresented = false;
+    }
+
+    private void BtnReviewPage_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new ListPage("Reviews"));
+        IsPresented = false;
+    }
+
+    private void BtnFilmsPage_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new ListPage("Films"));
+        IsPresented = false;
+    }
+
+    private void BtnTrailers_Clicked(object sender, EventArgs e)
+    {
+        IsPresented = false;
+        DisplayAlert("Error", "Not Implemented", "OK");
+        return;
+    }
+
+    private void BtnInterviews_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new ListPage("Interviews"));
         IsPresented = false;
     }
 }

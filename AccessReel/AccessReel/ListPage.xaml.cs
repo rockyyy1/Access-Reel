@@ -5,23 +5,40 @@ namespace AccessReel;
 
 public partial class ListPage : ContentPage
 {
-    public List<Review> l { get; set; }
+    public List<Review> reviewList { get; set; }
+    public List<Posts> postList { get; set; }
 
-    public ListPage()
+    public ListPage() //Used for xaml to prevent error, might be removed later
+    {
+        InitializeComponent();
+    }
+
+    public ListPage(string pageType = "")
 	{
 		InitializeComponent();
         //Test Data
-        l = new List<Review>();
-        Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description="Article Body", ReviewScore="10", Title="Article title"};
-        Review b = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", ReviewScore = "3", Title = "Article title" };
-        l.Add(a);
-        l.Add(b);
-        Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-        Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-        /*l.Add(c);
-        l.Add(d);*/
-        CVArticles.ItemTemplate = DTMovieArticle;
-        CVArticles.ItemsSource = l;
+        if(pageType == "Reviews" || pageType == "Films")
+        {
+            LblPageTitle.Text = pageType;
+            reviewList = new List<Review>();
+            Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "10", Title = "Film title" };
+            Review b = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "3", Title = "Film title" };
+            reviewList.Add(a);
+            reviewList.Add(b);
+            CVArticles.ItemTemplate = DTMovieArticle;
+            CVArticles.ItemsSource = reviewList;
+        }
+        else
+        {
+            LblPageTitle.Text = pageType;
+            postList = new List<Posts>();
+            Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
+            Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
+            postList.Add(c);
+            postList.Add(d);
+            CVArticles.ItemTemplate = DTArticle;
+            CVArticles.ItemsSource = postList;
+        }
     }
 
     private void BtnFlyoutMenu_Clicked(object sender, EventArgs e)
@@ -29,7 +46,7 @@ public partial class ListPage : ContentPage
         if(Application.Current.MainPage is FlyoutMenu flyoutPage)
         {
             flyoutPage.IsPresented = true;
-        }
+        }        
     }
 }
 

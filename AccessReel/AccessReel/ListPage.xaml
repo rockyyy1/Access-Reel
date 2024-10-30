@@ -54,7 +54,7 @@
     <ScrollView>
         <VerticalStackLayout>
             <Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>
-            <Label x:Name="LblListPageTitle" Text="News/Films/Interviews" FontSize="Header"/>
+            <Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>
             <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}">
 
             </CollectionView>
