@@ -29,7 +29,7 @@
     <AppXManifest Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2024-10-29T17:50:18.307</Modified>
+      <Modified>2024-10-30T04:51:00.204</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\bin\Debug\net8.0-windows10.0.19041.0\win10-x64\AccessReel.dll">
       <PackagePath>AccessReel.dll</PackagePath>
-      <Modified>2024-10-29T17:50:18.059</Modified>
+      <Modified>2024-10-30T04:50:59.914</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\obj\Debug\net8.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>AccessReel.exe</PackagePath>
-      <Modified>2024-10-29T17:50:18.063</Modified>
+      <Modified>2024-10-30T04:50:59.918</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="F:\GitHub\Access-Reel\AccessReel\AccessReel\Resources\Raw\AboutAssets.txt">
       <PackagePath>AboutAssets.txt</PackagePath>

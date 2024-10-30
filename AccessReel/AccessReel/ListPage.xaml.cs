@@ -1,18 +1,26 @@
+using System.Collections;
 using System.Globalization;
 
 namespace AccessReel;
 
 public partial class ListPage : ContentPage
 {
-	public ListPage()
+    public List<Review> l { get; set; }
+
+    public ListPage()
 	{
 		InitializeComponent();
         //Test Data
+        l = new List<Review>();
         Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description="Article Body", ReviewScore="10", Title="Article title"};
         Review b = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", ReviewScore = "3", Title = "Article title" };
-        List<Review> l = new List<Review>();
         l.Add(a);
         l.Add(b);
+        Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
+        Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
+        /*l.Add(c);
+        l.Add(d);*/
+        CVArticles.ItemTemplate = DTMovieArticle;
         CVArticles.ItemsSource = l;
     }
 }
@@ -44,3 +52,4 @@ public class ReviewScoreToAbsLayoutConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
+
