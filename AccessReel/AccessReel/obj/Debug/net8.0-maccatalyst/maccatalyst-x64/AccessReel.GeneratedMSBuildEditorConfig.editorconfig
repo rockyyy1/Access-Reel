@@ -12,53 +12,59 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = AccessReel
-build_property.ProjectDir = F:\GitHub\Access-Reel\AccessReel\AccessReel\
+build_property.ProjectDir = C:\Users\Lemmea\Documents\GitHub\Access-Reel\AccessReel\AccessReel\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/App.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.App.xaml
 build_metadata.AdditionalFiles.TargetPath = App.xaml
 build_metadata.AdditionalFiles.RelativePath = App.xaml
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/AppShell.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/AppShell.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.AppShell.xaml
 build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
 build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/FlyoutMenu.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/ArticlePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.ArticlePage.xaml
+build_metadata.AdditionalFiles.TargetPath = ArticlePage.xaml
+build_metadata.AdditionalFiles.RelativePath = ArticlePage.xaml
+
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/FlyoutMenu.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.FlyoutMenu.xaml
 build_metadata.AdditionalFiles.TargetPath = FlyoutMenu.xaml
 build_metadata.AdditionalFiles.RelativePath = FlyoutMenu.xaml
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/ListPage.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/ListPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.ListPage.xaml
 build_metadata.AdditionalFiles.TargetPath = ListPage.xaml
 build_metadata.AdditionalFiles.RelativePath = ListPage.xaml
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/MainPage.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/NewContent1.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/NewContent1.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.NewContent1.xaml
 build_metadata.AdditionalFiles.TargetPath = NewContent1.xaml
 build_metadata.AdditionalFiles.RelativePath = NewContent1.xaml
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/Resources/Styles/Colors.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/Resources/Styles/Colors.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.Resources.Styles.Colors.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
 
-[F:/GitHub/Access-Reel/AccessReel/AccessReel/Resources/Styles/Styles.xaml]
+[C:/Users/Lemmea/Documents/GitHub/Access-Reel/AccessReel/AccessReel/Resources/Styles/Styles.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = AccessReel.Resources.Styles.Styles.xaml
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml

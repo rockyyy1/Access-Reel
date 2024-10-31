@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Diagnostics;
 using System.Globalization;
+using Microsoft.Maui.Controls;
 
 namespace AccessReel;
 
@@ -11,6 +13,11 @@ public partial class ListPage : ContentPage
     public ListPage() //Used for xaml to prevent error, might be removed later
     {
         InitializeComponent();
+
+        var TapGesture = new TapGestureRecognizer();
+        TapGesture.Tapped += OnPageTapped;
+
+        Content.GestureRecognizers.Add(TapGesture);
     }
 
     public ListPage(string pageType = "")
@@ -19,7 +26,8 @@ public partial class ListPage : ContentPage
         //Test Data
         if(pageType == "Reviews" || pageType == "Films")
         {
-            LblPageTitle.Text = pageType;
+            Title = pageType;
+            //LblPageTitle.Text = pageType;
             reviewList = new List<Review>();
             Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "10", Title = "Film title" };
             Review b = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "3", Title = "Film title" };
@@ -30,7 +38,8 @@ public partial class ListPage : ContentPage
         }
         else
         {
-            LblPageTitle.Text = pageType;
+            Title = pageType;
+            //LblPageTitle.Text = pageType;
             postList = new List<Posts>();
             Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
             Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
@@ -47,6 +56,15 @@ public partial class ListPage : ContentPage
         {
             flyoutPage.IsPresented = true;
         }        
+    }
+
+    private void OnPageTapped(object sender, EventArgs e)
+    {
+        /*if (Application.Current.MainPage is FlyoutMenu flyoutPage)
+        {
+            flyoutPage.IsPresented = false;
+        }*/
+        Debug.WriteLine("Tapped");
     }
 }
 

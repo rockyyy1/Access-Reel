@@ -8,15 +8,15 @@
     
     <FlyoutPage.Flyout>
         
-        <ContentPage Title="Flyout Menu">
+        <ContentPage Title="Flyout Menu">            
             <StackLayout>
-                <Button x:Name="BtnCloseMenu" Text="Close Menu" Clicked="BtnCloseMenu_Clicked" HorizontalOptions="End"/>
-                <Button x:Name="BtnHomePage" Text="Home" Clicked="BtnHomePage_Clicked" HorizontalOptions="Fill" />
-                <Button x:Name="BtnNewsPage" Text="News" Clicked="BtnNewsPage_Clicked" HorizontalOptions="Fill"/>
-                <Button x:Name="BtnReviewPage" Text="Reviews" Clicked="BtnReviewPage_Clicked"/>
-                <Button x:Name="BtnFilmsPage" Text="Films" Clicked="BtnFilmsPage_Clicked" />
-                <Button x:Name="BtnTrailers" Text="Trailers" Clicked="BtnTrailers_Clicked" />
-                <Button x:Name="BtnInterviews" Text="Interviews" Clicked="BtnInterviews_Clicked"/>
+                <Button x:Name="BtnCloseMenu" Text="Close Menu" Clicked="BtnCloseMenu_Clicked" HorizontalOptions="End" />
+                <Button x:Name="BtnHomePage" Text="Home" Clicked="BtnHomePage_Clicked" HorizontalOptions="Fill" CornerRadius="0" BackgroundColor="White" BorderColor="LightGray" BorderWidth="1"/>
+                <Button x:Name="BtnNewsPage" Text="News" Clicked="BtnNewsPage_Clicked" HorizontalOptions="Fill" CornerRadius="0" BackgroundColor="White" BorderColor="LightGray" BorderWidth="1"/>
+                <Button x:Name="BtnReviewPage" Text="Reviews" Clicked="BtnReviewPage_Clicked" CornerRadius="0" BackgroundColor="White" BorderColor="LightGray" BorderWidth="1"/>
+                <Button x:Name="BtnFilmsPage" Text="Films" Clicked="BtnFilmsPage_Clicked" CornerRadius="0" BackgroundColor="White" BorderColor="LightGray" BorderWidth="1"/>
+                <Button x:Name="BtnTrailers" Text="Trailers" Clicked="BtnTrailers_Clicked" CornerRadius="0" BackgroundColor="White" BorderColor="LightGray" BorderWidth="1"/>
+                <Button x:Name="BtnInterviews" Text="Interviews" Clicked="BtnInterviews_Clicked" CornerRadius="0" BackgroundColor="White" BorderColor="LightGray" BorderWidth="1"/>
             </StackLayout>
         </ContentPage>
     </FlyoutPage.Flyout>

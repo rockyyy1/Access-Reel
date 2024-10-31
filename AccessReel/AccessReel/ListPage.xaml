@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:AccessReel"
              x:Class="AccessReel.ListPage"
              Title="ListPage">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ReviewScoreToAbsLayoutConverter x:Key="ReviewScoreToAbsLayoutConverter"/>
@@ -51,13 +52,15 @@
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <ScrollView>
-        <VerticalStackLayout>
-            <Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>
-            <Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>
-            <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}">
+    <ContentPage.Content>
+        <ScrollView>
+            <VerticalStackLayout>
+                <Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>
+                <!--<Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>-->
+                <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}">
 
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </ContentPage.Content>
 </ContentPage>

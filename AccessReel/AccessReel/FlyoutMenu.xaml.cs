@@ -38,9 +38,10 @@ public partial class FlyoutMenu : FlyoutPage
 
     private void BtnTrailers_Clicked(object sender, EventArgs e)
     {
+        Detail = new NavigationPage(new ArticlePage(""));
         IsPresented = false;
-        DisplayAlert("Error", "Not Implemented", "OK");
-        return;
+        /*DisplayAlert("Error", "Not Implemented", "OK");
+        return;*/
     }
 
     private void BtnInterviews_Clicked(object sender, EventArgs e)
