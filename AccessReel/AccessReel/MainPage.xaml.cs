@@ -8,6 +8,9 @@ namespace AccessReel
 {
     public partial class MainPage : ContentPage
     {
+        public static string ACCESSREELURL = "https://accessreel.com/";
+        public static string NEWSURL = "https://accessreel.com/categories/news/";
+
         HtmlDocument document;
         string text;
 
