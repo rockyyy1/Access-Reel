@@ -38,7 +38,7 @@ public partial class FlyoutMenu : FlyoutPage
 
     private void BtnTrailers_Clicked(object sender, EventArgs e)
     {
-        Detail = new NavigationPage(new ArticlePage(""));
+        Detail = new NavigationPage(new FilmPage(""));//ArticlePage(""));
         IsPresented = false;
         /*DisplayAlert("Error", "Not Implemented", "OK");
         return;*/

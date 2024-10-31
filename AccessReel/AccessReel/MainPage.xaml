@@ -9,7 +9,6 @@
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
-            <Button x:Name="FlyoutMenu" Text="Menu" Clicked="FlyoutMenu_Clicked"/>
             <Image
                 Source="dotnet_bot.png"
                 HeightRequest="185"

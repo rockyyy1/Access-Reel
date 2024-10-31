@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AccessReel.FilmPage"
+             >
+    <ScrollView>
+        <VerticalStackLayout>
+            <!-- Media Player Goes Here -->
+            <HorizontalStackLayout>
+                <Label x:Name="LblTitle" Text="Film Title" HorizontalOptions="Start"/>
+                <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore" HorizontalOptions="End">
+                    <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" />
+                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                </AbsoluteLayout>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Button x:Name="BtnOverview" Text="Overview" Clicked="BtnOverview_Clicked"/>
+                <Button x:Name="BtnReview" Text="Review" Clicked="BtnReview_Clicked"/>
+            </HorizontalStackLayout>
+            
+            <Grid x:Name="FilmOverview" IsVisible="True">                
+                <Image x:Name="ImagePoster"/>
+                <Label x:Name="LblDesc"/>
+                <!-- User Rating Stuff Goes Here-->
+                
+                <!-- Film Details-->
+                <VerticalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="Genre"/>
+                        <Label x:Name="LblGenre" Text="Action, Adventure"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="Cast"/>
+                        <Label x:Name="LblCast" Text="Person One, Person Two"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="Director"/>
+                        <Label x:Name="LblDirector" Text="Director One"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                
+            </Grid>
+            
+            <Grid x:Name="FilmReview" IsVisible="False">
+                <Label x:Name="LblReview" Text="ReviewPlaceholder"/>
+                <Label x:Name="LblAuthor" Text="ReviewAuthor"/>
+            </Grid>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
