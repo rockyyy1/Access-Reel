@@ -92,5 +92,13 @@ namespace AccessReel
                 Debug.WriteLine($"{title}\n{image}\n\n");
             }
         }
+
+        private void FlyoutMenu_Clicked(object sender, EventArgs e)
+        {
+            if (Application.Current.MainPage is FlyoutMenu flyoutPage)
+            {
+                flyoutPage.IsPresented = true;
+            }
+        }
     }
 }
