@@ -15,5 +15,10 @@ namespace AccessReel
         public DateTime? Date { get; set; }
         public Image? Image { get; set; }
     }
+
+    public class Review : Posts
+    {
+        public string? ReviewScore { get; set; }
+    }
     
 }
