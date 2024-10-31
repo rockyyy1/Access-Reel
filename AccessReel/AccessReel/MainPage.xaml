@@ -4,28 +4,66 @@
              xmlns:local="clr-namespace:AccessReel"
              x:Class="AccessReel.MainPage">
 
-    <ScrollView>
-        
-        <VerticalStackLayout
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Template for articles on the home page. Used by Latest News, Latest Interviews, Latest Reviews -->
+            <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">
+                <VerticalStackLayout>
+                    <ImageButton />
+                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
+                    <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
+                    <HorizontalStackLayout>
+                        <Label Text="{Binding Author}" FontSize="Caption" TextColor="DimGray" Margin="5"/>
+                        <Label Text="{Binding Date}" FontSize="Caption" TextColor="Gray" Margin="5"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView>        
+        <VerticalStackLayout HorizontalOptions="Center"
             Padding="30,0"
             Spacing="25">
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+            <!-- Images Carousel -->
+            <CarouselView x:Name="CVImageheader">
+                
+            </CarouselView>
+            <!-- Latest News-->
+            <VerticalStackLayout>
+                <Label x:Name="LblLatestNews" Text="Latest News"/>
+                <CollectionView x:Name="CVNews" ItemTemplate="TemplateArticle" >
+                    
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- Latest Interviews -->
+            <VerticalStackLayout>
+                <Label x:Name="LblLatestInterviews" Text="Latest Interview"/>
+                <CollectionView x:Name="CVInterviews" ItemTemplate="TemplateArticle">
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- Latest Reviews -->
+            <VerticalStackLayout>
+                <Label x:Name="LblLatestReviews" Text="Latest Reviews"/>
+                <CollectionView x:Name="CVReviews" ItemTemplate="TemplateArticle">
 
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-                        
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- Top User Rated Reviews -->
+            <VerticalStackLayout>
+                <Label x:Name="LblTopUserReviews" Text="Top User Rated Reviews"/>
+                <CollectionView x:Name="CVUserReviews">
+
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- New Trailers -->
+            <VerticalStackLayout>
+                <Label x:Name="LblTrailers" Text="New Trailers"/>
+                <CarouselView x:Name="CVTrailers">
+                    
+                </CarouselView>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 
