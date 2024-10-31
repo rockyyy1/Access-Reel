@@ -27,11 +27,17 @@ namespace AccessReel
         }
 
         // Extracts the details of details details we need from the node
-        private void RetrieveItemDetails(HtmlNode item, out string title, out string image, out string paragraph)
+        private void RetrieveItemDetails(HtmlNode item, out string title, out string image, out string paragraph,
+            out string user, out string datetime)
         {
             title = item.SelectSingleNode(".//h2[contains(@class, 'gp-loop-title')]//a").GetAttributeValue("title", string.Empty);
-            image = item.SelectSingleNode(".//img").GetAttributeValue("src", string.Empty);
+            image = item.SelectSingleNode(".//img")?.GetAttributeValue("src", string.Empty);
             paragraph = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-text')]//p")?.InnerText ?? string.Empty;
+            user = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-meta')]//span//a")?.InnerText;
+            datetime = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-meta')]//time")?.GetAttributeValue("datetime", string.Empty);
+            DateTime? time = datetime != null ? DateTime.Parse(datetime) : null;
+
+            datetime = time?.ToString("ddd - MMM - yyyy");
         }
 
         private void Retrieve(string text)
@@ -46,8 +52,9 @@ namespace AccessReel
             var latestNewsNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-news')]");
             foreach (var node in latestNewsNodes)
             {
-                RetrieveItemDetails(node, out string title, out string image, out string paragraph);
-                Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
+                RetrieveItemDetails(node, out string title, out string image, out string paragraph
+                    , out string user, out string datetime);
+                Debug.WriteLine($"{title}\n{paragraph}\n{image}\n{user}\n{datetime}\n");
             }
 
             // Retrieve "Latest Interviews"
@@ -55,7 +62,8 @@ namespace AccessReel
             var latestInterviewsNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-interviews')]");
             foreach (var node in latestInterviewsNodes)
             {
-                RetrieveItemDetails(node, out string title, out string image, out string paragraph);
+                RetrieveItemDetails(node, out string title, out string image, out string paragraph
+                    , out string user, out string datetime);
                 Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
             }
 
@@ -64,7 +72,8 @@ namespace AccessReel
             var latestReviewsNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'gp_hubs-reviews')]");
             foreach (var node in latestReviewsNodes)
             {
-                RetrieveItemDetails(node, out string title, out string image, out string paragraph);
+                RetrieveItemDetails(node, out string title, out string image, out string paragraph
+                    , out string user, out string datetime);
                 Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
             }
 
@@ -78,7 +87,8 @@ namespace AccessReel
             var newTrailersNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-trailers')]");
             foreach (var node in newTrailersNodes)
             {
-                RetrieveItemDetails(node, out string title, out string image, out string paragraph);
+                RetrieveItemDetails(node, out string title, out string image, out string paragraph
+                     , out string user, out string datetime);
                 Debug.WriteLine($"{title}\n{image}\n\n");
             }
         }
