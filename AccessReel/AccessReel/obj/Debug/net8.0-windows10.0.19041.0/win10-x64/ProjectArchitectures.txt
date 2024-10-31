@@ -1,1 +1,1 @@
-C:\Users\Lemmea\Documents\GitHub\Access-Reel\AccessReel\AccessReel\AccessReel.csproj;x64
+C:\Users\trangr\Documents\GitHub\Access-Reel\AccessReel\AccessReel\AccessReel.csproj;x64
