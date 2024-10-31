@@ -4,7 +4,8 @@ public partial class FlyoutMenu : FlyoutPage
 {
 	public FlyoutMenu()
 	{
-		InitializeComponent();
+        Application.Current.UserAppTheme = AppTheme.Dark;
+        InitializeComponent();
 	}
 
     private void BtnCloseMenu_Clicked(object sender, EventArgs e)

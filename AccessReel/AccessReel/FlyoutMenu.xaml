@@ -23,7 +23,7 @@
     <FlyoutPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <local:ListPage/>
+                <local:MainPage/>
             </x:Arguments>
         </NavigationPage>
     </FlyoutPage.Detail>
