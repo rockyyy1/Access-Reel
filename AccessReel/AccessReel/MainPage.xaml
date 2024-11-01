@@ -7,7 +7,7 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <!-- Template for articles on the home page. Used by Latest News, Latest Interviews, Latest Reviews -->
-            <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">
+            <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">                
                 <VerticalStackLayout>
                     <ImageButton />
                     <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
@@ -18,6 +18,23 @@
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </DataTemplate>
+            <!-- Template for user reviews on the homepage -->
+            <DataTemplate x:Key="TemplateUserReviews">
+                <AbsoluteLayout>
+                    <ImageButton />
+                    <Label Text="{Binding Title}" />
+                    <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="400,80, AutoSize,AutoSize">
+                        <Label Text="Critic" />
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="80,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                    </AbsoluteLayout>
+                    <AbsoluteLayout Margin="10" x:Name="UserReviewScore" AbsoluteLayout.LayoutBounds="400,140, AutoSize,AutoSize">
+                        <Label Text="Members" AbsoluteLayout.LayoutBounds="1,1"/>
+                        <RoundRectangle WidthRequest="60" HeightRequest="20" Fill="SkyBlue" CornerRadius="5" AbsoluteLayout.LayoutBounds="80,1"/>
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="80,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                    </AbsoluteLayout>
+                </AbsoluteLayout>
+            </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
     
@@ -26,40 +43,51 @@
             Padding="30,0"
             Spacing="25">
             <!-- Images Carousel -->
-            <CarouselView x:Name="CVImageheader">
+            <CarouselView x:Name="CVImageheader" >
                 
             </CarouselView>
             <!-- Latest News-->
             <VerticalStackLayout>
-                <Label x:Name="LblLatestNews" Text="Latest News"/>
-                <CollectionView x:Name="CVNews" ItemTemplate="TemplateArticle" >
-                    
+                <Label x:Name="LblLatestNews" Text="Latest News"
+                       BackgroundColor="SkyBlue" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVNews" ItemTemplate="{StaticResource TemplateArticle}" >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>
             <!-- Latest Interviews -->
             <VerticalStackLayout>
-                <Label x:Name="LblLatestInterviews" Text="Latest Interview"/>
-                <CollectionView x:Name="CVInterviews" ItemTemplate="TemplateArticle">
-
+                <Label x:Name="LblLatestInterviews" Text="Latest Interview"
+                       BackgroundColor="Black" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVInterviews" ItemTemplate="{StaticResource TemplateArticle}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>
             <!-- Latest Reviews -->
             <VerticalStackLayout>
-                <Label x:Name="LblLatestReviews" Text="Latest Reviews"/>
-                <CollectionView x:Name="CVReviews" ItemTemplate="TemplateArticle">
-
+                <Label x:Name="LblLatestReviews" Text="Latest Reviews" 
+                       BackgroundColor="SkyBlue" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVReviews" ItemTemplate="{StaticResource TemplateArticle}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>
             <!-- Top User Rated Reviews -->
             <VerticalStackLayout>
-                <Label x:Name="LblTopUserReviews" Text="Top User Rated Reviews"/>
-                <CollectionView x:Name="CVUserReviews">
+                <Label x:Name="LblTopUserReviews" Text="Top User Rated Reviews" 
+                       BackgroundColor="DodgerBlue" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVUserReviews" ItemTemplate="{StaticResource TemplateUserReviews}">
 
                 </CollectionView>
             </VerticalStackLayout>
             <!-- New Trailers -->
             <VerticalStackLayout>
-                <Label x:Name="LblTrailers" Text="New Trailers"/>
+                <Label x:Name="LblTrailers" Text="New Trailers" 
+                       BackgroundColor="OrangeRed" Style="{StaticResource HomePageHeaders}"/>
                 <CarouselView x:Name="CVTrailers">
                     
                 </CarouselView>

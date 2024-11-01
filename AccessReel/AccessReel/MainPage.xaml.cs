@@ -14,7 +14,19 @@ namespace AccessReel
         public MainPage()
         {
             InitializeComponent();
+            //Test Data
+            List<Review> postList = new List<Review>();
+            Review c = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title", ReviewScore = "10" };
+            postList.Add(c);
+            postList.Add(c);
+            postList.Add(c);
+            postList.Add(c);
+            CVInterviews.ItemsSource = postList;
+            CVNews.ItemsSource = postList;
+            CVReviews.ItemsSource = postList;
+            CVUserReviews.ItemsSource = postList;
             
+
             Retrieve(ReadWebsite());
         }
 
