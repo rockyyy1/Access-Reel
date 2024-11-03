@@ -39,13 +39,26 @@
     </ContentPage.Resources>
     
     <ScrollView>        
-        <VerticalStackLayout HorizontalOptions="Center"
+        <VerticalStackLayout HorizontalOptions="FillAndExpand"
             Padding="30,0"
             Spacing="25">
             <!-- Images Carousel -->
-            <CarouselView x:Name="CVImageheader" >
-                
+            <CarouselView x:Name="CVImageheader" IndicatorView="IImageHeader" HorizontalOptions="FillAndExpand" >
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HorizontalOptions="Center" BackgroundColor="White">
+                            <AbsoluteLayout HorizontalOptions="Center">
+                                <Image Source="dotnet_bot.png" HeightRequest="200" Aspect="AspectFit"/>
+                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="Gray" Opacity="50"  AbsoluteLayout.LayoutBounds="0,50"/>
+                            </AbsoluteLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" SnapPointsType="MandatorySingle" SnapPointsAlignment="Center" ItemSpacing="10"/>
+                </CarouselView.ItemsLayout>
             </CarouselView>
+            <IndicatorView x:Name="IImageHeader" HorizontalOptions="Center"/>
             <!-- Latest News-->
             <VerticalStackLayout>
                 <Label x:Name="LblLatestNews" Text="Latest News"
@@ -88,9 +101,21 @@
             <VerticalStackLayout>
                 <Label x:Name="LblTrailers" Text="New Trailers" 
                        BackgroundColor="OrangeRed" Style="{StaticResource HomePageHeaders}"/>
-                <CarouselView x:Name="CVTrailers">
-                    
+                
+                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout>
+                                <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                <Label Text="{Binding Title}" HorizontalOptions="Center"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" SnapPointsType="Mandatory" ItemSpacing="20"/>
+                    </CarouselView.ItemsLayout>
                 </CarouselView>
+                <IndicatorView x:Name="ITrailers" HorizontalOptions="Center" Margin="10"/>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>

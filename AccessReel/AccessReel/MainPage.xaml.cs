@@ -25,6 +25,8 @@ namespace AccessReel
             CVNews.ItemsSource = postList;
             CVReviews.ItemsSource = postList;
             CVUserReviews.ItemsSource = postList;
+            CVImageheader.ItemsSource = postList;
+            CVTrailers.ItemsSource = postList;
             
 
             Retrieve(ReadWebsite());
