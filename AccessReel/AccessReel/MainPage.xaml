@@ -4,29 +4,136 @@
              xmlns:local="clr-namespace:AccessReel"
              x:Class="AccessReel.MainPage">
 
-    <ScrollView>
-        
-        <VerticalStackLayout
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Template for articles on the home page. Used by Latest News, Latest Interviews, Latest Reviews -->
+            <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">                
+                <VerticalStackLayout>
+                    <ImageButton />
+                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
+                    <Label Text="{Binding Description}" FontSize="Body" Margin="5" LineBreakMode="TailTruncation" MaxLines="4"/>
+                    <HorizontalStackLayout>
+                        <Label Text="{Binding Author}" FontSize="Caption" TextColor="DimGray" Margin="5"/>
+                        <Label Text="{Binding Date}" FontSize="Caption" TextColor="Gray" Margin="5"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </DataTemplate>
+            <!-- Template for user reviews on the homepage -->
+            <DataTemplate x:Key="TemplateUserReviews">
+                <AbsoluteLayout>
+                    <ImageButton />
+                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                    <Label Text="{Binding Title}" BackgroundColor="DimGray" Opacity="10" TextColor="White" AbsoluteLayout.LayoutBounds="0,180"/>
+                    <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="400,80, AutoSize,AutoSize">
+                        <Label Text="Critic" AbsoluteLayout.LayoutBounds="30,20"/>
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds=".85,0.55" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
+                    </AbsoluteLayout>
+                    <AbsoluteLayout Margin="10" x:Name="UserReviewScore" AbsoluteLayout.LayoutBounds="400,140, AutoSize,AutoSize">
+                        <Label Text="Members" AbsoluteLayout.LayoutBounds="1,1"/>
+                        <RoundRectangle WidthRequest="60" HeightRequest="20" Fill="SkyBlue" CornerRadius="5" AbsoluteLayout.LayoutBounds="80,5"/>
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds=".82,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Micro" TextColor="White"/>
+                    </AbsoluteLayout>
+                </AbsoluteLayout>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <ScrollView>        
+        <VerticalStackLayout HorizontalOptions="FillAndExpand"
             Padding="30,0"
             Spacing="25">
-            <Button x:Name="FlyoutMenu" Text="Menu" Clicked="FlyoutMenu_Clicked"/>
-            <Image
-                Source="dotnet_bot.png"
-                HeightRequest="185"
-                Aspect="AspectFit"
-                SemanticProperties.Description="dot net bot in a race car number eight" />
+            <!-- Images Carousel -->
+            <CarouselView x:Name="CVImageheader" IndicatorView="IImageHeader" HorizontalOptions="FillAndExpand" >
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame HorizontalOptions="Center" BackgroundColor="White">
+                            <AbsoluteLayout HorizontalOptions="Center">
+                                <Image Source="dotnet_bot.png" HeightRequest="200" Aspect="AspectFit"/>
+                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="Gray" Opacity="50"  AbsoluteLayout.LayoutBounds="-100,170"/>
+                                <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="400,80, AutoSize,AutoSize">
+                                    <Label Text="Critic" AbsoluteLayout.LayoutBounds="90,60" FontAttributes="Bold"/>
+                                    <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
+                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.85,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
+                                </AbsoluteLayout>
+                            </AbsoluteLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+                <CarouselView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Horizontal" SnapPointsType="MandatorySingle" SnapPointsAlignment="Center" ItemSpacing="10"/>
+                </CarouselView.ItemsLayout>
+            </CarouselView>
+            <IndicatorView x:Name="IImageHeader" HorizontalOptions="Center"/>
+            <!-- Latest News-->
+            <VerticalStackLayout>
+                <Label x:Name="LblLatestNews" Text="Latest News"
+                       BackgroundColor="SkyBlue" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVNews" ItemTemplate="{StaticResource TemplateArticle}" >
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- Latest Interviews -->
+            <VerticalStackLayout>
+                <Label x:Name="LblLatestInterviews" Text="Latest Interview"
+                       BackgroundColor="Black" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVInterviews" ItemTemplate="{StaticResource TemplateArticle}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- Latest Reviews -->
+            <VerticalStackLayout>
+                <Label x:Name="LblLatestReviews" Text="Latest Reviews" 
+                       BackgroundColor="SkyBlue" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVReviews" ItemTemplate="{StaticResource TemplateArticle}">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                    </CollectionView.ItemsLayout>
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- Top User Rated Reviews -->
+            <VerticalStackLayout>
+                <Label x:Name="LblTopUserReviews" Text="Top User Rated Reviews" 
+                       BackgroundColor="DodgerBlue" Style="{StaticResource HomePageHeaders}"/>
+                <CollectionView x:Name="CVUserReviews" ItemTemplate="{StaticResource TemplateUserReviews}">
 
-            <Label
-                Text="Hello, World!"
-                Style="{StaticResource Headline}"
-                SemanticProperties.HeadingLevel="Level1" />
-
-            <Label
-                Text="Welcome to &#10;.NET Multi-platform App UI"
-                Style="{StaticResource SubHeadline}"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
-                        
+                </CollectionView>
+            </VerticalStackLayout>
+            <!-- New Trailers -->
+            <VerticalStackLayout>
+                <Label x:Name="LblTrailers" Text="New Trailers" 
+                       BackgroundColor="OrangeRed" Style="{StaticResource HomePageHeaders}"/>
+                
+                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout>
+                                <VerticalStackLayout>
+                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout>
+                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout>
+                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" SnapPointsType="Mandatory" ItemSpacing="20"/>
+                    </CarouselView.ItemsLayout>
+                </CarouselView>
+                <IndicatorView x:Name="ITrailers" HorizontalOptions="Center" Margin="10"/>
+            </VerticalStackLayout>
         </VerticalStackLayout>
     </ScrollView>
 

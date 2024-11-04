@@ -9,13 +9,30 @@ namespace AccessReel
 {
     public partial class MainPage : ContentPage
     {
+        public static string ACCESSREELURL = "https://accessreel.com/";
+        public static string NEWSURL = "https://accessreel.com/categories/news/";
+
         HtmlDocument document;
         string text;
 
         public MainPage()
         {
             InitializeComponent();
+            //Test Data
+            List<Review> postList = new List<Review>();
+            Review c = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title", ReviewScore = "10" };
+            postList.Add(c);
+            postList.Add(c);
+            postList.Add(c);
+            postList.Add(c);
+            CVInterviews.ItemsSource = postList;
+            CVNews.ItemsSource = postList;
+            CVReviews.ItemsSource = postList;
+            CVUserReviews.ItemsSource = postList;
+            CVImageheader.ItemsSource = postList;
+            CVTrailers.ItemsSource = postList;
             
+
             Retrieve(ReadWebsite());
         }
 
@@ -167,12 +184,5 @@ namespace AccessReel
 
         }
 
-        private void FlyoutMenu_Clicked(object sender, EventArgs e)
-        {
-            if (Application.Current.MainPage is FlyoutMenu flyoutPage)
-            {
-                flyoutPage.IsPresented = true;
-            }
-        }
     }
 }

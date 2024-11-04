@@ -13,11 +13,6 @@ public partial class ListPage : ContentPage
     public ListPage() //Used for xaml to prevent error, might be removed later
     {
         InitializeComponent();
-
-        var TapGesture = new TapGestureRecognizer();
-        TapGesture.Tapped += OnPageTapped;
-
-        Content.GestureRecognizers.Add(TapGesture);
     }
 
     public ListPage(string pageType = "")
@@ -58,14 +53,6 @@ public partial class ListPage : ContentPage
         }        
     }
 
-    private void OnPageTapped(object sender, EventArgs e)
-    {
-        /*if (Application.Current.MainPage is FlyoutMenu flyoutPage)
-        {
-            flyoutPage.IsPresented = false;
-        }*/
-        Debug.WriteLine("Tapped");
-    }
 }
 
 
@@ -73,7 +60,7 @@ public partial class ListPage : ContentPage
 //This changes the postion of the label within the circle for the review score
 public class ReviewScoreToAbsLayoutConverter : IValueConverter
 {
-    public Object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    public Object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         if(value is string text)
         {
@@ -86,7 +73,7 @@ public class ReviewScoreToAbsLayoutConverter : IValueConverter
                 return new Rect(0.28, 0.25, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
         }
-        return new Rect(0.5, 0.5, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+        return null; //new Rect(0.5, 0.5, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
         
     }
 

@@ -4,9 +4,10 @@ public partial class FlyoutMenu : FlyoutPage
 {
 	public FlyoutMenu()
 	{
-        Application.Current.UserAppTheme = AppTheme.Dark;
-        InitializeComponent();
-	}
+		InitializeComponent();
+
+        Application.Current.UserAppTheme = AppTheme.Light;
+    }
 
     private void BtnCloseMenu_Clicked(object sender, EventArgs e)
     {
@@ -39,7 +40,7 @@ public partial class FlyoutMenu : FlyoutPage
 
     private void BtnTrailers_Clicked(object sender, EventArgs e)
     {
-        Detail = new NavigationPage(new ArticlePage(""));
+        Detail = new NavigationPage(new FilmPage(""));//ArticlePage(""));
         IsPresented = false;
         /*DisplayAlert("Error", "Not Implemented", "OK");
         return;*/
