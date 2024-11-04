@@ -49,6 +49,9 @@ namespace AccessReel
             paragraph = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-text')]//p")?.InnerText ?? string.Empty;
             user = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-meta')]//span//a")?.InnerText;
             datetime = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-meta')]//time")?.GetAttributeValue("datetime", string.Empty);
+
+            title = HtmlEntity.DeEntitize(title);
+            paragraph = HtmlEntity.DeEntitize(paragraph);
             DateTime? time = datetime != null ? DateTime.Parse(datetime) : null;
 
             datetime = time?.ToString("ddd - MMM - yyyy");
