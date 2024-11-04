@@ -33,6 +33,10 @@ namespace AccessReel
             
 
             Retrieve(ReadWebsite());
+
+            Webscraping webscraping = new Webscraping();
+
+            Homepage homepage = webscraping.GetHomepage();
         }
 
         // Returns the html
@@ -57,7 +61,7 @@ namespace AccessReel
             paragraph = HtmlEntity.DeEntitize(paragraph);
             DateTime? time = datetime != null ? DateTime.Parse(datetime) : null;
 
-            datetime = time?.ToString("ddd - MMM - yyyy");
+            datetime = time?.ToString("dd - MMM - yyyy");
         }
 
         private void Retrieve(string text)
