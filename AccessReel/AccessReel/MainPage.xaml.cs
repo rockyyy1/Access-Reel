@@ -133,9 +133,11 @@ namespace AccessReel
             }
 
             // Retrieve "Top User Rated Reviews"
-            Debug.WriteLine("LASTEST REVIEWS:" + "\n\n");
+            Debug.WriteLine("LASTEST REVIEWS:" + "\n");
 
             var postItem = document.DocumentNode.SelectSingleNode("//*[@id=\"ghostpool_showcase_wrapper_1\"]/div[5]/section");
+            var smallPosts = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-small-posts')]");
+            var sectionSmallPosts = smallPosts.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
 
             // Extract href link
             var linkNode = postItem.SelectSingleNode(".//a[@href]");
@@ -145,12 +147,12 @@ namespace AccessReel
             string ttitle = linkNode.SelectSingleNode(".//h2").InnerText.Trim();
 
             // Extract source image 
-            var timageNode = linkNode.SelectSingleNode(".//img");
+            var timageNode = linkNode.SelectSingleNode(".//img[contains(@class, 'gp-large-image')]");
             string sourceImage = timageNode.Attributes["src"].Value;
 
             // Extract member and critic ratings
             var ratingWrapper = postItem.SelectSingleNode(".//div[@class='gp-rating-wrapper']");
-            string memberRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-user-average-rating']").InnerText.Trim();
+            string memberRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-average-rating']").InnerText.Trim();
             string tcriticRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-rating-inner']").InnerText.Trim();
 
             // Write to console or log file
@@ -159,10 +161,37 @@ namespace AccessReel
             Debug.WriteLine("sourceImage: " + sourceImage);
             Debug.WriteLine("memberRating: " + memberRating);
             Debug.WriteLine("criticRating: " + tcriticRating);
+            Debug.WriteLine("");
 
+            foreach (var posts in sectionSmallPosts)
+            {
+                // Extract href link
+                var smalllinkNode = posts.SelectSingleNode(".//a[@href]");
+                string smallHref = smalllinkNode.Attributes["href"].Value;
 
-                // Retrieve "New Trailers"
-                Debug.WriteLine("NEW TRAILERS:");
+                // Extract title
+                string smallTitle = smalllinkNode.Attributes["title"].Value;
+
+                // Extract source image with high resolution (data-rel points to larger image)
+                var smallimageNode = smalllinkNode.SelectSingleNode(".//img");
+                string smallSourceImage = smallimageNode.Attributes["data-rel"].Value;
+
+                // Extract member and critic ratings
+                var smallratingWrapper = posts.SelectSingleNode(".//div[@class='gp-rating-wrapper']");
+                string smallMemberRating = smallratingWrapper.SelectSingleNode(".//div[@class='gp-average-rating']").InnerText.Trim();
+                string smallCriticRating = smallratingWrapper.SelectSingleNode(".//div[@class='gp-rating-inner']").InnerText.Trim();
+
+                // Write to console or log file (add prefix as requested)
+                Debug.WriteLine("smallHref: " + smallHref);
+                Debug.WriteLine("smallTitle: " + smallTitle);
+                Debug.WriteLine("smallSourceImage: " + smallSourceImage);
+                Debug.WriteLine("smallMemberRating: " + smallMemberRating);
+                Debug.WriteLine("smallCriticRating: " + smallCriticRating);
+                Debug.WriteLine("");
+            }
+
+            // Retrieve "New Trailers"
+            Debug.WriteLine("NEW TRAILERS:");
             var newTrailersNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-trailers')]");
             foreach (var node in newTrailersNodes)
             {
