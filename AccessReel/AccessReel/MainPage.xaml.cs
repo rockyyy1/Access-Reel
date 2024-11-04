@@ -134,46 +134,35 @@ namespace AccessReel
 
             // Retrieve "Top User Rated Reviews"
             Debug.WriteLine("LASTEST REVIEWS:" + "\n\n");
-            // ... Dont know how to do this lol
-            //var TURRWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[2]/div/div/div[3]/div[5]");
-/*            HtmlNode TURRWrapper = document.DocumentNode.SelectSingleNode("//div[@class='gp-inner-loop ajax-loop'][5]");
-            foreach (HtmlNode section in TURRWrapper.SelectNodes(".//section[@class='gp-post-item']"))
-            {
-                // Extract information from each section
-                HtmlNode link = section.SelectSingleNode(".//a[@class='gp-loop-title']//a");
 
-                if (link != null)
-                {
-                    // Title
-                    string title = link.InnerText.Trim();
+            var postItem = document.DocumentNode.SelectSingleNode("//*[@id=\"ghostpool_showcase_wrapper_1\"]/div[5]/section");
 
-                    // Href link
-                    string href = link.GetAttributeValue("href", "");
+            // Extract href link
+            var linkNode = postItem.SelectSingleNode(".//a[@href]");
+            string thref = linkNode.Attributes["href"].Value;
 
-                    // Image source (use the first image)
-                    HtmlNode imageNode = section.SelectSingleNode(".//div[@class='gp-post-thumbnail']//img[@class='gp-large-image']");
-                    string imageSource = imageNode?.GetAttributeValue("src", "");
+            // Extract title
+            string ttitle = linkNode.SelectSingleNode(".//h2").InnerText.Trim();
 
-                    // Critic rating
-                    HtmlNode criticRatingNode = section.SelectSingleNode(".//div[@class='gp-site-rating-wrapper']//div[@class='gp-rating-inner']");
-                    string criticRating = criticRatingNode?.InnerText?.Trim() ?? "";
+            // Extract source image 
+            var timageNode = linkNode.SelectSingleNode(".//img");
+            string sourceImage = timageNode.Attributes["src"].Value;
 
-                    // Member rating
-                    HtmlNode memberRatingNode = section.SelectSingleNode(".//div[@class='gp-user-rating-wrapper']//div[@class='gp-average-rating']");
-                    string memberRating = memberRatingNode?.InnerText?.Trim() ?? "";
+            // Extract member and critic ratings
+            var ratingWrapper = postItem.SelectSingleNode(".//div[@class='gp-rating-wrapper']");
+            string memberRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-user-average-rating']").InnerText.Trim();
+            string tcriticRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-rating-inner']").InnerText.Trim();
 
-                    // Process the extracted information (e.g., print to console)
-                    Debug.WriteLine("Title: " + title);
-                    Debug.WriteLine("Href Link: " + href);
-                    Debug.WriteLine("Image Source: " + imageSource);
-                    Debug.WriteLine("Critic Rating: " + criticRating);
-                    Debug.WriteLine("Member Rating: " + memberRating);
-                    Debug.WriteLine("");
-                }
-            }
-*/
-            // Retrieve "New Trailers"
-            Debug.WriteLine("NEW TRAILERS:");
+            // Write to console or log file
+            Debug.WriteLine("href: " + thref);
+            Debug.WriteLine("title: " + ttitle);
+            Debug.WriteLine("sourceImage: " + sourceImage);
+            Debug.WriteLine("memberRating: " + memberRating);
+            Debug.WriteLine("criticRating: " + tcriticRating);
+
+
+                // Retrieve "New Trailers"
+                Debug.WriteLine("NEW TRAILERS:");
             var newTrailersNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-trailers')]");
             foreach (var node in newTrailersNodes)
             {
