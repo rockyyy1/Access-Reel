@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Xml;
@@ -48,6 +49,40 @@ namespace AccessReel
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(text);
 
+            // Retrieve the carousel at the top of the page
+            Debug.WriteLine("TOP CAROUSEL");
+            var carouselWrapper = document.DocumentNode.SelectSingleNode("//ul[@class='slides']");
+            foreach (HtmlNode liNode in carouselWrapper.SelectNodes(".//li"))
+            {
+                // Extract information from each li
+                HtmlNode link = liNode.SelectSingleNode(".//a");
+
+                if (link != null)
+                {
+                    // Title
+                    HtmlNode titleNode = link.SelectSingleNode(".//h2[@class='gp-slide-caption-title']//span[@class='gp-text-highlight']");
+                    string title = titleNode?.InnerText ?? "";
+
+                    // Href link
+                    string href = link.GetAttributeValue("href", "");
+
+                    // Image source
+                    HtmlNode imageNode = liNode.SelectSingleNode(".//div[@class='gp-post-thumbnail']//img[@class='gp-post-image']");
+                    string imageSource = imageNode?.GetAttributeValue("src", "");
+
+                    // Critic rating
+                    HtmlNode ratingNode = liNode.SelectSingleNode(".//div[@class='gp-rating-outer']//div[@class='gp-rating-inner']");
+                    string criticRating = ratingNode?.InnerText?.Trim() ?? "";
+
+                    // Process the extracted information (e.g., print to console)
+                    Debug.WriteLine("Title: " + title);
+                    Debug.WriteLine("Href Link: " + href);
+                    Debug.WriteLine("Image Source: " + imageSource);
+                    Debug.WriteLine("Critic Rating: " + criticRating);
+                    Debug.WriteLine("");
+                }
+            }
+
             var wpdWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div/div");
 
             // Retrieve "Latest News"
@@ -83,8 +118,43 @@ namespace AccessReel
             // Retrieve "Top User Rated Reviews"
             Debug.WriteLine("LASTEST REVIEWS:" + "\n\n");
             // ... Dont know how to do this lol
-            var TURRWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[2]/div/div/div[3]");
+            //var TURRWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[2]/div/div/div[3]/div[5]");
+/*            HtmlNode TURRWrapper = document.DocumentNode.SelectSingleNode("//div[@class='gp-inner-loop ajax-loop'][5]");
+            foreach (HtmlNode section in TURRWrapper.SelectNodes(".//section[@class='gp-post-item']"))
+            {
+                // Extract information from each section
+                HtmlNode link = section.SelectSingleNode(".//a[@class='gp-loop-title']//a");
 
+                if (link != null)
+                {
+                    // Title
+                    string title = link.InnerText.Trim();
+
+                    // Href link
+                    string href = link.GetAttributeValue("href", "");
+
+                    // Image source (use the first image)
+                    HtmlNode imageNode = section.SelectSingleNode(".//div[@class='gp-post-thumbnail']//img[@class='gp-large-image']");
+                    string imageSource = imageNode?.GetAttributeValue("src", "");
+
+                    // Critic rating
+                    HtmlNode criticRatingNode = section.SelectSingleNode(".//div[@class='gp-site-rating-wrapper']//div[@class='gp-rating-inner']");
+                    string criticRating = criticRatingNode?.InnerText?.Trim() ?? "";
+
+                    // Member rating
+                    HtmlNode memberRatingNode = section.SelectSingleNode(".//div[@class='gp-user-rating-wrapper']//div[@class='gp-average-rating']");
+                    string memberRating = memberRatingNode?.InnerText?.Trim() ?? "";
+
+                    // Process the extracted information (e.g., print to console)
+                    Debug.WriteLine("Title: " + title);
+                    Debug.WriteLine("Href Link: " + href);
+                    Debug.WriteLine("Image Source: " + imageSource);
+                    Debug.WriteLine("Critic Rating: " + criticRating);
+                    Debug.WriteLine("Member Rating: " + memberRating);
+                    Debug.WriteLine("");
+                }
+            }
+*/
             // Retrieve "New Trailers"
             Debug.WriteLine("NEW TRAILERS:");
             var newTrailersNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-trailers')]");
@@ -94,6 +164,7 @@ namespace AccessReel
                      , out string user, out string datetime);
                 Debug.WriteLine($"{title}\n{image}\n\n");
             }
+
         }
 
         private void FlyoutMenu_Clicked(object sender, EventArgs e)
