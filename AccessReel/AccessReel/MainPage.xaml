@@ -10,8 +10,9 @@
             <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">                
                 <VerticalStackLayout>
                     <ImageButton />
+                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
                     <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
-                    <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
+                    <Label Text="{Binding Description}" FontSize="Body" Margin="5" LineBreakMode="TailTruncation" MaxLines="4"/>
                     <HorizontalStackLayout>
                         <Label Text="{Binding Author}" FontSize="Caption" TextColor="DimGray" Margin="5"/>
                         <Label Text="{Binding Date}" FontSize="Caption" TextColor="Gray" Margin="5"/>
@@ -22,16 +23,17 @@
             <DataTemplate x:Key="TemplateUserReviews">
                 <AbsoluteLayout>
                     <ImageButton />
-                    <Label Text="{Binding Title}" />
+                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                    <Label Text="{Binding Title}" BackgroundColor="DimGray" Opacity="10" TextColor="White" AbsoluteLayout.LayoutBounds="0,180"/>
                     <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="400,80, AutoSize,AutoSize">
-                        <Label Text="Critic" />
+                        <Label Text="Critic" AbsoluteLayout.LayoutBounds="30,20"/>
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="80,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds=".85,0.55" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
                     </AbsoluteLayout>
                     <AbsoluteLayout Margin="10" x:Name="UserReviewScore" AbsoluteLayout.LayoutBounds="400,140, AutoSize,AutoSize">
                         <Label Text="Members" AbsoluteLayout.LayoutBounds="1,1"/>
-                        <RoundRectangle WidthRequest="60" HeightRequest="20" Fill="SkyBlue" CornerRadius="5" AbsoluteLayout.LayoutBounds="80,1"/>
-                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="80,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                        <RoundRectangle WidthRequest="60" HeightRequest="20" Fill="SkyBlue" CornerRadius="5" AbsoluteLayout.LayoutBounds="80,5"/>
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds=".82,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Micro" TextColor="White"/>
                     </AbsoluteLayout>
                 </AbsoluteLayout>
             </DataTemplate>
@@ -49,7 +51,12 @@
                         <Frame HorizontalOptions="Center" BackgroundColor="White">
                             <AbsoluteLayout HorizontalOptions="Center">
                                 <Image Source="dotnet_bot.png" HeightRequest="200" Aspect="AspectFit"/>
-                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="Gray" Opacity="50"  AbsoluteLayout.LayoutBounds="0,50"/>
+                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="Gray" Opacity="50"  AbsoluteLayout.LayoutBounds="-100,170"/>
+                                <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="400,80, AutoSize,AutoSize">
+                                    <Label Text="Critic" AbsoluteLayout.LayoutBounds="90,60" FontAttributes="Bold"/>
+                                    <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
+                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.85,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
+                                </AbsoluteLayout>
                             </AbsoluteLayout>
                         </Frame>
                     </DataTemplate>
@@ -105,10 +112,20 @@
                 <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <VerticalStackLayout>
-                                <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
-                                <Label Text="{Binding Title}" HorizontalOptions="Center"/>
-                            </VerticalStackLayout>
+                            <HorizontalStackLayout>
+                                <VerticalStackLayout>
+                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout>
+                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                                <VerticalStackLayout>
+                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                     <CarouselView.ItemsLayout>
