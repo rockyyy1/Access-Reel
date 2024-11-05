@@ -2,20 +2,23 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AccessReel"
+             xmlns:icons="clr-namespace:AccessReel.Icons"
              x:Class="AccessReel.MainPage">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <!-- Template for articles on the home page. Used by Latest News, Latest Interviews, Latest Reviews -->
-            <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">                
+            <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">
                 <VerticalStackLayout>
                     <ImageButton />
                     <Image Source="{Binding Image}" HeightRequest="250" Aspect="AspectFit"/>
                     <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
                     <Label Text="{Binding Description}" FontSize="Body" Margin="5" LineBreakMode="TailTruncation" MaxLines="4"/>
                     <HorizontalStackLayout>
+                        <Label Text="{x:Static icons:Icon.User}"/>
                         <Label Text="{Binding Author}" FontSize="Caption" TextColor="DimGray" Margin="5"/>
-                        <Label Text="{Binding Date}" FontSize="Caption" TextColor="Gray" Margin="5"/>
+                            <Label Text="{x:Static icons:Icon.Clock}"/>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="Gray" Margin="5"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
             </DataTemplate>
@@ -137,4 +140,6 @@
         </VerticalStackLayout>
     </ScrollView>
 
+    
+    
 </ContentPage>

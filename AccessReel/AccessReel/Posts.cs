@@ -15,6 +15,20 @@ namespace AccessReel
         public string? AuthorUrl { get; set; }
         public string? Url { get; set; }
         public DateTime? Date { get; set; }
+        public string FormattedDate
+        {
+            get
+            {
+                if (Date.HasValue)
+                {
+                    return Date.Value.ToString("dd MMM, yyyy");
+                }
+                else
+                {
+                    return "";
+                }
+            }
+        }
         public ImageSource? Image { get; set; }
     }
     

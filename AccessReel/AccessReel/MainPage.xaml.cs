@@ -26,11 +26,11 @@ namespace AccessReel
             postList.Add(c);
             postList.Add(c);
             postList.Add(c);
-            CVInterviews.ItemsSource = postList;
-            //CVNews.ItemsSource = postList; //DONE - check region "LATEST NEWS"
-            CVReviews.ItemsSource = postList;
-            CVUserReviews.ItemsSource = postList;
             //CVImageheader.ItemsSource = postList; //DONE - Check region "CAROUSEL"
+            //CVNews.ItemsSource = postList; //DONE 
+            //CVInterviews.ItemsSource = postList; //DONE 
+            //CVReviews.ItemsSource = postList; //DONE
+            CVUserReviews.ItemsSource = postList;
             CVTrailers.ItemsSource = postList;
             
 
@@ -60,10 +60,6 @@ namespace AccessReel
             title = HtmlEntity.DeEntitize(title);
             paragraph = HtmlEntity.DeEntitize(paragraph);
             DateTime? time = datetime != null ? DateTime.Parse(datetime) : null;
-
-            //need to not convert to string for now...
-            //datetime = time?.ToString("dd MMM, yyyy");
-
         }
 
         private void Retrieve(string text)
@@ -86,6 +82,7 @@ namespace AccessReel
                     // Title
                     HtmlNode titleNode = link.SelectSingleNode(".//h2[@class='gp-slide-caption-title']//span[@class='gp-text-highlight']");
                     string title = titleNode?.InnerText ?? "";
+                    title = HtmlEntity.DeEntitize(title);
 
                     // Href link
                     string href = link.GetAttributeValue("href", "");
@@ -140,25 +137,45 @@ namespace AccessReel
             #endregion
 
             // Retrieve "Latest Interviews"
-            Debug.WriteLine("LASTEST INTERVIEWS:");
+            #region LATEST INTERVIEWS
+
+            // Create a new list for latest interviews
+            List<Posts> lastestInterviewsList = new List<Posts>();
+            //Debug.WriteLine("LASTEST INTERVIEWS:");
             var latestInterviewsNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-interviews')]");
             foreach (var node in latestInterviewsNodes)
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
                     , out string user, out string datetime, out string href, out string userHref);
-                Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
+                //Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
+                Posts latestInterviewItem = new Posts { Title = title, Url = href, Description = paragraph, Image = image, Author = user, AuthorUrl = userHref, Date = datetime != null ? DateTime.Parse(datetime) : null };
+                lastestInterviewsList.Add(latestInterviewItem);
             }
+            // Populate XAML list
+            CVInterviews.ItemsSource = lastestInterviewsList;
+            #endregion
 
             // Retrieve "Latest Reviews"
-            Debug.WriteLine("LASTEST REVIEWS:");
+            #region LATEST REVIEWS
+
+            // Create a new list for latest reviews
+            List<Review> lastestReviewsList = new List<Review>();
+
+            //Debug.WriteLine("LASTEST REVIEWS:");
             var latestReviewsNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'gp_hubs-reviews')]");
             foreach (var node in latestReviewsNodes)
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
                     , out string user, out string datetime, out string href, out string userHref);
                 Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
+                Review lastReviewsItem = new Review { Title = title, Url = href, Description = paragraph, Image = image };
+                lastestReviewsList.Add(lastReviewsItem);
             }
+            // Populate XAML list
+            CVReviews.ItemsSource = lastestReviewsList;
 
+            #endregion
+            
             // Retrieve "Top User Rated Reviews"
             Debug.WriteLine("LASTEST REVIEWS:" + "\n");
 
