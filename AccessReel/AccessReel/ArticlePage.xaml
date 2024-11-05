@@ -6,7 +6,17 @@
     
     <ScrollView>
         <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="800">
-            <Label Text="Article Title" HorizontalOptions="Center" FontSize="Header"/>            
+            <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="Center" FontSize="Header" FontAttributes="Bold"/>
+            <Image x:Name="banner" Margin="0,20,0,20"/>
+            <StackLayout x:Name="contentStackLayout">
+            </StackLayout>
+            <Button Text="AccessReel" 
+                    BackgroundColor="Black" 
+                    HorizontalOptions="Start"
+                    WidthRequest="100"
+                    TextColor="White"
+                    Clicked="Button_Clicked"/>
+            <Label Text="AccessReel is the Western Australian movie-lovers website."/>
         </VerticalStackLayout>               
     </ScrollView>
 </ContentPage>
