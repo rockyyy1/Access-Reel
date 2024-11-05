@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using Microsoft.Maui.Controls;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
@@ -26,10 +27,10 @@ namespace AccessReel
             postList.Add(c);
             postList.Add(c);
             CVInterviews.ItemsSource = postList;
-            CVNews.ItemsSource = postList;
+            //CVNews.ItemsSource = postList; //DONE - check region "LATEST NEWS"
             CVReviews.ItemsSource = postList;
             CVUserReviews.ItemsSource = postList;
-            CVImageheader.ItemsSource = postList;
+            //CVImageheader.ItemsSource = postList; //DONE - Check region "CAROUSEL"
             CVTrailers.ItemsSource = postList;
             
 
@@ -46,19 +47,23 @@ namespace AccessReel
 
         // Extracts the details of details details we need from the node
         private void RetrieveItemDetails(HtmlNode item, out string title, out string image, out string paragraph,
-            out string user, out string datetime)
+            out string user, out string datetime, out string href, out string userHref)
         {
             title = item.SelectSingleNode(".//h2[contains(@class, 'gp-loop-title')]//a").GetAttributeValue("title", string.Empty);
+            href = item.SelectSingleNode(".//h2[contains(@class, 'gp-loop-title')]//a").GetAttributeValue("href", string.Empty);
             image = item.SelectSingleNode(".//img")?.GetAttributeValue("src", string.Empty);
             paragraph = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-text')]//p")?.InnerText ?? string.Empty;
             user = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-meta')]//span//a")?.InnerText;
+            userHref = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-meta')]//span//a")?.GetAttributeValue("href", string.Empty);
             datetime = item.SelectSingleNode(".//div[contains(@class, 'gp-loop-meta')]//time")?.GetAttributeValue("datetime", string.Empty);
 
             title = HtmlEntity.DeEntitize(title);
             paragraph = HtmlEntity.DeEntitize(paragraph);
             DateTime? time = datetime != null ? DateTime.Parse(datetime) : null;
 
-            datetime = time?.ToString("ddd - MMM - yyyy");
+            //need to not convert to string for now...
+            //datetime = time?.ToString("dd MMM, yyyy");
+
         }
 
         private void Retrieve(string text)
@@ -66,8 +71,10 @@ namespace AccessReel
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(text);
 
-            // Retrieve the carousel at the top of the page
-            Debug.WriteLine("TOP CAROUSEL");
+            // Image Carousel at the top of the page
+            #region CAROUSEL
+            // Debug.WriteLine("TOP CAROUSEL");
+            List<Review> carouselList = new List<Review>();
             var carouselWrapper = document.DocumentNode.SelectSingleNode("//ul[@class='slides']");
             foreach (HtmlNode liNode in carouselWrapper.SelectNodes(".//li"))
             {
@@ -91,26 +98,46 @@ namespace AccessReel
                     HtmlNode ratingNode = liNode.SelectSingleNode(".//div[@class='gp-rating-outer']//div[@class='gp-rating-inner']");
                     string criticRating = ratingNode?.InnerText?.Trim() ?? "";
 
-                    // Process the extracted information (e.g., print to console)
-                    Debug.WriteLine("Title: " + title);
+                    // DEBUG - COMMENT OUT ONCE FINISHED
+             /*       Debug.WriteLine("Title: " + title);
                     Debug.WriteLine("Href Link: " + href);
                     Debug.WriteLine("Image Source: " + imageSource);
                     Debug.WriteLine("Critic Rating: " + criticRating);
-                    Debug.WriteLine("");
+                    Debug.WriteLine("");*/
+                    
+                    // Create a new item (using Review for now because it has everything we need) - Could create a new class "Carousel" if we wanted
+                    Review carouselItem = new Review {Title = title, Url = href, Image = imageSource, ReviewScore = criticRating };
+                    carouselList.Add(carouselItem);
                 }
             }
+            // Populate XAML carousel
+            CVImageheader.ItemsSource = carouselList;
 
+            #endregion
+
+            // Node wrapper that contains "Latest News", "Latest Interviews", "Latest Reviews", "Top User Rated Reviews" or "TURR" for short and "New Trailers"
             var wpdWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div/div");
 
             // Retrieve "Latest News"
-            Debug.WriteLine("LASTEST NEWS:");
+            #region LATEST NEWS
+            
+            // Create a new list for latest news
+            List<Posts> latestNewsList = new List<Posts>();
+
+            //Debug.WriteLine("LASTEST NEWS:");
+            // Go to the needed node, loop through what we need and create items with Posts class
             var latestNewsNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-news')]");
             foreach (var node in latestNewsNodes)
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
-                    , out string user, out string datetime);
-                Debug.WriteLine($"{title}\n{paragraph}\n{image}\n{user}\n{datetime}\n");
+                    , out string user, out string datetime, out string href, out string userHref);
+                //Debug.WriteLine($"{title}\n{paragraph}\n{image}\n{user}\n{datetime}\nhref: {href}\nauthor href: {userHref}\n\n");
+                Posts latestNewsItem = new Posts { Title = title, Url = href, Description = paragraph, Image = image, Author = user, AuthorUrl = userHref, Date = datetime != null ? DateTime.Parse(datetime) : null};
+                latestNewsList.Add(latestNewsItem);
             }
+            // Populate XAML list
+            CVNews.ItemsSource = latestNewsList;
+            #endregion
 
             // Retrieve "Latest Interviews"
             Debug.WriteLine("LASTEST INTERVIEWS:");
@@ -118,7 +145,7 @@ namespace AccessReel
             foreach (var node in latestInterviewsNodes)
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
-                    , out string user, out string datetime);
+                    , out string user, out string datetime, out string href, out string userHref);
                 Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
             }
 
@@ -128,7 +155,7 @@ namespace AccessReel
             foreach (var node in latestReviewsNodes)
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
-                    , out string user, out string datetime);
+                    , out string user, out string datetime, out string href, out string userHref);
                 Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
             }
 
@@ -196,7 +223,7 @@ namespace AccessReel
             foreach (var node in newTrailersNodes)
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
-                     , out string user, out string datetime);
+                     , out string user, out string datetime, out string href, out string userHref);
                 Debug.WriteLine($"{title}\n{image}\n\n");
             }
 

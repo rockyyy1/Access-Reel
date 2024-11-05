@@ -10,7 +10,7 @@
             <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">                
                 <VerticalStackLayout>
                     <ImageButton />
-                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                    <Image Source="{Binding Image}" HeightRequest="250" Aspect="AspectFit"/>
                     <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
                     <Label Text="{Binding Description}" FontSize="Body" Margin="5" LineBreakMode="TailTruncation" MaxLines="4"/>
                     <HorizontalStackLayout>
@@ -44,18 +44,18 @@
         <VerticalStackLayout HorizontalOptions="FillAndExpand"
             Padding="30,0"
             Spacing="25">
-            <!-- Images Carousel -->
+            <!-- Top Carousel -->
             <CarouselView x:Name="CVImageheader" IndicatorView="IImageHeader" HorizontalOptions="FillAndExpand" >
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
                         <Frame HorizontalOptions="Center" BackgroundColor="White">
                             <AbsoluteLayout HorizontalOptions="Center">
-                                <Image Source="dotnet_bot.png" HeightRequest="200" Aspect="AspectFit"/>
+                                <Image Source="{Binding Image}" HeightRequest="200" Aspect="AspectFit"/>
                                 <Label Text="{Binding Title}" TextColor="White" BackgroundColor="Gray" Opacity="50"  AbsoluteLayout.LayoutBounds="-100,170"/>
                                 <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="400,80, AutoSize,AutoSize">
-                                    <Label Text="Critic" AbsoluteLayout.LayoutBounds="90,60" FontAttributes="Bold"/>
+                                    <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="90,60" FontAttributes="Bold" TextColor="White"/>
                                     <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.85,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
+                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
                                 </AbsoluteLayout>
                             </AbsoluteLayout>
                         </Frame>
