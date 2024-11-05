@@ -17,7 +17,7 @@
                     <Label Text="Critic" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout> <!-- Member review score -->
-                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore" HorizontalOptions="End">
+                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutMemberScore" HorizontalOptions="End">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="MediumTurquoise" Stroke="PaleTurquoise" StrokeThickness="15" />
                         <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
                     </AbsoluteLayout>
