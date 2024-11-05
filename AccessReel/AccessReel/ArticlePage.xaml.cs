@@ -1,6 +1,7 @@
 using HtmlAgilityPack;
 using System.Diagnostics;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace AccessReel;
 /// <summary>
@@ -34,10 +35,11 @@ public partial class ArticlePage : ContentPage
         // Use XPath to select the title element
         var titleNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/h1");
         string title = titleNode.InnerText;
+        title = HtmlEntity.DeEntitize(title); 
         articleTitle.Text = title;
         #endregion
 
-        #region IMAGE
+        #region BANNER
         var imageNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/div[3]/img");
 
         // Get the image source
@@ -48,30 +50,47 @@ public partial class ArticlePage : ContentPage
 
         #endregion
 
-        #region PARAGRAPHS
-        //class="gp-entry-text"
+        // had to go back and redo this because of https://accessreel.com/article/top-picks-saxo-scandinavian-film-festival/ where there were multiple paragraphs/pics one after the other
+        #region PARAGRAPHS & IMAGES
         var paragraphs = document.DocumentNode.SelectNodes("//div[@class='gp-entry-text']/p");
 
-        if (paragraphs != null)
+        foreach (var paragraph in paragraphs)
         {
-            var text = string.Empty;
-            foreach (var paragraph in paragraphs)
+            var imageNodes = paragraph.SelectSingleNode(".//img");
+
+            if (imageNodes != null)
             {
-                // Note to self: InnerHtml if we want to include all the html tags e.g <strong> etc && InnerText to exclude them
-                // in XAML - TextType = "Html" will render the tags
-                text += paragraph.InnerHtml + "\n\n";
+                var imageUrls = imageNodes.GetAttributeValue("src", string.Empty);
+                contentStackLayout.Children.Add(new Image { Source = ImageSource.FromUri(new Uri(imageUrls)) });
+
+                // Remove the image node from the paragraph
+                imageNodes.Remove();
             }
-            paragraphsLbl.Text = text;
+
+            var text = paragraph.InnerHtml.Trim();
+            text = Regex.Replace(text, "<(span|a|em|wbr).*?>|</(span|a|em)>", string.Empty);
+
+            if (!string.IsNullOrEmpty(text))
+            {
+                //text = HtmlEntity.DeEntitize(text);
+
+                contentStackLayout.Children.Add(new Label
+                {
+                    Text = text + "\n",
+                    FontSize = 14,
+                    TextType = TextType.Html
+                });
+            }
         }
 
         #endregion
 
     }
 
-    //Clicking the button on the button will navigate to AccessReel Author Page (ListPage)
+    //Clicking the button will navigate to AccessReel Author Page (ListPage)
     // https://accessreel.com/author/accessreel/"
     private void Button_Clicked(object sender, EventArgs e)
     {
-
+        // DO LATER
     }
 }
