@@ -39,13 +39,13 @@
                 <AbsoluteLayout>
                     <Image Source="{Binding Image}" WidthRequest="150" HeightRequest="150" Aspect="AspectFill" AbsoluteLayout.LayoutBounds="0,20,150,150" >
                         <Image.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ArticleTapped"/>
+                            <TapGestureRecognizer Tapped="FilmTapped"/>
                         </Image.GestureRecognizers>
                     </Image>
 
                     <Label Text="{Binding Title}" TextColor="Black" FontAttributes="Bold" AbsoluteLayout.LayoutBounds="180,14, AutoSize,AutoSize" FontSize="Medium">
                         <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ArticleTapped"/>
+                            <TapGestureRecognizer Tapped="FilmTapped"/>
                         </Label.GestureRecognizers>
                     </Label>
 
@@ -77,12 +77,12 @@
                             <AbsoluteLayout HorizontalOptions="Center">
                                 <Image Source="{Binding Image}" Aspect="AspectFill">
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="ArticleTapped"/>
+                                        <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Image.GestureRecognizers>
                                 </Image>
                                 <Label Text="{Binding Title}" TextColor="White" BackgroundColor="#301c10" Opacity="50"  AbsoluteLayout.LayoutBounds="0,170" FontSize="Large">
                                     <Label.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="ArticleTapped"/>
+                                        <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="800,60, AutoSize,AutoSize">
