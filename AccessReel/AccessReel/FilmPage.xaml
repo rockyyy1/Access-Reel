@@ -9,11 +9,21 @@
             <!-- Title/Score -->
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label x:Name="LblTitle" Text="Film Title" HorizontalOptions="Start" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
-                <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore" HorizontalOptions="End">
-                    <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" />
-                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
-                </AbsoluteLayout>
-            </HorizontalStackLayout>
+                <VerticalStackLayout> <!-- Critic review score -->
+                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore" HorizontalOptions="End">
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" />
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                    </AbsoluteLayout>
+                    <Label Text="Critic" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout> <!-- Member review score -->
+                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore" HorizontalOptions="End">
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="MediumTurquoise" Stroke="PaleTurquoise" StrokeThickness="15" />
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                    </AbsoluteLayout>
+                    <Label Text="Members" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>            
             <!-- Buttons to switch views -->
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand" >
                 <Button x:Name="BtnOverview" Text="Overview" Clicked="BtnOverview_Clicked" WidthRequest="300"/>
@@ -25,17 +35,31 @@
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
+                    <RowDefinition/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Image x:Name="ImagePoster" Grid.Column="0" Grid.Row="0"/>
+                <Image x:Name="ImagePoster" Grid.Column="0" Grid.Row="0" Source="dotnet_bot.png" MaximumWidthRequest="50"/>
                 <Label Grid.Column="1" Grid.Row="0" x:Name="LblDesc" Text="In Venom: The Last Dance, Tom Hardy returns as Venom, one of Marvel’s greatest and most complex characters, for the final film in the trilogy. Eddie and Venom are on the run. Hunted by both of their worlds and with the net closing in, the duo are forced into a devastating decision that will bring the curtains down on Venom and Eddie’s last dance."/>
                 <!-- User Rating Stuff Goes Here-->
-                
+                <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2">
+                    <HorizontalStackLayout>
+                        <AbsoluteLayout Margin="5">
+                            <Ellipse WidthRequest="60" HeightRequest="60" Fill="Gray" Stroke="LightGray" StrokeThickness="15" />
+                            <Label Text="10" AbsoluteLayout.LayoutBounds="0.5,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
+                        </AbsoluteLayout>
+                        <VerticalStackLayout Margin="5">
+                            <Label Text="Average User Rating" FontAttributes="Bold"/>
+                            <Label Text="... Votes" FontSize="Small"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>                    
+                    <Label Text="Rate This Item" FontAttributes="Italic,Bold"/>
+                    <Label Text="Your Rating: 0" />
+                </VerticalStackLayout>
                 <!-- Film Details-->
-                <VerticalStackLayout Grid.Column="0" Grid.Row="2" Margin="30" Grid.ColumnSpan="2">
+                <VerticalStackLayout Grid.Column="0" Grid.Row="1" Margin="30" Grid.ColumnSpan="2">
                     <HorizontalStackLayout>
                         <Label Text="Genre:" WidthRequest="100" />
                         <Label x:Name="LblGenre" Text="Action, Adventure"/>

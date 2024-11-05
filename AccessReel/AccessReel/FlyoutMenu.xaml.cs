@@ -51,4 +51,16 @@ public partial class FlyoutMenu : FlyoutPage
         Detail = new NavigationPage(new ListPage("Interviews"));
         IsPresented = false;
     }
+
+    private void BtnFilmPage_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new FilmPage(""));
+        IsPresented = false;
+    }
+
+    private void BtnArticle_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new ArticlePage(""));
+        IsPresented = false;
+    }
 }
