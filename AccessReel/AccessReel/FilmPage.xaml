@@ -14,7 +14,8 @@
     
     <ScrollView>
         <VerticalStackLayout HorizontalOptions="Fill" >
-            <!-- Media Player Goes Here -->
+            
+			<!-- Media Player Goes Here -->
             <StackLayout x:Name="videoStackLayout"></StackLayout>
 
             <HorizontalStackLayout HorizontalOptions="Center">
@@ -24,6 +25,27 @@
                     <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
                 </AbsoluteLayout>
             </HorizontalStackLayout>
+
+            <!-- Title/Score -->
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Label x:Name="LblTitle" Text="Film Title" HorizontalOptions="Start" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
+                <VerticalStackLayout> <!-- Critic review score -->
+                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore" HorizontalOptions="End">
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" />
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                    </AbsoluteLayout>
+                    <Label Text="Critic" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+                <VerticalStackLayout> <!-- Member review score -->
+                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutMemberScore" HorizontalOptions="End">
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="MediumTurquoise" Stroke="PaleTurquoise" StrokeThickness="15" />
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                    </AbsoluteLayout>
+                    <Label Text="Members" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>    
+	
+            <!-- Buttons to switch views -->
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand" >
                 <Button x:Name="BtnOverview" Text="{Binding Title}" Clicked="BtnOverview_Clicked" WidthRequest="300"/>
                 <Button x:Name="BtnNews" Text="News" Clicked="BtnNews_Clicked"  WidthRequest="300"/>
@@ -31,8 +53,7 @@
                 <Button x:Name="BtnReviews" Text="Review" Clicked="BtnReview_Clicked" WidthRequest="300"/>
             </HorizontalStackLayout>
             
-            
-            
+            <!-- Film Overview -->
             <Grid x:Name="FilmOverview" IsVisible="True" Margin="30">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -43,7 +64,8 @@
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <StackLayout Grid.Column="2" Grid.Row="0" >
+
+				<StackLayout Grid.Column="2" Grid.Row="0" >
                     <Label x:Name ="AUreleaseDate" Text="In Theaters (AU): " HorizontalTextAlignment="End" TextColor="#a2645f"/>
                     <Label x:Name ="USreleaseDate" Text="In Theaters (USA):  " HorizontalTextAlignment="End" TextColor="#a2645f"/>
                 </StackLayout>
@@ -53,8 +75,27 @@
                 </VerticalStackLayout>
                 <Label Grid.Column="1" Grid.Row="1" x:Name="LblDesc" Text="{Binding Description}"/>
 
-                <!-- Film Details-->
-                <VerticalStackLayout Grid.Column="0" Grid.Row="2" Margin="30" Grid.ColumnSpan="2">
+                <Image x:Name="ImagePoster" Grid.Column="0" Grid.Row="0" Source="dotnet_bot.png" MaximumWidthRequest="50"/>
+                <Label Grid.Column="1" Grid.Row="0" x:Name="LblDesc" Text="In Venom: The Last Dance, Tom Hardy returns as Venom, one of Marvel’s greatest and most complex characters, for the final film in the trilogy. Eddie and Venom are on the run. Hunted by both of their worlds and with the net closing in, the duo are forced into a devastating decision that will bring the curtains down on Venom and Eddie’s last dance."/>
+                
+	<!-- User Rating Stuff Goes Here-->
+                <VerticalStackLayout Grid.Row="2" Grid.ColumnSpan="2">
+                    <HorizontalStackLayout>
+                        <AbsoluteLayout Margin="5">
+                            <Ellipse WidthRequest="60" HeightRequest="60" Fill="Gray" Stroke="LightGray" StrokeThickness="15" />
+                            <Label Text="10" AbsoluteLayout.LayoutBounds="0.5,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
+                        </AbsoluteLayout>
+                        <VerticalStackLayout Margin="5">
+                            <Label Text="Average User Rating" FontAttributes="Bold"/>
+                            <Label Text="... Votes" FontSize="Small"/>
+                        </VerticalStackLayout>
+                    </HorizontalStackLayout>                    
+                    <Label Text="Rate This Item" FontAttributes="Italic,Bold"/>
+                    <Label Text="Your Rating: 0" />
+                </VerticalStackLayout>
+
+	        <!-- Film Details-->
+                <VerticalStackLayout Grid.Column="0" Grid.Row="1" Margin="30" Grid.ColumnSpan="2">
                     <HorizontalStackLayout>
                         <Label Text="Genre:" WidthRequest="100" />
                         <Label x:Name="LblGenre" Text=""/>
@@ -71,10 +112,8 @@
             </Grid>
             
             <!-- User Rating Stuff Goes Here-->
-                
-                
-            
-            
+
+            <!-- Film Review -->
             <Grid x:Name="FilmReview" IsVisible="False">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
@@ -82,7 +121,10 @@
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" x:Name="LblReview" Text="ReviewPlaceholder" HorizontalOptions="Center"/>
                 <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" >
-                    <Label  x:Name="LblAuthor" Text="ReviewAuthor" VerticalOptions="Center" WidthRequest="500"/>
+                    <HorizontalStackLayout>
+                        <Image Source="dotnet_bot.png" HeightRequest="60" WidthRequest="60" Margin="5"/>
+                        <Label  x:Name="LblAuthor" Text="ReviewAuthor" VerticalOptions="Center" WidthRequest="500"/>
+                    </HorizontalStackLayout>                    
                     <AbsoluteLayout Margin="10" x:Name="AbsLayoutReviewScore2" HorizontalOptions="EndAndExpand">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
                         <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />

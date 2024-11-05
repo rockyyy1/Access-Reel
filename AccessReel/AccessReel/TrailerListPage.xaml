@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AccessReel.TrailerListPage"
+             Title="TrailerListPage">
+    <ScrollView>
+        <VerticalStackLayout HorizontalOptions="FillAndExpand">
+            <!-- Banner -->
+            <AbsoluteLayout HorizontalOptions="CenterAndExpand"> 
+                <Image Source="dotnet_bot.png" />
+                <Label Text="Trailers"/>
+            </AbsoluteLayout>
+            <!-- Trailers -->
+            <CollectionView x:Name="CVTrailers">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <VerticalStackLayout>
+                            <Image Source="dotnet_bot.png" HorizontalOptions="Center"/>
+                            <Label Text="{Binding Title}" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                        </VerticalStackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="4" HorizontalItemSpacing="50" VerticalItemSpacing="50"/>
+                </CollectionView.ItemsLayout>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

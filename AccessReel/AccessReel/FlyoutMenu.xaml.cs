@@ -40,15 +40,20 @@ public partial class FlyoutMenu : FlyoutPage
 
     private void BtnTrailers_Clicked(object sender, EventArgs e)
     {
-        //Detail = new NavigationPage(new FilmPage());
+
+        Detail = new NavigationPage(new TrailerListPage());
         IsPresented = false;
-        /*DisplayAlert("Error", "Not Implemented", "OK");
-        return;*/
     }
 
     private void BtnInterviews_Clicked(object sender, EventArgs e)
     {
         Detail = new NavigationPage(new ListPage("Interviews"));
+        IsPresented = false;
+    }
+
+    private void BtnFilmPage_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new FilmPage(""));
         IsPresented = false;
     }
 }
