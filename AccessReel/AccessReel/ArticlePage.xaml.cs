@@ -50,7 +50,6 @@ public partial class ArticlePage : ContentPage
 
         #endregion
 
-        // had to go back and redo this because of https://accessreel.com/article/top-picks-saxo-scandinavian-film-festival/ where there were multiple paragraphs/pics one after the other
         #region PARAGRAPHS & IMAGES
         var paragraphs = document.DocumentNode.SelectNodes("//div[@class='gp-entry-text']/p");
 
@@ -83,6 +82,34 @@ public partial class ArticlePage : ContentPage
             }
         }
 
+        #endregion
+
+        #region VIDEO
+        var iframeNode = document.DocumentNode.SelectSingleNode("//iframe");
+
+        if (iframeNode != null)
+        {
+            // Extract the iframe HTML
+            var iframeHtml = iframeNode.OuterHtml;
+
+            // Create a WebView to render the iframe
+            var webView = new WebView
+            {
+                Source = new HtmlWebViewSource { Html = iframeHtml },
+                HeightRequest = 405,
+                WidthRequest = 720
+            };
+
+            // Add the WebView to the StackLayout
+            var VideostackLayout = new StackLayout
+            {
+                Children = { webView }
+            };
+
+            contentStackLayout.Children.Add(VideostackLayout);
+
+
+        }
         #endregion
 
     }
