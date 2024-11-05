@@ -19,21 +19,6 @@ namespace AccessReel
         public MainPage()
         {
             InitializeComponent();
-            //Test Data
-            List<Review> postList = new List<Review>();
-            Review c = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title", ReviewScore = "10" };
-            postList.Add(c);
-            postList.Add(c);
-            postList.Add(c);
-            postList.Add(c);
-            //CVImageheader.ItemsSource = postList; //DONE - Check region "CAROUSEL"
-            //CVNews.ItemsSource = postList; //DONE 
-            //CVInterviews.ItemsSource = postList; //DONE 
-            //CVReviews.ItemsSource = postList; //DONE
-            CVUserReviews.ItemsSource = postList;
-            CVTrailers.ItemsSource = postList;
-            
-
             Retrieve(ReadWebsite());
         }
 
@@ -167,7 +152,7 @@ namespace AccessReel
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
                     , out string user, out string datetime, out string href, out string userHref);
-                Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
+                //Debug.WriteLine($"{title}\n{paragraph}\n{image}\n");
                 Review lastReviewsItem = new Review { Title = title, Url = href, Description = paragraph, Image = image };
                 lastestReviewsList.Add(lastReviewsItem);
             }
@@ -175,9 +160,14 @@ namespace AccessReel
             CVReviews.ItemsSource = lastestReviewsList;
 
             #endregion
-            
+
             // Retrieve "Top User Rated Reviews"
-            Debug.WriteLine("LASTEST REVIEWS:" + "\n");
+            #region TOP USER RATED REVIEWS (TURR)
+
+            // Create a new list for latest reviews
+            List<Review> TURRList = new List<Review>();
+
+            //Debug.WriteLine("Top User Rated Reviews):" + "\n");
 
             var postItem = document.DocumentNode.SelectSingleNode("//*[@id=\"ghostpool_showcase_wrapper_1\"]/div[5]/section");
             var smallPosts = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-small-posts')]");
@@ -185,27 +175,30 @@ namespace AccessReel
 
             // Extract href link
             var linkNode = postItem.SelectSingleNode(".//a[@href]");
-            string thref = linkNode.Attributes["href"].Value;
+            string TURRhref = linkNode.Attributes["href"].Value;
 
             // Extract title
-            string ttitle = linkNode.SelectSingleNode(".//h2").InnerText.Trim();
+            string TURRtitle = linkNode.SelectSingleNode(".//h2").InnerText.Trim();
 
             // Extract source image 
-            var timageNode = linkNode.SelectSingleNode(".//img[contains(@class, 'gp-large-image')]");
-            string sourceImage = timageNode.Attributes["src"].Value;
+            var TURRimageNode = linkNode.SelectSingleNode(".//img[contains(@class, 'gp-large-image')]");
+            string TURRsourceImage = TURRimageNode.Attributes["src"].Value;
 
             // Extract member and critic ratings
             var ratingWrapper = postItem.SelectSingleNode(".//div[@class='gp-rating-wrapper']");
             string memberRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-average-rating']").InnerText.Trim();
-            string tcriticRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-rating-inner']").InnerText.Trim();
+            string TURRcriticRating = ratingWrapper.SelectSingleNode(".//div[@class='gp-rating-inner']").InnerText.Trim();
 
-            // Write to console or log file
-            Debug.WriteLine("href: " + thref);
-            Debug.WriteLine("title: " + ttitle);
-            Debug.WriteLine("sourceImage: " + sourceImage);
+            // Debug
+/*            Debug.WriteLine("href: " + TURRhref);
+            Debug.WriteLine("title: " + TURRtitle);
+            Debug.WriteLine("sourceImage: " + TURRsourceImage);
             Debug.WriteLine("memberRating: " + memberRating);
-            Debug.WriteLine("criticRating: " + tcriticRating);
-            Debug.WriteLine("");
+            Debug.WriteLine("criticRating: " + TURRcriticRating);
+            Debug.WriteLine("");*/
+
+            Review TURRitem = new Review { Title = TURRtitle, Url = TURRhref, Image = TURRsourceImage, ReviewScore = TURRcriticRating, MemberReviewScore = memberRating };
+            TURRList.Add(TURRitem);
 
             foreach (var posts in sectionSmallPosts)
             {
@@ -226,23 +219,39 @@ namespace AccessReel
                 string smallCriticRating = smallratingWrapper.SelectSingleNode(".//div[@class='gp-rating-inner']").InnerText.Trim();
 
                 // Write to console or log file (add prefix as requested)
-                Debug.WriteLine("smallHref: " + smallHref);
+    /*            Debug.WriteLine("smallHref: " + smallHref);
                 Debug.WriteLine("smallTitle: " + smallTitle);
                 Debug.WriteLine("smallSourceImage: " + smallSourceImage);
                 Debug.WriteLine("smallMemberRating: " + smallMemberRating);
                 Debug.WriteLine("smallCriticRating: " + smallCriticRating);
-                Debug.WriteLine("");
+                Debug.WriteLine("");*/
+
+                Review smallTURRitem = new Review { Title = smallTitle, Url = smallHref, Image = smallSourceImage, ReviewScore = smallCriticRating, MemberReviewScore = smallMemberRating };
+                TURRList.Add(smallTURRitem);
             }
+            
+            // Populate XAML list
+            CVUserReviews.ItemsSource = TURRList;
+
+            #endregion
 
             // Retrieve "New Trailers"
-            Debug.WriteLine("NEW TRAILERS:");
+            #region NEW TRAILERS
+            // Create a new list for New Trailers
+            List<Review> newTrailersList = new List<Review>();
+            //Debug.WriteLine("NEW TRAILERS:");
             var newTrailersNodes = wpdWrapper.SelectNodes("//section[contains(@class, 'gp-post-item') and contains(@class, 'type-article') and contains(@class, 'categories-trailers')]");
             foreach (var node in newTrailersNodes)
             {
                 RetrieveItemDetails(node, out string title, out string image, out string paragraph
                      , out string user, out string datetime, out string href, out string userHref);
-                Debug.WriteLine($"{title}\n{image}\n\n");
+                //Debug.WriteLine($"{title}\n{image}\n{href}\n\n");
+                Review newTrailerItem = new Review { Title = title, Url = href, Image = image };
+                newTrailersList.Add(newTrailerItem);
             }
+            CVTrailers.ItemsSource = newTrailersList;
+
+            #endregion
 
         }
 

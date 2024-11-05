@@ -26,7 +26,7 @@
             <DataTemplate x:Key="TemplateUserReviews">
                 <AbsoluteLayout>
                     <ImageButton />
-                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                    <Image Source="{Binding Image}" HeightRequest="250" Aspect="AspectFit"/>
                     <Label Text="{Binding Title}" BackgroundColor="DimGray" Opacity="10" TextColor="White" AbsoluteLayout.LayoutBounds="0,180"/>
                     <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="400,80, AutoSize,AutoSize">
                         <Label Text="Critic" AbsoluteLayout.LayoutBounds="30,20"/>
@@ -36,7 +36,7 @@
                     <AbsoluteLayout Margin="10" x:Name="UserReviewScore" AbsoluteLayout.LayoutBounds="400,140, AutoSize,AutoSize">
                         <Label Text="Members" AbsoluteLayout.LayoutBounds="1,1"/>
                         <RoundRectangle WidthRequest="60" HeightRequest="20" Fill="SkyBlue" CornerRadius="5" AbsoluteLayout.LayoutBounds="80,5"/>
-                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds=".82,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Micro" TextColor="White"/>
+                        <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds=".82,1" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Micro" TextColor="White"/>
                     </AbsoluteLayout>
                 </AbsoluteLayout>
             </DataTemplate>
@@ -115,17 +115,9 @@
                 <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <HorizontalStackLayout>
+                            <HorizontalStackLayout HorizontalOptions="Center">
                                 <VerticalStackLayout>
-                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
-                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
-                                </VerticalStackLayout>
-                                <VerticalStackLayout>
-                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
-                                    <Label Text="{Binding Title}" HorizontalOptions="Center"/>
-                                </VerticalStackLayout>
-                                <VerticalStackLayout>
-                                    <Image Source="dotnet_bot.png" HeightRequest="250" Aspect="AspectFit"/>
+                                    <Image Source="{Binding Image}" HeightRequest="250" Aspect="AspectFit"/>
                                     <Label Text="{Binding Title}" HorizontalOptions="Center"/>
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>

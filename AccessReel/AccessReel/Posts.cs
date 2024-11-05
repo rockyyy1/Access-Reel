@@ -35,6 +35,8 @@ namespace AccessReel
     public class Review : Posts
     {
         public string? ReviewScore { get; set; }
+        public string? MemberReviewScore { get; set; }
+
     }
     
 }
