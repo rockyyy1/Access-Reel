@@ -20,6 +20,8 @@
                 <Button x:Name="BtnFilmsPage" Text="Films" Clicked="BtnFilmsPage_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnTrailers" Text="Trailers" Clicked="BtnTrailers_Clicked" CornerRadius="0"  BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnInterviews" Text="Interviews" Clicked="BtnInterviews_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
+                <Label Text="Placeholders"/>
+                <Button x:Name="BtnFilmPage" Text="Film Page" Clicked="BtnFilmPage_Clicked" />
             </StackLayout>
         </ContentPage>
     </FlyoutPage.Flyout>    

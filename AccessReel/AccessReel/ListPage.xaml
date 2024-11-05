@@ -10,13 +10,13 @@
             <local:ReviewScoreToAbsLayoutConverter x:Key="ReviewScoreToAbsLayoutConverter"/>
             <!-- Template for movies articles -->
             <DataTemplate x:Name="DTMovieArticle" x:Key="templateMA">
-                <Grid>
+                <Grid HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <!--<Image Grid.Column="0" />-->
+                    <Image Grid.Column="0" Source="dotnet_bot.png"/>
                     <!-- May need to implement https://stackoverflow.com/questions/14546296/converter-failed-to-convert-value-of-type-windows-foundation-string-to-type-i -->
                     <VerticalStackLayout Grid.Column="1" Margin="5">
                         <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
@@ -34,13 +34,13 @@
             </DataTemplate>
             <!-- Template for regular articles -->
             <DataTemplate x:Name="DTArticle" x:Key="templateArticle">
-                <Grid>
+                <Grid HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Margin="5"/>
+                    <Image Grid.Column="0" Margin="5" Source="dotnet_bot.png"/>
                     <VerticalStackLayout Grid.Column="1" Margin="5">
                         <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
@@ -58,7 +58,8 @@
             <VerticalStackLayout>
                 <!--<Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>-->
                 <!--<Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>-->
-                <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}">
+                <Image Source="dotnet_bot.png" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
+                <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >
 
                 </CollectionView>
             </VerticalStackLayout>
