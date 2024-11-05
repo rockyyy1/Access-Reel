@@ -53,7 +53,7 @@ public partial class FlyoutMenu : FlyoutPage
 
     private void BtnFilmPage_Clicked(object sender, EventArgs e)
     {
-        Detail = new NavigationPage(new FilmPage(""));
+        //Detail = new NavigationPage(new FilmPage(""));
         IsPresented = false;
     }
 }
