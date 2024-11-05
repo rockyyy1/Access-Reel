@@ -52,6 +52,9 @@ namespace AccessReel
             HtmlDocument document = new HtmlDocument();
             document.LoadHtml(text);
 
+            // Node wrapper that contains "Latest News", "Latest Interviews", "Latest Reviews", "Top User Rated Reviews" or "TURR" for short and "New Trailers"
+            var wpdWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div/div");
+
             // Image Carousel at the top of the page
             #region CAROUSEL
             // Debug.WriteLine("TOP CAROUSEL");
@@ -96,9 +99,6 @@ namespace AccessReel
             CVImageheader.ItemsSource = carouselList;
 
             #endregion
-
-            // Node wrapper that contains "Latest News", "Latest Interviews", "Latest Reviews", "Top User Rated Reviews" or "TURR" for short and "New Trailers"
-            var wpdWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[1]/div/div");
 
             // Retrieve "Latest News"
             #region LATEST NEWS
@@ -264,8 +264,8 @@ namespace AccessReel
                 // Access the DataContext of the Label
                 var article = (Posts)((VisualElement)sender).BindingContext;
 
-                // Debug the Url - change later to make string html to scrape
-                Debug.WriteLine(article.Url);
+                // Debug
+                //Debug.WriteLine(article.Url);
 
                 string webpageURL = article.Url.ToString();
 
@@ -280,7 +280,6 @@ namespace AccessReel
         // If the user taps on a Post's/Article's Author
         // should bring up a list of all the reviews that Author has done e.g: https://accessreel.com/author/accessreel/
         // I think we use ListPage for this?? -Rocky
-
         private void AuthorTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label)
@@ -288,15 +287,31 @@ namespace AccessReel
                 // Access the DataContext of the Label
                 var article = (Posts)label.BindingContext;
 
-                // Debug the Url - change later to make string html to scrape
+                // Debug
                 Debug.WriteLine(article.AuthorUrl);
             }
         }
 
         // If the user taps on a Film's image/label will go that individual Film Page e.g: https://accessreel.com/saturday-night/
-        private void FilmTapped(object sender, TappedEventArgs e)
+        private async void FilmTapped(object sender, TappedEventArgs e)
         {
+            if (sender is Label label || sender is Image image)
+            {
+                // Access the DataContext of the Label
+                var film = (Review)((VisualElement)sender).BindingContext;
 
+                // Debug the Url - change later to make string html to scrape
+                //Debug.WriteLine(film.Url);
+
+                // Not sure if we actually need the Url as we can get from the item - will play around
+                //string webpageURL = film.Url.ToString();
+
+                // make new article page
+                FilmPage newFilm = new FilmPage(film);
+
+                await Navigation.PushAsync(newFilm);
+
+            }
         }
     }
 }
