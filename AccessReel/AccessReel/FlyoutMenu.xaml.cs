@@ -40,7 +40,7 @@ public partial class FlyoutMenu : FlyoutPage
 
     private void BtnTrailers_Clicked(object sender, EventArgs e)
     {
-        Detail = new NavigationPage(new TrailerListPage());//ArticlePage(""));
+        Detail = new NavigationPage(new TrailerListPage());
         IsPresented = false;
     }
 
@@ -53,12 +53,6 @@ public partial class FlyoutMenu : FlyoutPage
     private void BtnFilmPage_Clicked(object sender, EventArgs e)
     {
         Detail = new NavigationPage(new FilmPage(""));
-        IsPresented = false;
-    }
-
-    private void BtnArticle_Clicked(object sender, EventArgs e)
-    {
-        Detail = new NavigationPage(new ArticlePage(""));
         IsPresented = false;
     }
 }

@@ -22,7 +22,6 @@
                 <Button x:Name="BtnInterviews" Text="Interviews" Clicked="BtnInterviews_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Label Text="Placeholders"/>
                 <Button x:Name="BtnFilmPage" Text="Film Page" Clicked="BtnFilmPage_Clicked" />
-                <Button x:Name="BtnArticle" Text="Article Page" Clicked="BtnArticle_Clicked" />
             </StackLayout>
         </ContentPage>
     </FlyoutPage.Flyout>    
