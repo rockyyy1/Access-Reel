@@ -255,5 +255,35 @@ namespace AccessReel
 
         }
 
+        // If the user taps on a Post's/Article's Title or Image:
+        // Taps work - just need to scrape the article.Url e.g https://accessreel.com/article/rachel-griffiths-heads-up-cinefestoz-100000-film-prize-jury/
+        // I think we use ArticlePage for this?? -Rocky
+        private void ArticleTapped(object sender, TappedEventArgs e)
+        {
+            if (sender is Label label || sender  is Image image)
+            {
+                // Access the DataContext of the Label
+                var article = (Posts)((VisualElement)sender).BindingContext;
+
+                // Debug the Url - change later to make string html to scrape
+                Debug.WriteLine(article.Url);
+            }
+        }
+
+        // If the user taps on a Post's/Article's Author
+        // should bring up a list of all the reviews that Author has done e.g https://accessreel.com/author/accessreel/
+        // I think we use ListPage for this?? -Rocky
+
+        private void AuthorTapped(object sender, TappedEventArgs e)
+        {
+            if (sender is Label label)
+            {
+                // Access the DataContext of the Label
+                var article = (Posts)label.BindingContext;
+
+                // Debug the Url - change later to make string html to scrape
+                Debug.WriteLine(article.AuthorUrl);
+            }
+        }
     }
 }
