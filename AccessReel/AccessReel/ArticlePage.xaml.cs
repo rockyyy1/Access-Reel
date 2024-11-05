@@ -1,40 +1,77 @@
+using HtmlAgilityPack;
 using System.Diagnostics;
+using System.Net;
 
 namespace AccessReel;
 /// <summary>
-/// This page is for displaying individual articles e.g. news article
+/// This page is for displaying individual articles e.g. news article https://accessreel.com/article/2024-cinfestoz-film-prize-finalists-announced/
 /// </summary>
 public partial class ArticlePage : ContentPage
 {
-	public ArticlePage()
+    HtmlDocument document;
+    string text;
+
+    public ArticlePage()
 	{
 		InitializeComponent();
 	}
-    
+
+    private string ReadWebsite(string webpage)
+    {
+        var web = new HtmlWeb();
+        text = web.Load(webpage).Text;
+        return text;
+    }
+
     public ArticlePage(string webpage = "")
     {
         InitializeComponent();
-        //Test Data
-        FormattedString[] bodyText;
-        bodyText = ["Test1", "Test2", "Test3", "Test4"];
-        string[] bodyImages = ["Image1", "Image2"]; //replace with ImageSource
-        //ImageSource[] bodyImages;
+        string htmlText = ReadWebsite(webpage);
+        HtmlDocument document = new HtmlDocument();
+        document.LoadHtml(htmlText);
 
-        //Creates labels and images to form the full body of the article
-        for(int i = 0;  i < bodyText.Length; i++)
+        #region TITLE
+        // Use XPath to select the title element
+        var titleNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/h1");
+        string title = titleNode.InnerText;
+        articleTitle.Text = title;
+        #endregion
+
+        #region IMAGE
+        var imageNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/div[3]/img");
+
+        // Get the image source
+        string imageUrl = imageNode.GetAttributeValue("src", string.Empty);
+
+        // Create an Image control and set its source
+        banner.Source = ImageSource.FromUri(new Uri(imageUrl));
+
+        #endregion
+
+        #region PARAGRAPHS
+        //class="gp-entry-text"
+        var paragraphs = document.DocumentNode.SelectNodes("//div[@class='gp-entry-text']/p");
+
+        if (paragraphs != null)
         {
-            if (i < bodyImages.Length)
+            var text = string.Empty;
+            foreach (var paragraph in paragraphs)
             {
-                Image image = new Image();
-                image.Source = bodyImages[i];
-                ArticleLayout.Add(image);
+                // Note to self: InnerHtml if we want to include all the html tags e.g <strong> etc && InnerText to exclude them
+                // in XAML - TextType = "Html" will render the tags
+                text += paragraph.InnerHtml + "\n\n";
             }
-            if (i < bodyText.Length)
-            {
-                Label label = new Label();
-                label.FormattedText = bodyText[i];
-                ArticleLayout.Add(label);
-            }
+            paragraphsLbl.Text = text;
         }
+
+        #endregion
+
+    }
+
+    //Clicking the button on the button will navigate to AccessReel Author Page (ListPage)
+    // https://accessreel.com/author/accessreel/"
+    private void Button_Clicked(object sender, EventArgs e)
+    {
+
     }
 }

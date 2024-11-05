@@ -258,7 +258,7 @@ namespace AccessReel
         // If the user taps on a Post's/Article's Title or Image:
         // Taps work - just need to scrape the article.Url e.g https://accessreel.com/article/rachel-griffiths-heads-up-cinefestoz-100000-film-prize-jury/
         // I think we use ArticlePage for this?? -Rocky
-        private void ArticleTapped(object sender, TappedEventArgs e)
+        private async void ArticleTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label || sender  is Image image)
             {
@@ -267,6 +267,14 @@ namespace AccessReel
 
                 // Debug the Url - change later to make string html to scrape
                 Debug.WriteLine(article.Url);
+
+                string webpageURL = article.Url.ToString();
+
+                // make new article page
+                ArticlePage newArticle = new ArticlePage(webpageURL);
+
+                await Navigation.PushAsync(newArticle);
+
             }
         }
 

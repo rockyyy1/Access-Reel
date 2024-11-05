@@ -75,8 +75,16 @@
                     <DataTemplate>
                         <Frame HorizontalOptions="Center" BackgroundColor="White">
                             <AbsoluteLayout HorizontalOptions="Center">
-                                <Image Source="{Binding Image}" Aspect="AspectFill"/>
-                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="#301c10" Opacity="50"  AbsoluteLayout.LayoutBounds="0,170" FontSize="Large"/>
+                                <Image Source="{Binding Image}" Aspect="AspectFill">
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="ArticleTapped"/>
+                                    </Image.GestureRecognizers>
+                                </Image>
+                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="#301c10" Opacity="50"  AbsoluteLayout.LayoutBounds="0,170" FontSize="Large">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="ArticleTapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
                                 <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="800,60, AutoSize,AutoSize">
                                     <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="90,60" FontAttributes="Bold" TextColor="White"/>
                                     <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
