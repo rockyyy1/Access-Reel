@@ -27,7 +27,7 @@ public partial class FilmPage : ContentPage
         document.LoadHtml(htmlText);
         BindingContext = film;
 
-        #region VIDEO - DOESN'T WORK ATM
+        #region VIDEO - DOESN'T WORK
         // Getting the Video is not possible from what i can tell 
         // The site only updates the node when the user clicks play - otherwise it's not there
         // Someone else can give it go...

@@ -2,6 +2,7 @@
 using Microsoft.Maui.Controls;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml;
 
@@ -83,15 +84,25 @@ namespace AccessReel
                     HtmlNode ratingNode = liNode.SelectSingleNode(".//div[@class='gp-rating-outer']//div[@class='gp-rating-inner']");
                     string criticRating = ratingNode?.InnerText?.Trim() ?? "";
 
+                    // Member rating
+                    HtmlNode membersRating = liNode.SelectSingleNode(".//div[@class='gp-user-rating-wrapper gp-large-rating']");
+                    string membersRatings = "";
+
+                    if (membersRating != null)
+                    {
+                        HtmlNode ratingInner = membersRating.SelectSingleNode(".//div[@class='gp-rating-inner']");
+                        membersRatings = ratingInner?.InnerText?.Trim() ?? "";
+                    }
+
                     // DEBUG - COMMENT OUT ONCE FINISHED
-             /*       Debug.WriteLine("Title: " + title);
-                    Debug.WriteLine("Href Link: " + href);
-                    Debug.WriteLine("Image Source: " + imageSource);
-                    Debug.WriteLine("Critic Rating: " + criticRating);
-                    Debug.WriteLine("");*/
-                    
+                    /*       Debug.WriteLine("Title: " + title);
+                           Debug.WriteLine("Href Link: " + href);
+                           Debug.WriteLine("Image Source: " + imageSource);
+                           Debug.WriteLine("Critic Rating: " + criticRating);
+                           Debug.WriteLine("");*/
+
                     // Create a new item (using Review for now because it has everything we need) - Could create a new class "Carousel" if we wanted
-                    Review carouselItem = new Review {Title = title, Url = href, Image = imageSource, ReviewScore = criticRating };
+                    Review carouselItem = new Review {Title = title, Url = href, Image = imageSource, ReviewScore = criticRating, MemberReviewScore = membersRatings };
                     carouselList.Add(carouselItem);
                 }
             }
@@ -312,6 +323,24 @@ namespace AccessReel
                 await Navigation.PushAsync(newFilm);
 
             }
+        }
+
+        
+    }
+
+    // This shows/hides the Member's rating for the top carousel if there is no member's review 
+    public class NotEmptyStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo
+     culture)
+        {
+            return !string.IsNullOrEmpty((string)value);
+        }
+
+        public object ConvertBack(object value, Type targetType,
+     object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 }

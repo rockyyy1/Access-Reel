@@ -27,7 +27,7 @@
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                     <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore">
-                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" />
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
                         <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
                     </AbsoluteLayout>
                 </Grid>
