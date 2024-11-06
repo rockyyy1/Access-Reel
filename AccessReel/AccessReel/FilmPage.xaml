@@ -112,11 +112,20 @@
                     <RowDefinition/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Label Grid.Row="0" x:Name="LblReview" Text="ReviewPlaceholder" HorizontalOptions="Center"/>
-                <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center" >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="1" x:Name="LblReview" Text="ReviewPlaceholder" HorizontalOptions="Center" Margin="0,40,0,0"/>
+                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" HorizontalOptions="Center" >
                     <HorizontalStackLayout>
-                        <Image Source="dotnet_bot.png" HeightRequest="60" WidthRequest="60" Margin="5"/>
-                        <Label  x:Name="LblAuthor" Text="ReviewAuthor" VerticalOptions="Center" WidthRequest="500"/>
+                        <Image x:Name="ImageAuthor" Source="dotnet_bot.png" HeightRequest="60" WidthRequest="60" Margin="5"/>
+                        <Label  x:Name="LblAuthor" Text="ReviewAuthor" VerticalOptions="Center" WidthRequest="500">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="AuthorTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                     </HorizontalStackLayout>                    
                     <AbsoluteLayout Margin="10" x:Name="AbsLayoutReviewScore2" HorizontalOptions="EndAndExpand">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />

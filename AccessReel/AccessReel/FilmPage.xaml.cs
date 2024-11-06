@@ -1,5 +1,6 @@
 using HtmlAgilityPack;
 using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -11,6 +12,7 @@ public partial class FilmPage : ContentPage
 {
     string text;
     private Review film;
+    private string authorURL;
     public FilmPage()
 	{
 		InitializeComponent();
@@ -36,7 +38,7 @@ public partial class FilmPage : ContentPage
         var anchorNode = document.DocumentNode.SelectSingleNode("//li/a[@title='Review']");
         string ReviewURL = anchorNode != null ? anchorNode.GetAttributeValue("href", string.Empty) : string.Empty;
         string reviewHtmlText = ReadWebsite(ReviewURL);
-        Debug.WriteLine(ReviewURL);
+        //Debug.WriteLine(ReviewURL);
 
         HtmlDocument reviewDocument = new HtmlDocument();
         reviewDocument.LoadHtml(reviewHtmlText);
@@ -197,9 +199,37 @@ public partial class FilmPage : ContentPage
         #endregion
 
         #region REVIEWS
+        var paragraphNodes = reviewDocument.DocumentNode.SelectNodes("//div[@class='gp-entry-text']//p");
+        if (paragraphNodes != null)
+        {
+            StringBuilder reviewParagraphs = new StringBuilder();
 
-        #endregion
-    }
+            // Loop through each <p> tag and extract its text
+            foreach (var paragraph in paragraphNodes)
+            {
+                string p = paragraph.InnerText.Trim();
+                p = HtmlEntity.DeEntitize(p);
+                reviewParagraphs.AppendLine(p);
+            }
+            LblReview.Text = reviewParagraphs.ToString();
+        }
+
+        // author details
+        var imgNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-info']//img");
+        string authorImageUrl = imgNode.GetAttributeValue("src", string.Empty);
+
+        // Extract the author's name and URL from the <a> tag
+        var authorNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-name']//a");
+        string authorName = authorNode.InnerText.Trim();
+        authorURL = authorNode.GetAttributeValue("href", string.Empty);
+        Debug.WriteLine(authorName);
+        Debug.WriteLine(authorURL);
+        Debug.WriteLine(authorImageUrl);
+        LblAuthor.Text = authorName;
+        ImageAuthor.Source = authorImageUrl;
+
+    #endregion
+}
 
     private string ReadWebsite(string webpage)
     {
@@ -243,5 +273,10 @@ public partial class FilmPage : ContentPage
         {
             button.Text = "Follow +";
         }
+    }
+
+    private void AuthorTapped(object sender, TappedEventArgs e)
+    {
+        Debug.WriteLine(authorURL);
     }
 }
