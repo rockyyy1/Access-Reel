@@ -9,7 +9,6 @@ namespace AccessReel;
 /// </summary>
 public partial class ArticlePage : ContentPage
 {
-    HtmlDocument document;
     string text;
 
     public ArticlePage()

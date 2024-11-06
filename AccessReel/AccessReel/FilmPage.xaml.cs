@@ -9,7 +9,6 @@ namespace AccessReel;
 /// </summary>
 public partial class FilmPage : ContentPage
 {
-    HtmlDocument document;
     string text;
     private Review film;
     public FilmPage()
@@ -27,16 +26,25 @@ public partial class FilmPage : ContentPage
         document.LoadHtml(htmlText);
         BindingContext = film;
 
-        #region VIDEO - DOESN'T WORK
+        #region VIDEO
         // Just getthing the snapshot of video for now.
         // Getting the Video is not possible from what i can tell - there is only a href that links to dead videos e.g https://vimeo.com/989216189 (Joker film)
         // The site only updates the node to a proper iframe when the user clicks play - otherwise it's not there - not sure how to fix
 
-        var videoLinkNode = document.DocumentNode.SelectSingleNode("//a[@class='gp-play-video-button']");
-        if (videoLinkNode != null)
+        // I managed to find a workaround by going to the review article e.g - https://accessreel.com/hellboy-the-crooked-man/hellboy-the-crooked-man-review/ which usually has trailers
+
+        var anchorNode = document.DocumentNode.SelectSingleNode("//li/a[@title='Review']");
+        string ReviewURL = anchorNode != null ? anchorNode.GetAttributeValue("href", string.Empty) : string.Empty;
+        string reviewHtmlText = ReadWebsite(ReviewURL);
+        Debug.WriteLine(ReviewURL);
+
+        HtmlDocument reviewDocument = new HtmlDocument();
+        reviewDocument.LoadHtml(reviewHtmlText);
+        var iframeNode = reviewDocument.DocumentNode.SelectSingleNode("//iframe");
+        if (iframeNode != null)
         {
             // Extract the iframe HTML
-            var iframeHtml = videoLinkNode.OuterHtml;
+            var iframeHtml = iframeNode.OuterHtml;
 
             // Create a WebView to render the iframe
             var webView = new WebView
@@ -52,36 +60,33 @@ public partial class FilmPage : ContentPage
                 Children = { webView }
             };
 
-            //videoStackLayout.Children.Add(VideostackLayout);
-
-
+            videoStackLayout.Children.Add(VideostackLayout);
         }
+            /*        // getting snapshot of video instead
+                    HtmlNode header = document.DocumentNode.SelectSingleNode("//header[contains(@class, 'gp-page-header') and contains(@class, 'gp-has-video')]");
 
-        // getting snapshot of video instead
-        HtmlNode header = document.DocumentNode.SelectSingleNode("//header[contains(@class, 'gp-page-header') and contains(@class, 'gp-has-video')]");
+                    if (header != null)
+                    {
+                        string style = header.GetAttributeValue("style", string.Empty);
+                        //Debug.WriteLine(style);
+                        var start = style.IndexOf("url(") + 4; 
+                        var end = style.IndexOf(")", start);
+                        var imageUrl = style.Substring(start, end - start).Trim('\"');
 
-        if (header != null)
-        {
-            string style = header.GetAttributeValue("style", string.Empty);
-            //Debug.WriteLine(style);
-            var start = style.IndexOf("url(") + 4; 
-            var end = style.IndexOf(")", start);
-            var imageUrl = style.Substring(start, end - start).Trim('\"');
+                        // Create an Image 
+                        var image = new Image
+                        {
+                            Source = imageUrl
+                        };
 
-            // Create an Image 
-            var image = new Image
-            {
-                Source = imageUrl
-            };
-
-            videoStackLayout.Children.Add(image);
-        }
+                        videoStackLayout.Children.Add(image);
+                    }*/
 
 
-        #endregion - 
+            #endregion 
 
         #region RELEASE DATES
-        var releaseInfoDivs = document.DocumentNode.SelectNodes("//div[@class='release-info']");
+            var releaseInfoDivs = document.DocumentNode.SelectNodes("//div[@class='release-info']");
 
         if (releaseInfoDivs != null)
         {
@@ -128,9 +133,28 @@ public partial class FilmPage : ContentPage
 
         #region AVERAGE USER RATING
 
+        if (film.MemberReviewScore == "")
+        {
+            AverageUserRating.Text = "0";
+        }
+        else
+        {
+            AverageUserRating.Text = film.MemberReviewScore;
+        }
+
+
+
         #endregion
 
         #region VOTING SYSTEM / SUBMIT BUTTON
+        var numberUserVotesNode = document.DocumentNode.SelectSingleNode("//span[@class='gp-count']");
+        int numberUserVotes = numberUserVotesNode != null ? int.Parse(numberUserVotesNode.InnerText) : 0;
+
+        // Determine ("Vote" or "Votes")
+        string voteSuffix = numberUserVotes == 1 ? " Vote" : " Votes";
+
+        // Set the text
+        NumberUserVotes.Text = numberUserVotes.ToString() + voteSuffix;
         #endregion
 
         #region GENRE, CAST, DIRECTOR INFO
@@ -172,6 +196,9 @@ public partial class FilmPage : ContentPage
         }
         #endregion
 
+        #region REVIEWS
+
+        #endregion
     }
 
     private string ReadWebsite(string webpage)
@@ -201,5 +228,20 @@ public partial class FilmPage : ContentPage
     private void BtnNews_Clicked(object sender, EventArgs e)
     {
 
+    }
+
+    private void FollowBtn_Clicked(object sender, EventArgs e)
+    {
+        Button button = (Button)sender;
+        string currentText = button.Text;
+
+        if (currentText.Contains("Follow +"))
+        {
+            button.Text = "Unfollow +";
+        }
+        else
+        {
+            button.Text = "Follow +";
+        }
     }
 }

@@ -67,7 +67,7 @@
                 </StackLayout>
                 <VerticalStackLayout Grid.Column="0" Grid.Row="1">
                     <Image x:Name="ImagePoster" />
-                    <Button Text="Follow +" TextColor="White" BackgroundColor="#00d0e5" HorizontalOptions="Center" />
+                    <Button Text="Follow +" TextColor="White" BackgroundColor="#00d0e5" HorizontalOptions="Center" x:Name="FollowBtn" Clicked="FollowBtn_Clicked" />
                 </VerticalStackLayout>
                 <Label Grid.Column="1" Grid.Row="1" x:Name="LblDesc" Text="{Binding Description}" Margin="50,10,0,0"/>
 
@@ -76,11 +76,11 @@
                     <HorizontalStackLayout>
                         <AbsoluteLayout Margin="5">
                             <Ellipse WidthRequest="60" HeightRequest="60" Fill="Gray" Stroke="LightGray" StrokeThickness="15" />
-                            <Label Text="10" AbsoluteLayout.LayoutBounds="0.5,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
+                            <Label x:Name="AverageUserRating" Text="10" AbsoluteLayout.LayoutBounds="0.5,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
                         </AbsoluteLayout>
                         <VerticalStackLayout Margin="5">
                             <Label Text="Average User Rating" FontAttributes="Bold"/>
-                            <Label Text="... Votes" FontSize="Small"/>
+                            <Label x:Name="NumberUserVotes" Text="... Votes" FontSize="Small"/>
                         </VerticalStackLayout>
                     </HorizontalStackLayout>                    
                     <Label Text="Rate This Item" FontAttributes="Italic,Bold"/>
