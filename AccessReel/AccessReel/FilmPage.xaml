@@ -8,6 +8,7 @@
         <ResourceDictionary>
             <ResourceDictionary>
                 <local:ReviewScoreToAbsLayoutConverter x:Key="ReviewScoreToAbsLayoutConverter"/>
+                <local:NotEmptyStringConverter x:Key="NotEmptyStringConverter"/>
             </ResourceDictionary>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -20,7 +21,7 @@
 
             <!-- Title/Score -->
             <HorizontalStackLayout HorizontalOptions="Center">
-                <Label x:Name="LblTitle" Text="Film Title" HorizontalOptions="Start" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
+                <Label x:Name="LblTitle" Text="{Binding Title}" HorizontalOptions="Start" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
                 <VerticalStackLayout> <!-- Critic review score -->
                     <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore" HorizontalOptions="End">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
@@ -29,11 +30,14 @@
                     <Label Text="Critic" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout> <!-- Member review score -->
-                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutMemberScore" HorizontalOptions="End">
+                    <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutMemberScore" HorizontalOptions="End" 
+                            IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" />
                         <Label Text="{Binding MemberReviewScore}" TextColor="White" AbsoluteLayout.LayoutBounds="{Binding MemberReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
                     </AbsoluteLayout>
-                    <Label Text="Members" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+                    <Label Text="Members" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                    IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}"/>
+
                 </VerticalStackLayout>
             </HorizontalStackLayout>    
 	

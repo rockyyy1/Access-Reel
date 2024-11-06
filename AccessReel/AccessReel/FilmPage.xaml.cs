@@ -28,13 +28,11 @@ public partial class FilmPage : ContentPage
         BindingContext = film;
 
         #region VIDEO - DOESN'T WORK
-        // Getting the Video is not possible from what i can tell 
-        // The site only updates the node when the user clicks play - otherwise it's not there
-        // Someone else can give it go...
+        // Just getthing the snapshot of video for now.
+        // Getting the Video is not possible from what i can tell - there is only a href that links to dead videos e.g https://vimeo.com/989216189 (Joker film)
+        // The site only updates the node to a proper iframe when the user clicks play - otherwise it's not there - not sure how to fix
 
         var videoLinkNode = document.DocumentNode.SelectSingleNode("//a[@class='gp-play-video-button']");
-
-
         if (videoLinkNode != null)
         {
             // Extract the iframe HTML
@@ -54,10 +52,32 @@ public partial class FilmPage : ContentPage
                 Children = { webView }
             };
 
-            videoStackLayout.Children.Add(VideostackLayout);
+            //videoStackLayout.Children.Add(VideostackLayout);
 
 
         }
+
+        // getting snapshot of video instead
+        HtmlNode header = document.DocumentNode.SelectSingleNode("//header[contains(@class, 'gp-page-header') and contains(@class, 'gp-has-video')]");
+
+        if (header != null)
+        {
+            string style = header.GetAttributeValue("style", string.Empty);
+            //Debug.WriteLine(style);
+            var start = style.IndexOf("url(") + 4; 
+            var end = style.IndexOf(")", start);
+            var imageUrl = style.Substring(start, end - start).Trim('\"');
+
+            // Create an Image 
+            var image = new Image
+            {
+                Source = imageUrl
+            };
+
+            videoStackLayout.Children.Add(image);
+        }
+
+
         #endregion - 
 
         #region RELEASE DATES
