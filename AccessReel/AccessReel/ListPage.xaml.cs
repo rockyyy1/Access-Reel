@@ -32,14 +32,15 @@ public partial class ListPage : ContentPage
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = reviewList;
         }
-        else //News, Trailers and Interviews
+        else //News, Interviews
         {
             Title = pageType;
 
-            if (pageType == "News")
+            if (pageType == "News" || pageType == "Interviews")
             {
-                LoadNews();
+                LoadData(pageType);
             }
+
 
             /*postList = new List<Posts>();
             Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
@@ -51,12 +52,12 @@ public partial class ListPage : ContentPage
         }
     }
 
-    private void LoadNews()
+    private void LoadData(string pageType)
     {
         //Debug.WriteLine("You have opened the News flyout");
         List<Posts> newsList = new List<Posts>();
 
-        var url = "https://accessreel.com/categories/news/"; 
+        var url = "https://accessreel.com/categories/" + pageType; 
         var web = new HtmlWeb();
         var document = web.Load(url);
 
@@ -123,16 +124,23 @@ public partial class ListPage : ContentPage
         }        
     }
 
-    private void ItemTapped(object sender, TappedEventArgs e)
+    // When the user taps on a Article Title/Image, brings them to an Article Page
+    private async void ItemTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label || sender is Image image)
         {
             // Access the DataContext of the Label
             var item = (Posts)((VisualElement)sender).BindingContext;
-            Debug.WriteLine(item.Url);
+
+            //Debug.WriteLine(item.Url);
+
+            ArticlePage newArticle = new ArticlePage(item.Url);
+
+            await Navigation.PushAsync(newArticle);
         }
     }
 
+    // When the user taps on an user it should bring up the Author Page
     private void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
