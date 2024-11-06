@@ -1,5 +1,6 @@
 using HtmlAgilityPack;
 using System.Diagnostics;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
@@ -16,7 +17,7 @@ public partial class FilmPage : ContentPage
     public FilmPage()
 	{
 		InitializeComponent();
-	}
+    }
 
     //Receive the url
     public FilmPage(Review film)
@@ -64,31 +65,31 @@ public partial class FilmPage : ContentPage
 
             videoStackLayout.Children.Add(VideostackLayout);
         }
-            /*        // getting snapshot of video instead
-                    HtmlNode header = document.DocumentNode.SelectSingleNode("//header[contains(@class, 'gp-page-header') and contains(@class, 'gp-has-video')]");
+        /*        // getting snapshot of video instead
+                HtmlNode header = document.DocumentNode.SelectSingleNode("//header[contains(@class, 'gp-page-header') and contains(@class, 'gp-has-video')]");
 
-                    if (header != null)
+                if (header != null)
+                {
+                    string style = header.GetAttributeValue("style", string.Empty);
+                    //Debug.WriteLine(style);
+                    var start = style.IndexOf("url(") + 4; 
+                    var end = style.IndexOf(")", start);
+                    var imageUrl = style.Substring(start, end - start).Trim('\"');
+
+                    // Create an Image 
+                    var image = new Image
                     {
-                        string style = header.GetAttributeValue("style", string.Empty);
-                        //Debug.WriteLine(style);
-                        var start = style.IndexOf("url(") + 4; 
-                        var end = style.IndexOf(")", start);
-                        var imageUrl = style.Substring(start, end - start).Trim('\"');
+                        Source = imageUrl
+                    };
 
-                        // Create an Image 
-                        var image = new Image
-                        {
-                            Source = imageUrl
-                        };
-
-                        videoStackLayout.Children.Add(image);
-                    }*/
+                    videoStackLayout.Children.Add(image);
+                }*/
 
 
-            #endregion 
+        #endregion
 
         #region RELEASE DATES
-            var releaseInfoDivs = document.DocumentNode.SelectNodes("//div[@class='release-info']");
+        var releaseInfoDivs = document.DocumentNode.SelectNodes("//div[@class='release-info']");
 
         if (releaseInfoDivs != null)
         {
@@ -164,36 +165,154 @@ public partial class FilmPage : ContentPage
 
         if (hubFieldsDiv != null)
         {
-            // Extract Genre
+            // Handle Genre
             var genreField = hubFieldsDiv.SelectSingleNode(".//div[@class='gp-hub-field'][span[text()='Genre:']]");
             if (genreField != null)
             {
                 var genreList = genreField.SelectSingleNode(".//span[@class='gp-hub-field-list']");
                 if (genreList != null)
                 {
-                    var genreText = string.Join(", ", genreList.Descendants("a").Select(a => a.InnerText.Trim()));
-                    LblGenre.Text = $"{genreText}";
+                    var genreLinks = genreList.Descendants("a")
+                                              .Select(a => new
+                                              {
+                                                  Text = a.InnerText.Trim(),
+                                                  Url = a.GetAttributeValue("href", string.Empty)
+                                              }).ToList();
+
+                    // Create a stack layout for Genre
+                    var genreStackLayout = new StackLayout
+                    {
+                        Orientation = StackOrientation.Horizontal,
+                        Spacing = 10,
+                    };
+
+                    // Add each genre as a label with a TapGestureRecognizer
+                    foreach (var genre in genreLinks)
+                    {
+                        var genreSpan = new Span
+                        {
+                            Text = genre.Text,
+                            TextColor = Colors.DarkGray,
+                            BackgroundColor = Color.FromArgb("#edeef2"),
+                        };
+
+                        var genreLabel = new Label
+                        {
+                            VerticalTextAlignment = TextAlignment.Center,
+                            HorizontalTextAlignment = TextAlignment.Start,
+                            FontSize = 14,
+                            LineBreakMode = LineBreakMode.NoWrap,
+                            FormattedText = new FormattedString()
+                        };
+
+                        genreLabel.FormattedText.Spans.Add(genreSpan);
+
+                        var genreTapGesture = new TapGestureRecognizer();
+                        //genreTapGesture.Tapped += (s, e) => Launcher.OpenAsync(genre.Url);
+                        genreTapGesture.Tapped += (s, e) => OnTagTapped(genre.Url);
+                        genreLabel.GestureRecognizers.Add(genreTapGesture);
+
+                        genreStackLayout.Children.Add(genreLabel);
+                    }
+
+                    GenreStackLayout.Children.Add(genreStackLayout);
                 }
             }
 
-            // Extract Cast
+            // Handle Cast
             var castField = hubFieldsDiv.SelectSingleNode(".//div[@class='gp-hub-field'][span[text()='Cast:']]");
             if (castField != null)
             {
                 var castList = castField.SelectSingleNode(".//span[@class='gp-hub-field-list']");
                 if (castList != null)
                 {
-                    var castText = string.Join(", ", castList.Descendants("a").Select(a => a.InnerText.Trim()));
-                    LblCast.Text = $"{castText}";
+                    var castLinks = castList.Descendants("a")
+                                            .Select(a => new
+                                            {
+                                                Text = a.InnerText.Trim(),
+                                                Url = a.GetAttributeValue("href", string.Empty)
+                                            }).ToList();
+
+                    // Create a stack layout for Cast
+                    var castStackLayout = new StackLayout
+                    {
+                        Orientation = StackOrientation.Horizontal,
+                        Spacing = 10,
+                    };
+
+                    // Add each cast as a label with a TapGestureRecognizer
+                    foreach (var cast in castLinks)
+                    {
+                        var castSpan = new Span
+                        {
+                            Text = cast.Text,
+                            TextColor = Colors.DarkGray,
+                            BackgroundColor = Color.FromArgb("#edeef2"),
+                        };
+
+                        var castLabel = new Label
+                        {
+                            VerticalTextAlignment = TextAlignment.Center,
+                            HorizontalTextAlignment = TextAlignment.Start,
+                            FontSize = 14,
+                            LineBreakMode = LineBreakMode.NoWrap,
+                            FormattedText = new FormattedString()
+                        };
+
+                        castLabel.FormattedText.Spans.Add(castSpan);
+
+                        var castTapGesture = new TapGestureRecognizer();
+                        //castTapGesture.Tapped += (s, e) => Launcher.OpenAsync(cast.Url);
+                        castTapGesture.Tapped += (s, e) => OnTagTapped(cast.Url);
+                        castLabel.GestureRecognizers.Add(castTapGesture);
+
+                        castStackLayout.Children.Add(castLabel);
+                    }
+
+                    CastStackLayout.Children.Add(castStackLayout);
                 }
             }
 
-            // Extract Director
+            // Handle Director
             var directorField = hubFieldsDiv.SelectSingleNode(".//div[@class='gp-hub-field'][span[text()='Director:']]");
             if (directorField != null)
             {
-                var directorText = directorField.SelectSingleNode(".//span[@class='gp-hub-field-list']//a").InnerText.Trim();
-                LblDirector.Text = $"{directorText}";
+                var directorList = directorField.SelectSingleNode(".//span[@class='gp-hub-field-list']");
+                if (directorList != null)
+                {
+                    var directorLink = directorList.Descendants("a").FirstOrDefault();
+                    if (directorLink != null)
+                    {
+                        var directorText = directorLink.InnerText.Trim();
+                        var directorUrl = directorLink.GetAttributeValue("href", string.Empty);
+
+                        // Create a label for Director with a TapGestureRecognizer
+                        var directorSpan = new Span
+                        {
+                            Text = directorText,
+                            TextColor = Colors.DarkGray, 
+                            BackgroundColor = Color.FromArgb("#edeef2"), 
+                        };
+
+                        var directorLabel = new Label
+                        {
+                            VerticalTextAlignment = TextAlignment.Center,
+                            HorizontalTextAlignment = TextAlignment.Start,
+                            FontSize = 14,
+                            LineBreakMode = LineBreakMode.NoWrap,
+                            FormattedText = new FormattedString()
+                        };
+
+                        directorLabel.FormattedText.Spans.Add(directorSpan);
+
+                        var directorTapGesture = new TapGestureRecognizer();
+                        //directorTapGesture.Tapped += (s, e) => Launcher.OpenAsync(directorUrl);
+                        directorTapGesture.Tapped += (s, e) => OnTagTapped(directorUrl);
+                        directorLabel.GestureRecognizers.Add(directorTapGesture);
+
+                        DirectorStackLayout.Children.Add(directorLabel);
+                    }
+                }
             }
         }
         #endregion
@@ -222,14 +341,69 @@ public partial class FilmPage : ContentPage
         var authorNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-name']//a");
         string authorName = authorNode.InnerText.Trim();
         authorURL = authorNode.GetAttributeValue("href", string.Empty);
-        Debug.WriteLine(authorName);
-        Debug.WriteLine(authorURL);
-        Debug.WriteLine(authorImageUrl);
+        //Debug.WriteLine(authorName);
+        //Debug.WriteLine(authorURL);
+        //Debug.WriteLine(authorImageUrl);
         LblAuthor.Text = authorName;
         ImageAuthor.Source = authorImageUrl;
 
-    #endregion
-}
+        #endregion
+
+        #region TAGS
+        // Extract all <a> tags inside <div class='gp-entry-tags'>
+        var tagNodes = reviewDocument.DocumentNode.SelectNodes("//div[@class='gp-entry-tags']//a");
+
+        if (tagNodes != null)
+        {
+            // Create a horizontal StackLayout to hold the tags
+            var horizontalStackLayout = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal, // Arrange tags horizontally
+                Spacing = 10, // Space between the tags
+                VerticalOptions = LayoutOptions.Center
+            };
+
+            foreach (var tagNode in tagNodes)
+            {
+                string tagName = tagNode.InnerText.Trim();
+                string tagUrl = tagNode.GetAttributeValue("href", string.Empty);
+
+                var tagSpan = new Span
+                {
+                    Text = tagName,
+                    TextColor = Colors.DarkGray, // Dark grey
+                    BackgroundColor = Color.FromArgb("#edeef2") // Light grey 
+                };
+
+                // Create a Label to hold the formatted text
+                var tagLabel = new Label
+                {
+                    VerticalTextAlignment = TextAlignment.Center,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    FontSize = 14, 
+                };
+
+                // Create a FormattedString and add the Span to it
+                var formattedString = new FormattedString();
+                formattedString.Spans.Add(tagSpan);
+
+                // Set the formatted string to the Label
+                tagLabel.FormattedText = formattedString;
+
+                // Create a TapGestureRecognizer for each tag
+                var tapGestureRecognizer = new TapGestureRecognizer();
+                tapGestureRecognizer.Tapped += (s, e) => OnTagTapped(tagUrl); //see method
+                tagLabel.GestureRecognizers.Add(tapGestureRecognizer);
+
+                // Add the Label to the horizontal StackLayout
+                horizontalStackLayout.Children.Add(tagLabel);
+            }
+
+            TagsStackLayout.Children.Add(horizontalStackLayout);
+        }
+
+        #endregion
+    }
 
     private string ReadWebsite(string webpage)
     {
@@ -278,5 +452,10 @@ public partial class FilmPage : ContentPage
     private void AuthorTapped(object sender, TappedEventArgs e)
     {
         Debug.WriteLine(authorURL);
+    }
+
+    private async void OnTagTapped(string tagUrl)
+    {
+        Debug.WriteLine(tagUrl);
     }
 }
