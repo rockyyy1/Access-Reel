@@ -424,16 +424,6 @@ public partial class FilmPage : ContentPage
         FilmReview.IsVisible = true;
     }
 
-    private void BtnVideos_Clicked(object sender, EventArgs e)
-    {
-
-    }
-
-    private void BtnNews_Clicked(object sender, EventArgs e)
-    {
-
-    }
-
     private void FollowBtn_Clicked(object sender, EventArgs e)
     {
         Button button = (Button)sender;

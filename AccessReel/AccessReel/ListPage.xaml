@@ -16,14 +16,14 @@
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="dotnet_bot.png"/>
+                    <Image Grid.Column="0" Source="{Binding Image}"/>
                     <!-- May need to implement https://stackoverflow.com/questions/14546296/converter-failed-to-convert-value-of-type-windows-foundation-string-to-type-i -->
                     <VerticalStackLayout Grid.Column="1" Margin="5">
                         <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
                             <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
-                            <Label Text="{Binding Date}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                     <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore">
@@ -40,25 +40,39 @@
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Margin="5" Source="dotnet_bot.png"/>
+                    <Image Grid.Column="0" Margin="5" Source="{Binding Image}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ItemTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
                     <VerticalStackLayout Grid.Column="1" Margin="5">
-                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
+                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ItemTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
-                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
-                            <Label Text="{Binding Date}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
+                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AuthorTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
+    
     <ContentPage.Content>
         <ScrollView>
             <VerticalStackLayout>
                 <!--<Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>-->
                 <!--<Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>-->
-                <Image Source="dotnet_bot.png" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
+                <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
                 <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >
 
                 </CollectionView>

@@ -44,9 +44,8 @@
             <!-- Buttons to switch views -->
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand" >
                 <Button x:Name="BtnOverview" Text="{Binding Title}" Clicked="BtnOverview_Clicked" WidthRequest="300"/>
-                <Button x:Name="BtnNews" Text="News" Clicked="BtnNews_Clicked"  WidthRequest="300"/>
-                <Button x:Name="BtnVideos" Text="Videos" Clicked="BtnVideos_Clicked"  WidthRequest="300"/>
                 <Button x:Name="BtnReviews" Text="Review" Clicked="BtnReview_Clicked" WidthRequest="300"/>
+                <!-- Don't need to do News and Videos buttons, both are pretty jank (There are no news on any of the films and why click a video tab when there is one at the very top )-->
             </HorizontalStackLayout>
             
             <!-- Film Overview -->

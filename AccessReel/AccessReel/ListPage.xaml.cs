@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
+using HtmlAgilityPack;
 using Microsoft.Maui.Controls;
 
 namespace AccessReel;
@@ -31,18 +32,87 @@ public partial class ListPage : ContentPage
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = reviewList;
         }
-        else
+        else //News, Trailers and Interviews
         {
             Title = pageType;
-            //LblPageTitle.Text = pageType;
-            postList = new List<Posts>();
+
+            if (pageType == "News")
+            {
+                LoadNews();
+            }
+
+            /*postList = new List<Posts>();
             Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
             Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
             postList.Add(c);
             postList.Add(d);
             CVArticles.ItemTemplate = DTArticle;
-            CVArticles.ItemsSource = postList;
+            CVArticles.ItemsSource = postList;*/
         }
+    }
+
+    private void LoadNews()
+    {
+        //Debug.WriteLine("You have opened the News flyout");
+        List<Posts> newsList = new List<Posts>();
+
+        var url = "https://accessreel.com/categories/news/"; 
+        var web = new HtmlWeb();
+        var document = web.Load(url);
+
+        var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
+        var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
+        if (nodes != null)
+        {
+            foreach (var node in nodes)
+            {
+                var post = new Posts();
+
+                // Extract Title
+                var titleNode = node.SelectSingleNode(".//h2[@class='gp-loop-title']/a");
+                string title = titleNode.InnerText.Trim();
+                title = HtmlEntity.DeEntitize(title);
+                post.Title = title;
+
+                // Extract Paragraph
+                var paragraphNode = node.SelectSingleNode(".//div[@class='gp-loop-text']/p");
+                string para = paragraphNode.InnerText.Trim();
+                para = HtmlEntity.DeEntitize(para);
+                post.Description = para;
+
+                // Extract the main link
+                var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
+                post.Url = linkNode?.GetAttributeValue("href", string.Empty);
+
+                var imageNode = linkNode?.SelectSingleNode(".//img");
+                post.Image = imageNode?.GetAttributeValue("src", string.Empty);
+
+                // Extract Author
+                var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
+                post.Author = authorNode?.InnerText.Trim();
+                post.AuthorUrl = authorNode?.GetAttributeValue("href", string.Empty);
+
+                // Extract Date Published
+                var dateNode = node.SelectSingleNode(".//time[@class='gp-post-meta gp-meta-date']");
+                var dateText = dateNode?.InnerText.Trim();
+                if (DateTime.TryParse(dateText, out var parsedDate))
+                {
+                    post.Date = parsedDate;
+                }
+              /*  Debug.WriteLine(post.Title);
+                Debug.WriteLine(post.Description);
+                Debug.WriteLine(post.Author);
+                Debug.WriteLine(post.FormattedDate);
+                Debug.WriteLine(post.Url);
+                Debug.WriteLine(post.Image);*/
+
+
+                newsList.Add(post);
+            }
+        }
+        CVArticles.ItemTemplate = DTArticle;
+        CVArticles.ItemsSource = newsList;
+
     }
 
     private void BtnFlyoutMenu_Clicked(object sender, EventArgs e)
@@ -53,6 +123,24 @@ public partial class ListPage : ContentPage
         }        
     }
 
+    private void ItemTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Label label || sender is Image image)
+        {
+            // Access the DataContext of the Label
+            var item = (Posts)((VisualElement)sender).BindingContext;
+            Debug.WriteLine(item.Url);
+        }
+    }
+
+    private void AuthorTapped(object sender, TappedEventArgs e)
+    {
+        if (sender is Label label)
+        {
+            var item = (Posts)((VisualElement)sender).BindingContext;
+            Debug.WriteLine(item.AuthorUrl);
+        }
+    }
 }
 
 
