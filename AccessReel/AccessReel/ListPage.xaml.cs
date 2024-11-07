@@ -20,7 +20,7 @@ public partial class ListPage : ContentPage
 	{
 		InitializeComponent();
         //Test Data
-        if(pageType == "Reviews" || pageType == "Films")
+        if(pageType == "Films")
         {
             Title = pageType;
             //LblPageTitle.Text = pageType;
@@ -36,7 +36,7 @@ public partial class ListPage : ContentPage
         {
             Title = pageType;
 
-            if (pageType == "News" || pageType == "Interviews")
+            if (pageType == "News" || pageType == "Interviews" || pageType == "Reviews")
             {
                 LoadData(pageType);
             }
@@ -61,7 +61,8 @@ public partial class ListPage : ContentPage
         int page = 1;
         while ( true )
         {
-            var url = "https://accessreel.com/categories/" + pageType + "/page/" + (page > 0 ? page.ToString() : "");
+            string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
+            var url = "https://accessreel.com/" + group +  pageType + "/page/" + (page > 0 ? page.ToString() : "");
             var web = new HtmlWeb();
             var document = web.Load(url);
 
@@ -73,9 +74,15 @@ public partial class ListPage : ContentPage
             var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
             if (nodes != null)
             {
+
                 foreach (var node in nodes)
-                {
+                {   
                     var post = new Posts();
+                    if ( pageType == "Reviews" )
+                    {
+                        post = new Review();
+                    }
+                    
 
                     // Extract Title
                     var titleNode = node.SelectSingleNode(".//h2[@class='gp-loop-title']/a");
@@ -108,6 +115,17 @@ public partial class ListPage : ContentPage
                     {
                         post.Date = parsedDate;
                     }
+
+                    if ( post.GetType() == typeof(Review) )
+                    {
+                        var review = (Review) post;
+
+                        var reviewScoreNode = node.SelectSingleNode(".//div[@class='gp-rating-inner']");
+                        string reviewScore = reviewScoreNode?.InnerText.Trim();
+                        review.ReviewScore = reviewScore;
+                    }
+
+
                     /*  Debug.WriteLine(post.Title);
                       Debug.WriteLine(post.Description);
                       Debug.WriteLine(post.Author);
