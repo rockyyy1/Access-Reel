@@ -7,6 +7,8 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <local:NotEmptyStringConverter x:Key="NotEmptyStringConverter" />
+
             <!-- Template for articles on the home page. Used by Latest News, Latest Interviews, Latest Reviews -->
             <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">
                 <VerticalStackLayout>
@@ -85,11 +87,21 @@
                                         <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Label.GestureRecognizers>
                                 </Label>
+                                <!--Critic-->
                                 <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="800,60, AutoSize,AutoSize">
                                     <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="90,60" FontAttributes="Bold" TextColor="White"/>
                                     <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
                                     <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
                                 </AbsoluteLayout>
+
+                                <!--Member-->
+                                <AbsoluteLayout Margin="10" x:Name="MemberReviewScore" AbsoluteLayout.LayoutBounds="890,60, AutoSize,AutoSize"
+                                                IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}">
+                                <Label Text="MEMBERS" AbsoluteLayout.LayoutBounds="80,60" FontAttributes="Bold" TextColor="White"/>
+                                <Ellipse WidthRequest="60" HeightRequest="60" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
+                                <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                </AbsoluteLayout>
+                                
                             </AbsoluteLayout>
                         </Frame>
                     </DataTemplate>

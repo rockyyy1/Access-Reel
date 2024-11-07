@@ -15,8 +15,16 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout>
-                            <Image Source="dotnet_bot.png" HorizontalOptions="Center"/>
-                            <Label Text="{Binding Title}" HorizontalTextAlignment="Center" FontAttributes="Bold"/>
+                            <Image Source="{Binding Image}" HorizontalOptions="Center">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FilmTapped"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                            <Label Text="{Binding Title}" HorizontalTextAlignment="Center" FontAttributes="Bold">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="FilmTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
                         </VerticalStackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
