@@ -41,52 +41,72 @@ public partial class ListPage : ContentPage
         }
     }
 
-    private void LoadNewsAndInterviews(string pageType)
+    // function loads data from all pages
+    private async Task LoadDataOnAllPages(string pageType)
     {
         postList = new List<Posts>();
 
-        var url = "https://accessreel.com/categories/" + pageType; 
-        var web = new HtmlWeb();
-        var document = web.Load(url);
-
-        var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
-        var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
-        if (nodes != null)
+        int page = 1;
+        while ( true )
         {
-            foreach (var node in nodes)
+            var url = "https://accessreel.com/categories/" + pageType + "/page/" + (page > 0 ? page.ToString() : "");
+            var web = new HtmlWeb();
+            var document = web.Load(url);
+
+            var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
+            if ( parentContainer == null )
             {
-                var post = new Posts();
-
-                // Extract Title
-                var titleNode = node.SelectSingleNode(".//h2[@class='gp-loop-title']/a");
-                string title = titleNode.InnerText.Trim();
-                title = HtmlEntity.DeEntitize(title);
-                post.Title = title;
-
-                // Extract Paragraph
-                var paragraphNode = node.SelectSingleNode(".//div[@class='gp-loop-text']/p");
-                string para = paragraphNode.InnerText.Trim();
-                para = HtmlEntity.DeEntitize(para);
-                post.Description = para;
-
-                // Extract the main link
-                var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
-                post.Url = linkNode?.GetAttributeValue("href", string.Empty);
-
-                var imageNode = linkNode?.SelectSingleNode(".//img");
-                post.Image = imageNode?.GetAttributeValue("src", string.Empty);
-
-                // Extract Author
-                var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
-                post.Author = authorNode?.InnerText.Trim();
-                post.AuthorUrl = authorNode?.GetAttributeValue("href", string.Empty);
-
-                // Extract Date Published
-                var dateNode = node.SelectSingleNode(".//time[@class='gp-post-meta gp-meta-date']");
-                var dateText = dateNode?.InnerText.Trim();
-                if (DateTime.TryParse(dateText, out var parsedDate))
+                break;
+            }
+            var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
+            if (nodes != null)
+            {
+                foreach (var node in nodes)
                 {
-                    post.Date = parsedDate;
+                    var post = new Posts();
+
+                    // Extract Title
+                    var titleNode = node.SelectSingleNode(".//h2[@class='gp-loop-title']/a");
+                    string title = titleNode.InnerText.Trim();
+                    title = HtmlEntity.DeEntitize(title);
+                    post.Title = title;
+
+                    // Extract Paragraph
+                    var paragraphNode = node.SelectSingleNode(".//div[@class='gp-loop-text']/p");
+                    string para = paragraphNode.InnerText.Trim();
+                    para = HtmlEntity.DeEntitize(para);
+                    post.Description = para;
+
+                    // Extract the main link
+                    var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
+                    post.Url = linkNode?.GetAttributeValue("href", string.Empty);
+
+                    var imageNode = linkNode?.SelectSingleNode(".//img");
+                    post.Image = imageNode?.GetAttributeValue("src", string.Empty);
+
+                    // Extract Author
+                    var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
+                    post.Author = authorNode?.InnerText.Trim();
+                    post.AuthorUrl = authorNode?.GetAttributeValue("href", string.Empty);
+
+                    // Extract Date Published
+                    var dateNode = node.SelectSingleNode(".//time[@class='gp-post-meta gp-meta-date']");
+                    var dateText = dateNode?.InnerText.Trim();
+                    if (DateTime.TryParse(dateText, out var parsedDate))
+                    {
+                        post.Date = parsedDate;
+                    }
+                    /*  Debug.WriteLine(post.Title);
+                      Debug.WriteLine(post.Description);
+                      Debug.WriteLine(post.Author);
+                      Debug.WriteLine(post.FormattedDate);
+                      Debug.WriteLine(post.Url);
+                      Debug.WriteLine(post.Image);*/
+
+
+                    newsList.Add(post);
+
+                    page += 1;
                 }
               /*  Debug.WriteLine(post.Title);
                 Debug.WriteLine(post.Description);
@@ -101,7 +121,80 @@ public partial class ListPage : ContentPage
         }
         CVArticles.ItemTemplate = DTArticle;
         CVArticles.ItemsSource = postList;
+            }
+        }
+        CVArticles.ItemTemplate = DTArticle;
+            CVArticles.ItemsSource = newsList;
+    }
 
+    // NOTE: i noticed you got the data from the categories pages, however it seems it is only from the
+    // 1 page thus far so i created another function, to get the data from all pages
+    // it seems to work o=however it is a bit slow, so trying to come up with an faster way
+    private async void LoadData(string pageType)
+    {
+        await LoadDataOnAllPages(pageType);
+
+        // sorry i commented out your standard code, just testing getting data from all the pages at once :)
+
+        //Debug.WriteLine("You have opened the News flyout");
+        //List<Posts> newsList = new List<Posts>();
+
+        //var url = "https://accessreel.com/categories/" + pageType;
+        //var web = new HtmlWeb();
+        //var document = web.Load(url);
+
+        //var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
+        //var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
+        //if (nodes != null)
+        //{
+        //    foreach (var node in nodes)
+        //    {
+        //        var post = new Posts();
+
+        //        // Extract Title
+        //        var titleNode = node.SelectSingleNode(".//h2[@class='gp-loop-title']/a");
+        //        string title = titleNode.InnerText.Trim();
+        //        title = HtmlEntity.DeEntitize(title);
+        //        post.Title = title;
+
+        //        // Extract Paragraph
+        //        var paragraphNode = node.SelectSingleNode(".//div[@class='gp-loop-text']/p");
+        //        string para = paragraphNode.InnerText.Trim();
+        //        para = HtmlEntity.DeEntitize(para);
+        //        post.Description = para;
+
+        //        // Extract the main link
+        //        var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
+        //        post.Url = linkNode?.GetAttributeValue("href", string.Empty);
+
+        //        var imageNode = linkNode?.SelectSingleNode(".//img");
+        //        post.Image = imageNode?.GetAttributeValue("src", string.Empty);
+
+        //        // Extract Author
+        //        var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
+        //        post.Author = authorNode?.InnerText.Trim();
+        //        post.AuthorUrl = authorNode?.GetAttributeValue("href", string.Empty);
+
+        //        // Extract Date Published
+        //        var dateNode = node.SelectSingleNode(".//time[@class='gp-post-meta gp-meta-date']");
+        //        var dateText = dateNode?.InnerText.Trim();
+        //        if (DateTime.TryParse(dateText, out var parsedDate))
+        //        {
+        //            post.Date = parsedDate;
+        //        }
+        //        /*  Debug.WriteLine(post.Title);
+        //          Debug.WriteLine(post.Description);
+        //          Debug.WriteLine(post.Author);
+        //          Debug.WriteLine(post.FormattedDate);
+        //          Debug.WriteLine(post.Url);
+        //          Debug.WriteLine(post.Image);*/
+
+
+        //        newsList.Add(post);
+        //    }
+        //}
+        //CVArticles.ItemTemplate = DTArticle;
+        //CVArticles.ItemsSource = newsList;
     }
 
     private void LoadFilmsAndReviews(string pageType)

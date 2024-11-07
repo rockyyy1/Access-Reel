@@ -19,6 +19,10 @@ namespace AccessReel
         {
             InitializeComponent();
             Retrieve(ReadWebsite());
+
+            Webscraping webscraping = new Webscraping();
+
+            Homepage homepage = webscraping.GetHomepage();
         }
 
         // Returns the html
@@ -44,6 +48,8 @@ namespace AccessReel
             title = HtmlEntity.DeEntitize(title);
             paragraph = HtmlEntity.DeEntitize(paragraph);
             DateTime? time = datetime != null ? DateTime.Parse(datetime) : null;
+
+            datetime = time?.ToString("dd - MMM - yyyy");
         }
 
         private void Retrieve(string text)
