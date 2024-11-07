@@ -16,7 +16,7 @@
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Source="{Binding Image}"/>
-                    <!-- May need to implement https://stackoverflow.com/questions/14546296/converter-failed-to-convert-value-of-type-windows-foundation-string-to-type-i -->
+                    
                     <VerticalStackLayout Grid.Column="1" Margin="5">
                         <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
@@ -69,10 +69,8 @@
     <ContentPage.Content>
         <ScrollView>
             <VerticalStackLayout>
-                <!--<Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>-->
-                <!--<Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>-->
                 <AbsoluteLayout HorizontalOptions="Center">
-                    <Image Source="dotnet_bot.png" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
+                    <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
                     <Label x:Name="Title" Text="listPage" AbsoluteLayout.LayoutBounds="5,220" FontSize="Title" FontAttributes="Bold" Opacity="50" TextColor="White" Background="#301c10"/>
                 </AbsoluteLayout>
                 <!-- {Binding Image}-->
