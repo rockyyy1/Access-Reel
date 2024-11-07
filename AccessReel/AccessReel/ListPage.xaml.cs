@@ -17,10 +17,10 @@ public partial class ListPage : ContentPage
     }
 
     public ListPage(string pageType = "")
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
 
-        if(pageType == "Reviews" || pageType == "Films")
+        if (pageType == "Reviews" || pageType == "Films")
         {
             Title = pageType;
             LoadFilmsAndReviews(pageType);
@@ -37,24 +37,25 @@ public partial class ListPage : ContentPage
         else if (pageType == "News" || pageType == "Interviews")
         {
             Title = pageType;
-            LoadNewsAndInterviews(pageType);
+            //LoadNewsAndInterviews(pageType);
         }
     }
 
     // function loads data from all pages
     private async Task LoadDataOnAllPages(string pageType)
     {
-        postList = new List<Posts>();
+        //Debug.WriteLine("You have opened the News flyout");
+        List<Posts> newsList = new List<Posts>();
 
         int page = 1;
-        while ( true )
+        while (true)
         {
             var url = "https://accessreel.com/categories/" + pageType + "/page/" + (page > 0 ? page.ToString() : "");
             var web = new HtmlWeb();
             var document = web.Load(url);
 
             var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
-            if ( parentContainer == null )
+            if (parentContainer == null)
             {
                 break;
             }
@@ -108,23 +109,10 @@ public partial class ListPage : ContentPage
 
                     page += 1;
                 }
-              /*  Debug.WriteLine(post.Title);
-                Debug.WriteLine(post.Description);
-                Debug.WriteLine(post.Author);
-                Debug.WriteLine(post.FormattedDate);
-                Debug.WriteLine(post.Url);
-                Debug.WriteLine(post.Image);*/
-
-
-                postList.Add(post);
             }
         }
         CVArticles.ItemTemplate = DTArticle;
-        CVArticles.ItemsSource = postList;
-            }
-        }
-        CVArticles.ItemTemplate = DTArticle;
-            CVArticles.ItemsSource = newsList;
+        CVArticles.ItemsSource = newsList;
     }
 
     // NOTE: i noticed you got the data from the categories pages, however it seems it is only from the
