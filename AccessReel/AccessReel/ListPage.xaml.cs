@@ -19,10 +19,11 @@ public partial class ListPage : ContentPage
     public ListPage(string pageType = "")
 	{
 		InitializeComponent();
-        //Test Data
+
         if(pageType == "Reviews" || pageType == "Films")
         {
             Title = pageType;
+            LoadFilmsAndReviews(pageType);
             //LblPageTitle.Text = pageType;
             reviewList = new List<Review>();
             Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "10", Title = "Film title" };
@@ -32,30 +33,17 @@ public partial class ListPage : ContentPage
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = reviewList;
         }
-        else //News, Interviews
+        //News, Interviews
+        else if (pageType == "News" || pageType == "Interviews")
         {
             Title = pageType;
-
-            if (pageType == "News" || pageType == "Interviews")
-            {
-                LoadData(pageType);
-            }
-
-
-            /*postList = new List<Posts>();
-            Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-            Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-            postList.Add(c);
-            postList.Add(d);
-            CVArticles.ItemTemplate = DTArticle;
-            CVArticles.ItemsSource = postList;*/
+            LoadNewsAndInterviews(pageType);
         }
     }
 
-    private void LoadData(string pageType)
+    private void LoadNewsAndInterviews(string pageType)
     {
-        //Debug.WriteLine("You have opened the News flyout");
-        List<Posts> newsList = new List<Posts>();
+        postList = new List<Posts>();
 
         var url = "https://accessreel.com/categories/" + pageType; 
         var web = new HtmlWeb();
@@ -108,14 +96,18 @@ public partial class ListPage : ContentPage
                 Debug.WriteLine(post.Image);*/
 
 
-                newsList.Add(post);
+                postList.Add(post);
             }
         }
         CVArticles.ItemTemplate = DTArticle;
-        CVArticles.ItemsSource = newsList;
+        CVArticles.ItemsSource = postList;
 
     }
 
+    private void LoadFilmsAndReviews(string pageType)
+    {
+
+    }
     private void BtnFlyoutMenu_Clicked(object sender, EventArgs e)
     {
         if(Application.Current.MainPage is FlyoutMenu flyoutPage)

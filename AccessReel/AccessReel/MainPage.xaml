@@ -162,12 +162,12 @@
                                 <VerticalStackLayout>
                                     <Image Source="{Binding Image}" HeightRequest="250" Aspect="AspectFit">
                                         <Image.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ArticleTapped"/>
+                                            <TapGestureRecognizer Tapped="TrailerTapped"/>
                                         </Image.GestureRecognizers>
                                     </Image>
                                     <Label Text="{Binding Title}" HorizontalOptions="Center" FontAttributes="Bold">
                                         <Label.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="ArticleTapped"/>
+                                            <TapGestureRecognizer Tapped="TrailerTapped"/>
                                         </Label.GestureRecognizers>
                                     </Label>
                                 </VerticalStackLayout>

@@ -309,12 +309,6 @@ namespace AccessReel
                 // Access the DataContext of the Label
                 var film = (Review)((VisualElement)sender).BindingContext;
 
-                // Debug the Url - change later to make string html to scrape
-                //Debug.WriteLine(film.Url);
-
-                // Not sure if we actually need the Url as we can get from the item - will play around
-                //string webpageURL = film.Url.ToString();
-
                 // make new article page
                 FilmPage newFilm = new FilmPage(film);
 
@@ -323,7 +317,15 @@ namespace AccessReel
             }
         }
 
-        
+        // If the user taps on a trailer on the bottom carousel
+        private void TrailerTapped(object sender, TappedEventArgs e)
+        {
+            if (sender is Label label || sender is Image image)
+            {
+                var film = (Review)((VisualElement)sender).BindingContext;
+                Debug.WriteLine(film.Url);
+            }
+        }
     }
 
     // This shows/hides the Member's rating for the top carousel if there is no member's review 
