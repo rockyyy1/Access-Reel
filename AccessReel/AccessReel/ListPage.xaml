@@ -2,8 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AccessReel"
-             x:Class="AccessReel.ListPage"
-             Title="ListPage">
+             x:Class="AccessReel.ListPage" >
     
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -12,8 +11,8 @@
             <DataTemplate x:Name="DTMovieArticle" x:Key="templateMA">
                 <Grid HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="300"/>
+                        <ColumnDefinition Width="500"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Source="{Binding Image}"/>
@@ -34,11 +33,11 @@
             </DataTemplate>
             <!-- Template for regular articles -->
             <DataTemplate x:Name="DTArticle" x:Key="templateArticle">
-                <Grid HorizontalOptions="CenterAndExpand">
+                <Grid HorizontalOptions="CenterAndExpand" Padding="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="500"/>
+                        <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
                     <Image Grid.Column="0" Margin="5" Source="{Binding Image}">
                         <Image.GestureRecognizers>
@@ -53,12 +52,12 @@
                         </Label>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
-                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5">
+                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="Gray" Margin="5">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AuthorTapped"/>
                                 </Label.GestureRecognizers>
                             </Label>
-                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="Gray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Grid>
@@ -72,7 +71,11 @@
             <VerticalStackLayout>
                 <!--<Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>-->
                 <!--<Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>-->
-                <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
+                <AbsoluteLayout HorizontalOptions="Center">
+                    <Image Source="dotnet_bot.png" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
+                    <Label x:Name="Title" Text="listPage" AbsoluteLayout.LayoutBounds="5,220" FontSize="Title" FontAttributes="Bold" Opacity="50" TextColor="White" Background="#301c10"/>
+                </AbsoluteLayout>
+                <!-- {Binding Image}-->
                 <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >
 
                 </CollectionView>

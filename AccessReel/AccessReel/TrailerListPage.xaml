@@ -15,7 +15,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout>
-                            <Image Source="{Binding Image}" HorizontalOptions="Center">
+                            <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="297" WidthRequest="200">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="FilmTapped"/>
                                 </Image.GestureRecognizers>

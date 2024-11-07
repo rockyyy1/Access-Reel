@@ -22,7 +22,7 @@ public partial class ListPage : ContentPage
         //Test Data
         if(pageType == "Reviews" || pageType == "Films")
         {
-            Title = pageType;
+            Title.Text = pageType;
             //LblPageTitle.Text = pageType;
             reviewList = new List<Review>();
             Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "10", Title = "Film title" };
@@ -32,23 +32,10 @@ public partial class ListPage : ContentPage
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = reviewList;
         }
-        else //News, Interviews
+        else if (pageType == "News" || pageType == "Interviews") //News, Interviews
         {
-            Title = pageType;
-
-            if (pageType == "News" || pageType == "Interviews")
-            {
-                LoadData(pageType);
-            }
-
-
-            /*postList = new List<Posts>();
-            Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-            Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-            postList.Add(c);
-            postList.Add(d);
-            CVArticles.ItemTemplate = DTArticle;
-            CVArticles.ItemsSource = postList;*/
+            Title.Text = pageType;
+            LoadData(pageType);
         }
     }
 
