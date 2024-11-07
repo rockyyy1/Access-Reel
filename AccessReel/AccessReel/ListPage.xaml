@@ -10,55 +10,70 @@
             <local:ReviewScoreToAbsLayoutConverter x:Key="ReviewScoreToAbsLayoutConverter"/>
             <!-- Template for movies articles -->
             <DataTemplate x:Name="DTMovieArticle" x:Key="templateMA">
-                <Grid>
+                <Grid HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <!--<Image Grid.Column="0" />-->
+                    <Image Grid.Column="0" Source="{Binding Image}"/>
                     <!-- May need to implement https://stackoverflow.com/questions/14546296/converter-failed-to-convert-value-of-type-windows-foundation-string-to-type-i -->
                     <VerticalStackLayout Grid.Column="1" Margin="5">
                         <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
                             <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
-                            <Label Text="{Binding Date}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                     <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore">
-                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="DarkRed" Stroke="MediumVioletRed" StrokeThickness="15" />
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
                         <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
                     </AbsoluteLayout>
                 </Grid>
             </DataTemplate>
             <!-- Template for regular articles -->
             <DataTemplate x:Name="DTArticle" x:Key="templateArticle">
-                <Grid>
+                <Grid HorizontalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="200"/>
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Margin="5"/>
+                    <Image Grid.Column="0" Margin="5" Source="{Binding Image}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ItemTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
                     <VerticalStackLayout Grid.Column="1" Margin="5">
-                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
+                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ItemTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
-                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
-                            <Label Text="{Binding Date}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
+                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AuthorTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </ContentPage.Resources>
+    
+    
     <ContentPage.Content>
         <ScrollView>
             <VerticalStackLayout>
                 <!--<Button x:Name="BtnFlyoutMenu"  Text="Menu" Clicked="BtnFlyoutMenu_Clicked"/>-->
                 <!--<Label x:Name="LblPageTitle" Text="News/Films/Interviews" FontSize="Header"/>-->
-                <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}">
+                <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
+                <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >
 
                 </CollectionView>
             </VerticalStackLayout>
