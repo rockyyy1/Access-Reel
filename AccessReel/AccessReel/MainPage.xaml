@@ -75,32 +75,66 @@
             <CarouselView x:Name="CVImageheader" IndicatorView="IImageHeader" HorizontalOptions="FillAndExpand" >
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Frame HorizontalOptions="Center" BackgroundColor="White">
-                            <AbsoluteLayout HorizontalOptions="Center">
-                                <Image Source="{Binding Image}" Aspect="AspectFill">
+                        <Frame HorizontalOptions="Start" BackgroundColor="White" CornerRadius="0" WidthRequest="1150" HeightRequest="350" BorderColor="White">
+                            <AbsoluteLayout HorizontalOptions="Start" VerticalOptions="Start">
+                                <Image Source="{Binding Image}" Aspect="AspectFill" >
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Image.GestureRecognizers>
                                 </Image>
-                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="#301c10" Opacity="50"  AbsoluteLayout.LayoutBounds="0,170" FontSize="Large">
+                                <Label Text="{Binding Title}" TextColor="White" BackgroundColor="#301c10" Opacity="50"  AbsoluteLayout.LayoutBounds="0,240" FontSize="Large">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Label.GestureRecognizers>
-                                </Label>
-                                <!--Critic-->
-                                <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="800,60, AutoSize,AutoSize">
-                                    <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="90,60" FontAttributes="Bold" TextColor="White"/>
-                                    <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
-                                </AbsoluteLayout>
-
-                                <!--Member-->
-                                <AbsoluteLayout Margin="10" x:Name="MemberReviewScore" AbsoluteLayout.LayoutBounds="890,60, AutoSize,AutoSize"
-                                                IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}">
-                                <Label Text="MEMBERS" AbsoluteLayout.LayoutBounds="80,60" FontAttributes="Bold" TextColor="White"/>
-                                <Ellipse WidthRequest="60" HeightRequest="60" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
-                                </AbsoluteLayout>
+                                </Label>                                
+                                <HorizontalStackLayout AbsoluteLayout.LayoutBounds="950,230, AutoSize,AutoSize">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <!-- I can't get the text to be in the centre of the circle-->
+                                            <!--Critic-->
+                                            <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15"
+                                                     HorizontalOptions="Center" VerticalOptions="Center" />
+                                            <Label Text="9.0" FontSize="Medium" TextColor="White" FontAttributes="Bold"
+                                                   HorizontalTextAlignment="Center" VerticalTextAlignment="Center" 
+                                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                                            <Label Grid.Row="1"  Text="CRITIC" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"/>
+                                            <!--Member-->
+                                            <Label Grid.Column="1" Grid.Row="1" Text="MEMBERS" AbsoluteLayout.LayoutBounds="0,60" FontAttributes="Bold" TextColor="White"
+                                                   IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}"/>
+                                            <Ellipse Grid.Column="1" WidthRequest="60" HeightRequest="60" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" 
+                                                     IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}"/>
+                                            <Label Grid.Column="1" Text="{Binding MemberReviewScore}" FontSize="Medium" TextColor="Beige" FontAttributes="Bold" 
+                                                   HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center"
+                                                   IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}"/>
+                                    </Grid>
+                                    <!--<VerticalStackLayout>
+                                        <AbsoluteLayout>
+                                            <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="15,60" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"/>
+                                            <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15"/>
+                                            <Label Text="{Binding ReviewScore}" FontSize="Medium" TextColor="White" FontAttributes="Bold" 
+                                                   HorizontalTextAlignment="Center" HeightRequest="60" WidthRequest="60"/>
+                                        </AbsoluteLayout>
+                                    </VerticalStackLayout>-->
+                                    <!--Critic-->
+                                    <!--<AbsoluteLayout x:Name="CriticReviewScore" >
+                                        <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="15,60" FontAttributes="Bold" TextColor="White" HorizontalTextAlignment="Center"/>
+                                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15"/>
+                                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0,0,60,60" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold" HorizontalTextAlignment="Center" HeightRequest="60" WidthRequest="60"/>
+                                    </AbsoluteLayout>-->
+                                    <!--Member-->
+                                    <!--<AbsoluteLayout x:Name="MemberReviewScore" IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}">
+                                        <Label Text="MEMBERS" AbsoluteLayout.LayoutBounds="0,60" FontAttributes="Bold" TextColor="White"/>
+                                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" />
+                                        <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0,0" AbsoluteLayout.LayoutFlags="WidthProportional"  FontSize="Medium" TextColor="Beige" FontAttributes="Bold" HorizontalTextAlignment="Start" HorizontalOptions="Start"/>
+                                    </AbsoluteLayout>-->
+                                </HorizontalStackLayout>
                                 
                             </AbsoluteLayout>
                         </Frame>
