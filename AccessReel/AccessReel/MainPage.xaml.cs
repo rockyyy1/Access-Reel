@@ -277,7 +277,7 @@ namespace AccessReel
                 //Debug.WriteLine(article.Url);
 
                 string webpageURL = article.Url.ToString();
-
+                    
                 // make new article page
                 ArticlePage newArticle = new ArticlePage(webpageURL);
 

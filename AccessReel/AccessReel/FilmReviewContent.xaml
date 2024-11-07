@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
             <!-- Review -->
-            <Label Grid.Row="0" Grid.Column="1" x:Name="LblReview" Text="ReviewPlaceholder" HorizontalOptions="Center" Margin="0,40,0,0"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="LblReview" Text="ReviewPlaceholder" TextType="Html" HorizontalOptions="Center" Margin="0,40,0,0"/>
 
             <!-- Tags -->
             <HorizontalStackLayout Grid.Row="1" Grid.Column="1" x:Name="TagsStackLayout" Padding="10" >
@@ -27,7 +27,7 @@
             <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" >
                 <HorizontalStackLayout>
                     <Image x:Name="ImageAuthor" Source="dotnet_bot.png" HeightRequest="60" WidthRequest="60" Margin="5"/>
-                    <Label  x:Name="LblAuthor" Text="ReviewAuthor" VerticalOptions="Center" WidthRequest="500">
+                    <Label  x:Name="LblAuthor" Text="ReviewAuthor" VerticalOptions="Center" BackgroundColor="Black" TextColor="White">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="AuthorTapped"/>
                         </Label.GestureRecognizers>

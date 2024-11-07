@@ -8,7 +8,9 @@
         <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="800">
             <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="Center" FontSize="Header" FontAttributes="Bold"/>
             <Image x:Name="banner" Margin="0,20,0,20"/>
-            <StackLayout x:Name="contentStackLayout"></StackLayout>
+            <StackLayout x:Name="contentStackLayout">
+                <ContentView x:Name="FilmReviewContainer" />
+            </StackLayout>
             <Button Text="AccessReel" 
                     BackgroundColor="Black" 
                     HorizontalOptions="Start"

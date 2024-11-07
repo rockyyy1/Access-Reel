@@ -23,6 +23,7 @@ public partial class FilmReviewContent : ContentPage
         HtmlDocument reviewDocument = new HtmlDocument();
         reviewDocument.LoadHtml(reviewHtmlText);
 
+        // FILM REVIEW CONTENT:
         #region REVIEWS
         var paragraphNodes = reviewDocument.DocumentNode.SelectNodes("//div[@class='gp-entry-text']//p");
         if (paragraphNodes != null)
@@ -32,7 +33,7 @@ public partial class FilmReviewContent : ContentPage
             // Loop through each <p> tag and extract its text
             foreach (var paragraph in paragraphNodes)
             {
-                string p = paragraph.InnerText.Trim();
+                string p = paragraph.InnerText.Trim() + "\n";
                 p = HtmlEntity.DeEntitize(p);
                 reviewParagraphs.AppendLine(p);
             }
