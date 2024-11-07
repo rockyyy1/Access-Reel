@@ -45,6 +45,7 @@
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand" >
                 <Button x:Name="BtnOverview" Text="{Binding Title}" Clicked="BtnOverview_Clicked" WidthRequest="300"/>
                 <Button x:Name="BtnReviews" Text="Review" Clicked="BtnReview_Clicked" WidthRequest="300"/>
+                <Button x:Name="BtnVideos" Text="Videos" Clicked="BtnVideos_Clicked"  WidthRequest="300"/>
                 <!-- Don't need to do News and Videos buttons, both are pretty jank (There are no news on any of the films and why click a video tab when there is one at the very top )-->
             </HorizontalStackLayout>
             
@@ -108,41 +109,10 @@
             <!-- User Rating Stuff Goes Here-->
 
             <!-- Film Review -->
-            <Grid x:Name="FilmReview" IsVisible="False">
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.5*"/>
-                    <ColumnDefinition Width="8*"/>
-                    <ColumnDefinition Width="0.5*"/>
-                </Grid.ColumnDefinitions>
-                <!-- Review -->
-                <Label Grid.Row="0" Grid.Column="1" x:Name="LblReview" Text="ReviewPlaceholder" HorizontalOptions="Center" Margin="0,40,0,0"/>
-                
-                <!-- Tags -->
-                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" x:Name="TagsStackLayout" Padding="10" >
-                    <!-- Tags will be added here by code-->
-                </HorizontalStackLayout>
-                
-                <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" >
-                    <HorizontalStackLayout>
-                        <Image x:Name="ImageAuthor" Source="dotnet_bot.png" HeightRequest="60" WidthRequest="60" Margin="5"/>
-                        <Label  x:Name="LblAuthor" Text="ReviewAuthor" VerticalOptions="Center" WidthRequest="500">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="AuthorTapped"/>
-                            </Label.GestureRecognizers>
-                        </Label>
-                    </HorizontalStackLayout>                
-                    
-                    <AbsoluteLayout Margin="20" x:Name="AbsLayoutReviewScore2" HorizontalOptions="EndAndExpand">
-                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
-                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
-                    </AbsoluteLayout>
-                </HorizontalStackLayout>                
-            </Grid>
+            <StackLayout x:Name ="FilmReview" IsVisible="False">
+                <ContentView x:Name="FilmReviewContainer" />
+            </StackLayout>
+            
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

@@ -13,8 +13,6 @@ namespace AccessReel
     {
         public static string ACCESSREELURL = "https://accessreel.com/";
         public static string NEWSURL = "https://accessreel.com/categories/news/";
-
-        HtmlDocument document;
         string text;
 
         public MainPage()
