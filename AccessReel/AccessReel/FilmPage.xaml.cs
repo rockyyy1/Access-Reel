@@ -317,7 +317,6 @@ public partial class FilmPage : ContentPage
         }
         #endregion
 
-
     }
 
     public string ReadWebsite(string webpage)
