@@ -4,6 +4,15 @@
              xmlns:local="clr-namespace:AccessReel"
              x:Class="AccessReel.FilmReviewContent"
              Title="FilmReviewContent">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary>
+                <local:ReviewScoreToAbsLayoutConverter x:Key="ReviewScoreToAbsLayoutConverter"/>
+            </ResourceDictionary>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <VerticalStackLayout>
         <Grid x:Name="Review">
             <Grid.RowDefinitions>
@@ -36,7 +45,7 @@
 
                 <AbsoluteLayout Margin="20" x:Name="AbsLayoutReviewScore2" HorizontalOptions="EndAndExpand">
                     <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
-                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.5,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White"/>
                 </AbsoluteLayout>
             </HorizontalStackLayout>
         </Grid>
