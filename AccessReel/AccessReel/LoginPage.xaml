@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AccessReel.LoginPage"
+             Title="LoginPage">
+    <Grid>
+        <StackLayout Margin="20">
+            <Image Source="logo.jpg" HeightRequest="50"  HorizontalOptions="StartAndExpand"/>
+
+            <StackLayout Margin="0,80">
+                <Label FontSize="32" Text="Welcome Back"/>
+                <Label FontFamily="OpenSansRegular" 
+                       FontSize="16" Text="Sign in to continue"/>
+            </StackLayout>
+
+            <StackLayout>
+                <Label FontFamily="OpenSansRegular" 
+                       FontSize="16" Text="Username"/>
+                <Grid Margin="0,5">
+                    <Frame Opacity="0.3" BackgroundColor="White" CornerRadius="5"/>
+                    <Entry BackgroundColor="Transparent" Placeholder="Enter username" 
+                           TextColor="White" Margin="5,0"
+                           PlaceholderColor="Gray" />
+
+                </Grid>
+
+                <Label FontFamily="OpenSansRegular"
+                       FontSize="16" Text="Password"/>
+                <Grid Margin="0,5">
+                    <Frame Opacity="0.3" BackgroundColor="White" CornerRadius="5"/>
+                    <Entry BackgroundColor="Transparent" Placeholder="Enter password" 
+                           TextColor="White" Margin="5,0"
+                           PlaceholderColor="Gray" IsPassword="True"/>
+
+                </Grid>
+            </StackLayout>
+
+            <Button Margin="0,15"
+                    x:Name="SignInBtn"
+                    Clicked="SignInBtn_Clicked"
+                    Text="Sign in" FontFamily="OpenSansBold"/>
+
+            <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal">
+
+                <Button FontFamily="OpenSansRegular" 
+                        x:Name="ForgotPasswordBtn"
+                        Clicked="ForgotPasswordBtn_Clicked"
+                       FontSize="16" Text="Forgot Password?" VerticalOptions="EndAndExpand" HorizontalOptions="StartAndExpand" 
+                       />
+                <Button FontFamily="OpenSansRegular"
+                        x:Name="RegisterBtn"
+                        Clicked="RegisterBtn_Clicked"
+                       FontSize="16" Text="Register"  VerticalOptions="EndAndExpand" 
+                       HorizontalOptions="EndAndExpand" 
+                       />
+            </StackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

@@ -56,4 +56,20 @@ public partial class FlyoutMenu : FlyoutPage
         //Detail = new NavigationPage(new FilmPage(""));
         IsPresented = false;
     }
+
+    private void BtnLogin_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new LoginPage());
+        IsPresented = false;
+    }
+
+    // Link to website for new registration
+    private async void BtnRegister_Clicked(object sender, EventArgs e)
+    {
+        string url = "https://accessreel.com/wp/wp-login.php?action=register";
+
+        // Launch the URL
+        await Launcher.OpenAsync(url);
+    }
+
 }

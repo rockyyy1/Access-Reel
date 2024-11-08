@@ -13,14 +13,16 @@ namespace AccessReel
     {
         public static string ACCESSREELURL = "https://accessreel.com/";
         public static string NEWSURL = "https://accessreel.com/categories/news/";
-
-        HtmlDocument document;
         string text;
 
         public MainPage()
         {
             InitializeComponent();
             Retrieve(ReadWebsite());
+
+            Webscraping webscraping = new Webscraping();
+
+            Homepage homepage = webscraping.GetHomepage();
         }
 
         // Returns the html
@@ -46,6 +48,8 @@ namespace AccessReel
             title = HtmlEntity.DeEntitize(title);
             paragraph = HtmlEntity.DeEntitize(paragraph);
             DateTime? time = datetime != null ? DateTime.Parse(datetime) : null;
+
+            datetime = time?.ToString("dd - MMM - yyyy");
         }
 
         private void Retrieve(string text)
@@ -279,7 +283,7 @@ namespace AccessReel
                 //Debug.WriteLine(article.Url);
 
                 string webpageURL = article.Url.ToString();
-
+                    
                 // make new article page
                 ArticlePage newArticle = new ArticlePage(webpageURL);
 
@@ -311,12 +315,6 @@ namespace AccessReel
                 // Access the DataContext of the Label
                 var film = (Review)((VisualElement)sender).BindingContext;
 
-                // Debug the Url - change later to make string html to scrape
-                //Debug.WriteLine(film.Url);
-
-                // Not sure if we actually need the Url as we can get from the item - will play around
-                //string webpageURL = film.Url.ToString();
-
                 // make new article page
                 FilmPage newFilm = new FilmPage(film);
 
@@ -325,7 +323,15 @@ namespace AccessReel
             }
         }
 
-        
+        // If the user taps on a trailer on the bottom carousel
+        private void TrailerTapped(object sender, TappedEventArgs e)
+        {
+            if (sender is Label label || sender is Image image)
+            {
+                var film = (Review)((VisualElement)sender).BindingContext;
+                Debug.WriteLine(film.Url);
+            }
+        }
     }
 
     // This shows/hides the Member's rating for the top carousel if there is no member's review 

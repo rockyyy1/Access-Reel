@@ -12,8 +12,8 @@ namespace AccessReel;
 public partial class FilmPage : ContentPage
 {
     string text;
-    private Review film;
     private string authorURL;
+    string reviewURL;
     public FilmPage()
 	{
 		InitializeComponent();
@@ -37,9 +37,9 @@ public partial class FilmPage : ContentPage
         // I managed to find a workaround by going to the review article e.g - https://accessreel.com/hellboy-the-crooked-man/hellboy-the-crooked-man-review/ which usually has trailers
 
         var anchorNode = document.DocumentNode.SelectSingleNode("//li/a[@title='Review']");
-        string ReviewURL = anchorNode != null ? anchorNode.GetAttributeValue("href", string.Empty) : string.Empty;
-        string reviewHtmlText = ReadWebsite(ReviewURL);
-        //Debug.WriteLine(ReviewURL);
+        reviewURL = anchorNode != null ? anchorNode.GetAttributeValue("href", string.Empty) : string.Empty;
+        string reviewHtmlText = ReadWebsite(reviewURL);
+        //Debug.WriteLine(reviewURL);
 
         HtmlDocument reviewDocument = new HtmlDocument();
         reviewDocument.LoadHtml(reviewHtmlText);
@@ -317,95 +317,9 @@ public partial class FilmPage : ContentPage
         }
         #endregion
 
-        #region REVIEWS
-        var paragraphNodes = reviewDocument.DocumentNode.SelectNodes("//div[@class='gp-entry-text']//p");
-        if (paragraphNodes != null)
-        {
-            StringBuilder reviewParagraphs = new StringBuilder();
-
-            // Loop through each <p> tag and extract its text
-            foreach (var paragraph in paragraphNodes)
-            {
-                string p = paragraph.InnerText.Trim();
-                p = HtmlEntity.DeEntitize(p);
-                reviewParagraphs.AppendLine(p);
-            }
-            LblReview.Text = reviewParagraphs.ToString();
-        }
-
-        // author details
-        var imgNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-info']//img");
-        string authorImageUrl = imgNode.GetAttributeValue("src", string.Empty);
-
-        // Extract the author's name and URL from the <a> tag
-        var authorNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-name']//a");
-        string authorName = authorNode.InnerText.Trim();
-        authorURL = authorNode.GetAttributeValue("href", string.Empty);
-        //Debug.WriteLine(authorName);
-        //Debug.WriteLine(authorURL);
-        //Debug.WriteLine(authorImageUrl);
-        LblAuthor.Text = authorName;
-        ImageAuthor.Source = authorImageUrl;
-
-        #endregion
-
-        #region TAGS
-        // Extract all <a> tags inside <div class='gp-entry-tags'>
-        var tagNodes = reviewDocument.DocumentNode.SelectNodes("//div[@class='gp-entry-tags']//a");
-
-        if (tagNodes != null)
-        {
-            // Create a horizontal StackLayout to hold the tags
-            var horizontalStackLayout = new StackLayout
-            {
-                Orientation = StackOrientation.Horizontal, // Arrange tags horizontally
-                Spacing = 10, // Space between the tags
-                VerticalOptions = LayoutOptions.Center
-            };
-
-            foreach (var tagNode in tagNodes)
-            {
-                string tagName = tagNode.InnerText.Trim();
-                string tagUrl = tagNode.GetAttributeValue("href", string.Empty);
-
-                var tagSpan = new Span
-                {
-                    Text = tagName,
-                    TextColor = Colors.DarkGray, // Dark grey
-                    BackgroundColor = Color.FromArgb("#edeef2") // Light grey 
-                };
-
-                // Create a Label to hold the formatted text
-                var tagLabel = new Label
-                {
-                    VerticalTextAlignment = TextAlignment.Center,
-                    HorizontalTextAlignment = TextAlignment.Center,
-                    FontSize = 14, 
-                };
-
-                // Create a FormattedString and add the Span to it
-                var formattedString = new FormattedString();
-                formattedString.Spans.Add(tagSpan);
-
-                // Set the formatted string to the Label
-                tagLabel.FormattedText = formattedString;
-
-                // Create a TapGestureRecognizer for each tag
-                var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += (s, e) => OnTagTapped(tagUrl); //see method
-                tagLabel.GestureRecognizers.Add(tapGestureRecognizer);
-
-                // Add the Label to the horizontal StackLayout
-                horizontalStackLayout.Children.Add(tagLabel);
-            }
-
-            TagsStackLayout.Children.Add(horizontalStackLayout);
-        }
-
-        #endregion
     }
 
-    private string ReadWebsite(string webpage)
+    public string ReadWebsite(string webpage)
     {
         var web = new HtmlWeb();
         text = web.Load(webpage).Text;
@@ -422,6 +336,9 @@ public partial class FilmPage : ContentPage
     {
         FilmOverview.IsVisible = false;
         FilmReview.IsVisible = true;
+
+        var filmReviewContent = new FilmReviewContent(reviewURL);
+        FilmReviewContainer.Content = filmReviewContent.Content;
     }
 
     private void FollowBtn_Clicked(object sender, EventArgs e)
@@ -439,12 +356,17 @@ public partial class FilmPage : ContentPage
         }
     }
 
+    private void BtnVideos_Clicked(object sender, EventArgs e)
+    {
+
+    }
+
     private void AuthorTapped(object sender, TappedEventArgs e)
     {
         Debug.WriteLine(authorURL);
     }
 
-    private async void OnTagTapped(string tagUrl)
+    private void OnTagTapped(string tagUrl)
     {
         Debug.WriteLine(tagUrl);
     }

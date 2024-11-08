@@ -30,59 +30,86 @@ public partial class ArticlePage : ContentPage
         HtmlDocument document = new HtmlDocument();
         document.LoadHtml(htmlText);
 
-        #region TITLE
-        // Use XPath to select the title element
-        var titleNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/h1");
-        string title = titleNode.InnerText;
-        title = HtmlEntity.DeEntitize(title); 
-        articleTitle.Text = title;
-        #endregion
-
-        #region BANNER
-        var imageNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/div[3]/img");
-
-        // Get the image source
-        string imageUrl = imageNode.GetAttributeValue("src", string.Empty);
-
-        // Create an Image control and set its source
-        banner.Source = ImageSource.FromUri(new Uri(imageUrl));
-
-        #endregion
-
-        #region PARAGRAPHS & IMAGES
-        var paragraphs = document.DocumentNode.SelectNodes("//div[@class='gp-entry-text']/p");
-
-        foreach (var paragraph in paragraphs)
+        #region REVIEW
+        if (webpage.Contains("-review"))
         {
-            var imageNodes = paragraph.SelectSingleNode(".//img");
-
-            if (imageNodes != null)
+            #region TITLE
+            var titleNode = document.DocumentNode.SelectSingleNode("//h1[@class='gp-entry-title']");
+            if (titleNode != null)
             {
-                var imageUrls = imageNodes.GetAttributeValue("src", string.Empty);
-                contentStackLayout.Children.Add(new Image { Source = ImageSource.FromUri(new Uri(imageUrls)) });
-
-                // Remove the image node from the paragraph
-                imageNodes.Remove();
+                string title = titleNode.InnerText;
+                title = HtmlEntity.DeEntitize(title);
+                articleTitle.Text = title;
             }
+            #endregion
 
-            var text = paragraph.InnerHtml.Trim();
-            text = Regex.Replace(text, "<(span|a|em|wbr).*?>|</(span|a|em)>", string.Empty);
-
-            if (!string.IsNullOrEmpty(text))
-            {
-                //text = HtmlEntity.DeEntitize(text);
-
-                contentStackLayout.Children.Add(new Label
-                {
-                    Text = text + "\n",
-                    FontSize = 14,
-                    TextType = TextType.Html
-                });
-            }
+            #region CONTENT
+            FilmReviewContainer.IsVisible = true;
+            var reviewContent = new FilmReviewContent(webpage);
+            FilmReviewContainer.Content = reviewContent.Content;
+            #endregion
         }
-
         #endregion
 
+        #region ARTICLE
+        else
+        {
+            FilmReviewContainer.IsVisible = false;
+            #region TITLE
+            // Use XPath to select the title element
+            var titleNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/h1");
+            string title = titleNode.InnerText;
+            title = HtmlEntity.DeEntitize(title);
+            articleTitle.Text = title;
+            #endregion
+
+            #region BANNER
+            var imageNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/div[3]/img");
+
+            // Get the image source
+            string imageUrl = imageNode.GetAttributeValue("src", string.Empty);
+
+            // Create an Image control and set its source
+            banner.Source = ImageSource.FromUri(new Uri(imageUrl));
+
+            #endregion
+
+            #region PARAGRAPHS & IMAGES
+            var paragraphs = document.DocumentNode.SelectNodes("//div[@class='gp-entry-text']/p");
+
+            foreach (var paragraph in paragraphs)
+            {
+                var imageNodes = paragraph.SelectSingleNode(".//img");
+
+                if (imageNodes != null)
+                {
+                    var imageUrls = imageNodes.GetAttributeValue("src", string.Empty);
+                    contentStackLayout.Children.Add(new Image { Source = ImageSource.FromUri(new Uri(imageUrls)) });
+
+                    // Remove the image node from the paragraph
+                    imageNodes.Remove();
+                }
+
+                var text = paragraph.InnerHtml.Trim();
+                text = Regex.Replace(text, "<(span|a|em|wbr).*?>|</(span|a|em)>", string.Empty);
+
+                if (!string.IsNullOrEmpty(text))
+                {
+                    //text = HtmlEntity.DeEntitize(text);
+
+                    contentStackLayout.Children.Add(new Label
+                    {
+                        Text = text + "\n",
+                        FontSize = 14,
+                        TextType = TextType.Html
+                    });
+                }
+            }
+
+            #endregion
+        }
+        #endregion
+        
         #region VIDEO
         var iframeNode = document.DocumentNode.SelectSingleNode("//iframe");
 
@@ -110,7 +137,6 @@ public partial class ArticlePage : ContentPage
 
         }
         #endregion
-
     }
 
     //Clicking the button will navigate to AccessReel Author Page (ListPage)
