@@ -51,12 +51,6 @@ public partial class FlyoutMenu : FlyoutPage
         IsPresented = false;
     }
 
-    private void BtnFilmPage_Clicked(object sender, EventArgs e)
-    {
-        //Detail = new NavigationPage(new FilmPage(""));
-        IsPresented = false;
-    }
-
     private void BtnLogin_Clicked(object sender, EventArgs e)
     {
         Detail = new NavigationPage(new LoginPage());
@@ -72,4 +66,9 @@ public partial class FlyoutMenu : FlyoutPage
         await Launcher.OpenAsync(url);
     }
 
+    private void BtnFindTheaters_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new FindNearby());
+        IsPresented = false;
+    }
 }

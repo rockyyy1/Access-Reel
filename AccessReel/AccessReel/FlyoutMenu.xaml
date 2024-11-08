@@ -23,6 +23,8 @@
                 <Label/> <!-- Used For Visual Seperation Between Buttons -->
                 <Button x:Name="BtnLogin" Text="Login" Clicked="BtnLogin_Clicked" />
                 <Button x:Name="BtnRegister" Text="Register" Clicked="BtnRegister_Clicked" />
+                <Label/>
+                <Button x:Name="BtnFindTheaters" Text="Find Nearby Theaters" Clicked="BtnFindTheaters_Clicked"/>
             </StackLayout>
         </ContentPage>
     </FlyoutPage.Flyout>    
