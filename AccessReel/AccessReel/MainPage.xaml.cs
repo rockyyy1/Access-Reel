@@ -303,11 +303,11 @@ namespace AccessReel
                 var article = (Posts)label.BindingContext;
 
                 // Debug
-                Debug.WriteLine(article.Author);
-                Debug.WriteLine(article.AuthorUrl);
+                //Debug.WriteLine(article.Author);
+                //Debug.WriteLine(article.AuthorUrl);
 
                 //create new listpage:
-                NavigationPage authorListPage = new NavigationPage(new ListPage("Author"));
+                NavigationPage authorListPage = new NavigationPage(new ListPage("Author", article.Author));
                 await Navigation.PushAsync(authorListPage);
 
             }

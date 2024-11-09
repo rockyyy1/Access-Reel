@@ -7,6 +7,8 @@
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:ReviewScoreToAbsLayoutConverter x:Key="ReviewScoreToAbsLayoutConverter"/>
+            <local:NotEmptyStringConverter x:Key="NotEmptyStringConverters" />
+
             <!-- Template for movies articles -->
             <DataTemplate x:Name="DTMovieArticle" x:Key="templateMA">
                 <Grid HorizontalOptions="CenterAndExpand" Padding="5">
@@ -21,13 +23,15 @@
                         <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
-                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
-                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="LightGray" Margin="5"/>
+                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5"/>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="DarkGray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                     <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore">
-                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
-                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                        <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" IsVisible="{Binding ReviewScore, Converter={StaticResource NotEmptyStringConverters}}"/>
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" 
+                               AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" 
+                               TextColor="White" FontAttributes="Bold"  />
                     </AbsoluteLayout>
                 </Grid>
             </DataTemplate>
@@ -52,12 +56,12 @@
                         </Label>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
-                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="Gray" Margin="5">
+                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AuthorTapped"/>
                                 </Label.GestureRecognizers>
                             </Label>
-                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="Gray" Margin="5"/>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="DarkGray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Grid>

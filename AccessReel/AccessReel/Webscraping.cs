@@ -84,7 +84,7 @@ namespace AccessReel
             }
 
             // Retrieve "Top User Rated Reviews"
-            Debug.WriteLine("LASTEST REVIEWS:" + "\n\n");
+            //Debug.WriteLine("LASTEST REVIEWS:" + "\n\n");
             // ... Dont know how to do this lol
             var TURRWrapper = document.DocumentNode.SelectSingleNode("/html/body/div[3]/div[2]/div[3]/div[1]/div[2]/div[2]/div/div/div[3]");
 
