@@ -17,13 +17,25 @@
                         <ColumnDefinition Width="500"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="{Binding Image}"/>
+                    <Image Grid.Column="0" Source="{Binding Image}">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ItemTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
                     
                     <VerticalStackLayout Grid.Column="1" Margin="5">
-                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5"/>
+                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ItemTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
                         <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
                         <HorizontalStackLayout>
-                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5"/>
+                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="AuthorTapped"/>
+                                </Label.GestureRecognizers>
+                            </Label>
                             <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="DarkGray" Margin="5"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
@@ -74,8 +86,16 @@
         <ScrollView>
             <VerticalStackLayout>
                 <AbsoluteLayout HorizontalOptions="Center">
-                    <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit"/>
-                    <Label x:Name="Title" Text="listPage" AbsoluteLayout.LayoutBounds="5,220" FontSize="Title" FontAttributes="Bold" Opacity="50" TextColor="White" Background="#301c10"/>
+                    <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ItemTapped"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+                    <Label x:Name="Title" Text="listPage" AbsoluteLayout.LayoutBounds="5,220" FontSize="Title" FontAttributes="Bold" Opacity="50" TextColor="White" Background="#301c10">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ItemTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
                 </AbsoluteLayout>
                 <!-- {Binding Image}-->
                 <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >

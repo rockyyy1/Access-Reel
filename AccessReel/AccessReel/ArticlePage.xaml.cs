@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using System;
 using System.Diagnostics;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -140,9 +141,9 @@ public partial class ArticlePage : ContentPage
     }
 
     //Clicking the button will navigate to AccessReel Author Page (ListPage)
-    // https://accessreel.com/author/accessreel/"
-    private void Button_Clicked(object sender, EventArgs e)
+    private async void Button_Clicked(object sender, EventArgs e)
     {
-        // DO LATER
+        NavigationPage authorListPage = new NavigationPage(new ListPage("Author", "AccessReel"));
+        await Navigation.PushAsync(authorListPage);
     }
 }

@@ -7,6 +7,7 @@
             InitializeComponent();
             
             MainPage = new FlyoutMenu();//new AppShell();
+
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
@@ -28,30 +29,33 @@ public partial class ListPage : ContentPage
     // https://accessreel.com/genre/comedy/
     //https://accessreel.com/cast/cooper-hoffman/
     //https://accessreel.com/director/jason-reitman/
-    // SOMETHING EVEN TRICKIER IS THERE IS ALSO A /tag/ urls FOUND ON REVIEWS E.G : https://accessreel.com/venom-the-last-dance/venom-the-last-dance-review/
+    // THERE IS ALSO A /tag/ paths FOUND ON REVIEWS E.G : https://accessreel.com/venom-the-last-dance/venom-the-last-dance-review/
     // https://accessreel.com/tag/alanna-ubach/
     // https://accessreel.com/tag/kelly-marcel/
     // ALL WILL USE A DTArticle ListPage, it's just how arrange the path Urls
 
     string Author;
-    public ListPage(string pageType = "", string? authorName = null)
+    string Tag;
+    string Group;
+    public ListPage(string pageType = "", string? authorName = null, string? tagUrl = null)
     {
         InitializeComponent();
+        Title.Text = pageType;
         if (authorName != null)
         {
             Author = authorName;
         }
-
-        if (pageType == "Tags")
+        if (tagUrl != null)
         {
-            Title.Text = pageType;
+            Tag = ProcessUrl(tagUrl);
+            Group = ExtractGroup(tagUrl);
+            Title.Text = Tag;
+            //Debug.WriteLine("group is: " + Group);
+            //Debug.WriteLine(tagUrl);
+            //Debug.WriteLine(Tag);
         }
-        // DO WE EVEN NEED THESE IF STATEMENTS? WILL LEAVE THEM HERE FOR NOW BECAUSE HAVEN'T DONE TAGS YET
-        else if (pageType == "News" || pageType == "Interviews" || pageType == "Films" || pageType == "Reviews" || pageType == "Author")
-        {
-            Title.Text = pageType;
-            LoadData(pageType);
-        }
+        LoadData(pageType);
+        
     }
 
     // function loads data from all pages
@@ -70,6 +74,12 @@ public partial class ListPage : ContentPage
             Title.Text = Author;
         }
 
+        if (pageType == "Tag")
+        {
+            group = Group + "/";
+            pageType = Tag;
+        }
+
         #region FIND LAST PAGE NUMBER
         var urlp = "https://accessreel.com/" + group + pageType.Replace(" ", "-");
         var webp = new HtmlWeb();
@@ -82,15 +92,19 @@ public partial class ListPage : ContentPage
             string lastPageUrl = pageLinks[pageLinks.Count - 1].GetAttributeValue("href", string.Empty);
             // Extract the last page number from the URL
             lastPage = int.Parse(lastPageUrl.Split('/')[^2]);
-
             //Debug.WriteLine($"Number of pages: {lastPage}");
         }
+        else
+        {
+            lastPage = 1;
+        }
         #endregion
-        while (page < lastPage)
+        
+        while (page <= lastPage)
         {
             //loop until last page number
             var url = "https://accessreel.com/" + group + pageType.Replace(" ", "-") + "/page/" + page.ToString();
-            Debug.WriteLine(url);
+            //Debug.WriteLine(url);
             var web = new HtmlWeb();
             var document = web.Load(url);
 
@@ -109,7 +123,7 @@ public partial class ListPage : ContentPage
                 foreach (var node in nodes)
                 {
                     var post = new Posts();
-                    if (pageType == "Reviews" || pageType == "Films" || pageType == Author)
+                    if (pageType == "Reviews" || pageType == "Films" || pageType == Author || pageType == Tag)
                     {
                         post = new Review();
                     }
@@ -166,14 +180,14 @@ public partial class ListPage : ContentPage
                     }
                 }
             }
-            Debug.WriteLine(url);
+            //Debug.WriteLine(url);
         }
-        if (group == "categories/" )
+        if (group == "categories/")
         {
             CVArticles.ItemTemplate = DTArticle;
             CVArticles.ItemsSource = newsList;
         }
-        else if (group == "hubs/" || group == "author/")
+        else if (group == "hubs/" || group == "author/" || group == Group + "/")
         {
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = newsList;
@@ -290,6 +304,36 @@ public partial class ListPage : ContentPage
             await Navigation.PushAsync(authorListPage);
 
         }
+    }
+
+    public string ProcessUrl(string url)
+    {
+        string lastPart = url.TrimEnd('/').Split('/').Last();
+        // Replace any spaces with hyphens and capitalize the result
+        string formatted = lastPart.Replace("-", " ");
+        string tag = string.Join(" ", formatted.Split(' ').Select(word => char.ToUpper(word[0]) + word.Substring(1).ToLower()));
+        //Debug.WriteLine("tag is:" + tag);
+        return tag;
+    }
+
+    public string ExtractGroup(string url)
+    {
+        url = url.TrimEnd('/');
+
+        // Find the index after ".com/"
+        int startIndex = url.IndexOf(".com/") + 5;  // Add 5 to get the position after ".com/"
+
+        // Extract the substring between ".com/" and the next "/"
+        int endIndex = url.IndexOf('/', startIndex);
+
+        // If there is no further slash, take the rest of the string after ".com/"
+        if (endIndex == -1)
+        {
+            return url.Substring(startIndex);
+        }
+
+        // Extract and return the category part of the URL
+        return url.Substring(startIndex, endIndex - startIndex);
     }
 }
 

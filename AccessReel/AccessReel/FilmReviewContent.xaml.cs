@@ -11,14 +11,14 @@ public partial class FilmReviewContent : ContentPage
 	{
 		InitializeComponent();
 	}
-    string authorURL;
-	public FilmReviewContent(string reviewUrl)
-	{
+    Review review = new Review();
+    public FilmReviewContent(string reviewUrl)
+    {
         InitializeComponent();
         FilmPage page = new FilmPage();
 
         string reviewHtmlText = page.ReadWebsite(reviewUrl);
-        Debug.WriteLine(reviewUrl);
+        //Debug.WriteLine(reviewUrl);
 
         HtmlDocument reviewDocument = new HtmlDocument();
         reviewDocument.LoadHtml(reviewHtmlText);
@@ -37,6 +37,7 @@ public partial class FilmReviewContent : ContentPage
                 p = HtmlEntity.DeEntitize(p);
                 reviewParagraphs.AppendLine(p);
             }
+            review.Description = reviewParagraphs.ToString();
             LblReview.Text = reviewParagraphs.ToString();
         }
 
@@ -46,60 +47,58 @@ public partial class FilmReviewContent : ContentPage
 
         // Extract the author's name and URL from the <a> tag
         var authorNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-name']//a");
-        string authorName = authorNode.InnerText.Trim();
-        authorURL = authorNode.GetAttributeValue("href", string.Empty);
+        review.Author = authorNode.InnerText;
+        //authorURL = authorNode.GetAttributeValue("href", string.Empty);
         //Debug.WriteLine(authorName);
         //Debug.WriteLine(authorURL);
         //Debug.WriteLine(authorImageUrl);
-        LblAuthor.Text = authorName;
+        LblAuthor.Text = review.Author;
         ImageAuthor.Source = authorImageUrl;
 
-        #endregion
+        // review score
+        var ratingNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-rating-inner']");
+
+        if (ratingNode != null)
+        {
+            string ratingText = ratingNode.InnerText.Trim();
+            review.ReviewScore = ratingText;
+        }
+            #endregion
 
         #region TAGS
-        // Extract all <a> tags inside <div class='gp-entry-tags'>
         var tagNodes = reviewDocument.DocumentNode.SelectNodes("//div[@class='gp-entry-tags']//a");
 
         if (tagNodes != null)
         {
-            // Create a horizontal StackLayout to hold the tags
+            // horizontal StackLayout to hold the tags
             var horizontalStackLayout = new StackLayout
             {
-                Orientation = StackOrientation.Horizontal, // Arrange tags horizontally
-                Spacing = 10, // Space between the tags
+                Orientation = StackOrientation.Horizontal,
+                Spacing = 10,
                 VerticalOptions = LayoutOptions.Center
             };
 
             foreach (var tagNode in tagNodes)
             {
                 string tagName = tagNode.InnerText.Trim();
+                tagName = HtmlEntity.DeEntitize(tagName);
                 string tagUrl = tagNode.GetAttributeValue("href", string.Empty);
 
-                var tagSpan = new Span
-                {
-                    Text = tagName,
-                    TextColor = Colors.DarkGray, // Dark grey
-                    BackgroundColor = Color.FromArgb("#edeef2") // Light grey 
-                };
-
-                // Create a Label to hold the formatted text
+                // Label to hold the formatted text
                 var tagLabel = new Label
                 {
                     VerticalTextAlignment = TextAlignment.Center,
                     HorizontalTextAlignment = TextAlignment.Center,
                     FontSize = 14,
+                    BackgroundColor = Colors.LightGray,
+                    TextColor = Colors.Black
                 };
 
-                // Create a FormattedString and add the Span to it
-                var formattedString = new FormattedString();
-                formattedString.Spans.Add(tagSpan);
-
-                // Set the formatted string to the Label
-                tagLabel.FormattedText = formattedString;
+                tagLabel.Text = tagName;
 
                 // Create a TapGestureRecognizer for each tag
                 var tapGestureRecognizer = new TapGestureRecognizer();
-                tapGestureRecognizer.Tapped += (s, e) => OnTagTapped(tagUrl); //see method
+                tapGestureRecognizer.Tapped += (s, e) => OnTagTapped(tagUrl);
                 tagLabel.GestureRecognizers.Add(tapGestureRecognizer);
 
                 // Add the Label to the horizontal StackLayout
@@ -108,30 +107,37 @@ public partial class FilmReviewContent : ContentPage
 
             TagsStackLayout.Children.Add(horizontalStackLayout);
         }
-
         #endregion
     }
+
+    // WHY ARENT YOU WORKING!!
+    // WHY ARENT YOU WORKING!!
+    // WHY ARENT YOU WORKING!!
+    // WHY ARENT YOU WORKING!!
 
     private async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
         {
-            // Access the DataContext of the Label
-            var article = (Posts)label.BindingContext;
-
-            // Debug
-            //Debug.WriteLine(article.Author);
-            //Debug.WriteLine(article.AuthorUrl);
-
-            //create new listpage:
-            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", article.Author));
+            Debug.WriteLine(review.Author);
+            Debug.WriteLine("author rating:" + review.ReviewScore);
+            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", review.Author));
             await Navigation.PushAsync(authorListPage);
 
         }
     }
+    // WHY ARENT YOU WORKING!!
+    // WHY ARENT YOU WORKING!!
+    // WHY ARENT YOU WORKING!!
+    // WHY ARENT YOU WORKING!!
 
-    private void OnTagTapped(string tagUrl)
+    private async void OnTagTapped(string tagUrl)
     {
         Debug.WriteLine(tagUrl);
+        //NavigationPage tagListPage = new NavigationPage(new ListPage("Tag", null, tagUrl));
+        //await Navigation.PushAsync(tagListPage);
+
+        await Navigation.PushAsync(new ListPage("Tag", null, tagUrl));
+
     }
 }

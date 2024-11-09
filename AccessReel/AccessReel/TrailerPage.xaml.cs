@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using System;
 using System.Diagnostics;
 using static System.Net.WebRequestMethods;
 
@@ -293,8 +294,10 @@ public partial class TrailerPage : ContentPage
                     homepageLabel.FormattedText.Spans.Add(homepageSpan);
 
                     var homepageTapGesture = new TapGestureRecognizer();
-                    homepageTapGesture.Tapped += (s, e) => OnTagTapped(homepageUrl);
-                    homepageLabel.GestureRecognizers.Add(homepageTapGesture);
+                    homepageTapGesture.Tapped += async (s, e) =>
+                    { 
+                        await Launcher.OpenAsync(homepageUrl);
+                    };
 
                     HomepageStackLayout.Children.Add(homepageLabel);
                 }
@@ -305,8 +308,9 @@ public partial class TrailerPage : ContentPage
 
 
     }
-    private void OnTagTapped(string tagUrl)
+    private async void OnTagTapped(string tagUrl)
     {
-        Debug.WriteLine(tagUrl);
+        NavigationPage tagListPage = new NavigationPage(new ListPage("Tag", null, tagUrl));
+        await Navigation.PushAsync(tagListPage);
     }
 }
