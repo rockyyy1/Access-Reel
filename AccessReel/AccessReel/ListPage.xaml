@@ -9,7 +9,7 @@
             <local:ReviewScoreToAbsLayoutConverter x:Key="ReviewScoreToAbsLayoutConverter"/>
             <!-- Template for movies articles -->
             <DataTemplate x:Name="DTMovieArticle" x:Key="templateMA">
-                <Grid HorizontalOptions="CenterAndExpand">
+                <Grid HorizontalOptions="CenterAndExpand" Padding="5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="300"/>
                         <ColumnDefinition Width="500"/>
@@ -27,7 +27,7 @@
                     </VerticalStackLayout>
                     <AbsoluteLayout Grid.Column="2" Margin="10" x:Name="AbsLayoutReviewScore">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
-                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
+                        <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
                     </AbsoluteLayout>
                 </Grid>
             </DataTemplate>

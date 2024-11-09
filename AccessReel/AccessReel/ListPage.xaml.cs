@@ -15,53 +15,44 @@ public partial class ListPage : ContentPage
     {
         InitializeComponent();
     }
+    //FILMS, REVIEWS, AUTHORS AND TAGS HAVE RED RATINGS IN THEIR LISTS
+    // USE TEMPLATE DTMovieArticle
 
+    // NEWS, INTERVIEWS AND TAGS (GENRE, CASTS, DIRECTORS) DO NOT HAVE RATINGS
+    // USE TEMPLATE DTArticle
+
+
+    // TAGS ARE OPENED WHEN USER CLICKS ON THE THINGS E.G https://accessreel.com/saturday-night/ IN THE BOTTOM RIGHT.
+    // TAGS MIGHT BE A BIT TRICKY AS THEY HAVE DIFFERENT URL paths 'genre' 'cast' and 'director'
+    // https://accessreel.com/genre/comedy/
+    //https://accessreel.com/cast/cooper-hoffman/
+    //https://accessreel.com/director/jason-reitman/
     public ListPage(string pageType = "")
     {
         InitializeComponent();
-        //Test Data
-        if (pageType == "Films")
+
+        if (pageType == "Author" || pageType == "Tags")
         {
-            Title = pageType;
-            //LblPageTitle.Text = pageType;
-            reviewList = new List<Review>();
-            Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "10", Title = "Film title" };
-            Review b = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "3", Title = "Film title" };
-            reviewList.Add(a);
-            reviewList.Add(b);
-            CVArticles.ItemTemplate = DTMovieArticle;
-            CVArticles.ItemsSource = reviewList;
+            Title.Text = pageType;
         }
-        else //News, Interviews
+
+        else if (pageType == "News" || pageType == "Interviews" || pageType == "Films" || pageType == "Reviews")
+
         {
-            Title = pageType;
-
-            if (pageType == "News" || pageType == "Interviews" || pageType == "Reviews")
-            {
-                LoadData(pageType);
-            }
-
-
-            /*postList = new List<Posts>();
-            Posts c = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-            Posts d = new Posts { Author = "Test Author", Date = DateTime.Today, Description = "Article Body", Title = "Article title" };
-            postList.Add(c);
-            postList.Add(d);
-            CVArticles.ItemTemplate = DTArticle;
-            CVArticles.ItemsSource = postList;*/
+            Title.Text = pageType;
+            LoadData(pageType);
         }
     }
 
     // function loads data from all pages
     private async Task LoadDataOnAllPages(string pageType)
     {
-        //Debug.WriteLine("You have opened the News flyout");
         List<Posts> newsList = new List<Posts>();
 
         int page = 1;
+        string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
         while (true)
         {
-            string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
             var url = "https://accessreel.com/" + group + pageType + "/page/" + (page > 0 ? page.ToString() : "");
             var web = new HtmlWeb();
             var document = web.Load(url);
@@ -78,7 +69,7 @@ public partial class ListPage : ContentPage
                 foreach (var node in nodes)
                 {
                     var post = new Posts();
-                    if (pageType == "Reviews")
+                    if (pageType == "Reviews" || pageType == "Films")
                     {
                         post = new Review();
                     }
@@ -125,32 +116,29 @@ public partial class ListPage : ContentPage
                         review.ReviewScore = reviewScore;
                     }
 
-
-                    /*  Debug.WriteLine(post.Title);
-                      Debug.WriteLine(post.Description);
-                      Debug.WriteLine(post.Author);
-                      Debug.WriteLine(post.FormattedDate);
-                      Debug.WriteLine(post.Url);
-                      Debug.WriteLine(post.Image);*/
-
-
                     newsList.Add(post);
 
                     page += 1;
                 }
             }
         }
-        CVArticles.ItemTemplate = DTArticle;
-        CVArticles.ItemsSource = newsList;
+        if (group == "categories/")
+        {
+            CVArticles.ItemTemplate = DTArticle;
+            CVArticles.ItemsSource = newsList;
+        }
+        else if (group == "hubs/")
+        {
+            CVArticles.ItemTemplate = DTMovieArticle;
+            CVArticles.ItemsSource = newsList;
+        }
     }
 
-    // NOTE: i noticed you got the data from the categories pages, however it seems it is only from the
-    // 1 page thus far so i created another function, to get the data from all pages
-    // it seems to work o=however it is a bit slow, so trying to come up with an faster way
     private async void LoadData(string pageType)
     {
         await LoadDataOnAllPages(pageType);
 
+        #region ROCKY'S CODE - BACKUP
         // sorry i commented out your standard code, just testing getting data from all the pages at once :)
 
         //Debug.WriteLine("You have opened the News flyout");
@@ -212,7 +200,7 @@ public partial class ListPage : ContentPage
         //}
         //CVArticles.ItemTemplate = DTArticle;
         //CVArticles.ItemsSource = newsList;
-
+        #endregion
     }
 
     private void BtnFlyoutMenu_Clicked(object sender, EventArgs e)
@@ -261,11 +249,11 @@ public class ReviewScoreToAbsLayoutConverter : IValueConverter
         {
             if (text.Length == 2)
             {
-                return new Rect(0.22, 0.25, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+                return new Rect(0.22, 0.15, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
             else
             {
-                return new Rect(0.28, 0.25, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+                return new Rect(0.28, 0.15, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
         }
         return null; //new Rect(0.5, 0.5, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
