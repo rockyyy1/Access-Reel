@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:AccessReel"
              x:Class="AccessReel.FindNearby"
              Title="Find Nearby Theaters">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:OpenNowConverter x:Key="OpenNowConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
     <VerticalStackLayout>
         <Button x:Name="BtnFindTheaters" Text="Find Nearby Theaters Via GPS" Clicked="BtnFindTheaters_Clicked"/>
         <Button x:Name="BtnFindWithPreset" Text="Find theaters with a preset location. (FOR TESTING PURPOSES)" Clicked="BtnFindWithPreset_Clicked"/>
         <Label x:Name="LblTheaters" VerticalOptions="Center" 
                                     HorizontalOptions="Center" />
+        <CollectionView x:Name="CVTheaters" HorizontalOptions="Center" VerticalOptions="Center">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="500">
+                        <Label Text="{Binding name}"  FontAttributes="Bold" FontSize="Small"/>
+                        <Label Text="{Binding address}" FontAttributes="Italic" TextColor="DarkGray" FontSize="Subtitle"/>                        
+                        <HorizontalStackLayout>
+                            <Label Text="{Binding openNow, Converter={StaticResource OpenNowConverter}}" WidthRequest="150"/>
+                            <Label Text="Rating:" WidthRequest="50"/>
+                            <Label Text="{Binding rating}"/>
+                        </HorizontalStackLayout>
+                        <Label/>
+                    </VerticalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
     </VerticalStackLayout>
 </ContentPage>
