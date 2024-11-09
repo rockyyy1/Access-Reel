@@ -68,11 +68,10 @@ public partial class ListPage : ContentPage
             group = "author/";
             pageType = Author;
             Title.Text = Author;
-            Debug.WriteLine("https://accessreel.com/" + group + pageType);
         }
 
         #region FIND LAST PAGE NUMBER
-        var urlp = "https://accessreel.com/" + group + pageType;
+        var urlp = "https://accessreel.com/" + group + pageType.Replace(" ", "-");
         var webp = new HtmlWeb();
         var documentp = webp.Load(urlp);
         var pageLinks = documentp.DocumentNode.SelectNodes("//a[@class='page-numbers']");
@@ -90,7 +89,8 @@ public partial class ListPage : ContentPage
         while (page < lastPage)
         {
             //loop until last page number
-            var url = "https://accessreel.com/" + group + pageType + "/page/" + page.ToString();
+            var url = "https://accessreel.com/" + group + pageType.Replace(" ", "-") + "/page/" + page.ToString();
+            Debug.WriteLine(url);
             var web = new HtmlWeb();
             var document = web.Load(url);
 
@@ -106,7 +106,6 @@ public partial class ListPage : ContentPage
             }
             if (nodes != null)
             {
-
                 foreach (var node in nodes)
                 {
                     var post = new Posts();
@@ -161,7 +160,7 @@ public partial class ListPage : ContentPage
 
                     page += 1;
 
-                    if (page > 140) //I think 140 pages is the max
+                    if (page > lastPage)  
                     {
                         break;
                     }
