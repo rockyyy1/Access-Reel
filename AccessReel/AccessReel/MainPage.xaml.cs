@@ -304,6 +304,10 @@ namespace AccessReel
 
                 // Debug
                 Debug.WriteLine(article.AuthorUrl);
+
+                //create new listpage:
+                NavigationPage authorListPage = new NavigationPage(new ListPage("Author"));
+
             }
         }
 

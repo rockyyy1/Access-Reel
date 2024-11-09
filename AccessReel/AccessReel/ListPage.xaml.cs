@@ -19,8 +19,8 @@ public partial class ListPage : ContentPage
     public ListPage(string pageType = "")
 	{
 		InitializeComponent();
-        //Test Data
-        if(pageType == "Reviews" || pageType == "Films")
+        // These peages have that red circles next to articles
+        if(pageType == "Reviews" || pageType == "Films" || pageType == "Author")
         {
             Title.Text = pageType;
             //LblPageTitle.Text = pageType;
@@ -32,7 +32,9 @@ public partial class ListPage : ContentPage
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = reviewList;
         }
-        else if (pageType == "News" || pageType == "Interviews") //News, Interviews
+        // These pages dont have red circles
+        // A "Tag" is when user clicks on a Genre, Cast or Director tag
+        else if (pageType == "News" || pageType == "Interviews" ) // || pageType == "Tags") Might have trouble with this one - because LoadData() loads url with suffix .com/categories/... hmmm...
         {
             Title.Text = pageType;
             LoadData(pageType);
@@ -41,7 +43,6 @@ public partial class ListPage : ContentPage
 
     private void LoadData(string pageType)
     {
-        //Debug.WriteLine("You have opened the News flyout");
         List<Posts> newsList = new List<Posts>();
 
         var url = "https://accessreel.com/categories/" + pageType; 
