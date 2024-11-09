@@ -19,10 +19,15 @@ public partial class ListPage : ContentPage
     public ListPage(string pageType = "")
 	{
 		InitializeComponent();
-        // These peages have that red circles next to articles
-        if(pageType == "Reviews" || pageType == "Films" || pageType == "Author")
+        // These pages have that red circles next to articles
+        if (pageType == "Reviews" || pageType == "Films" || pageType == "Author")
         {
             Title.Text = pageType;
+            if (pageType == "Author")
+            {
+                //Title.Text = author
+            }
+
             //LblPageTitle.Text = pageType;
             reviewList = new List<Review>();
             Review a = new Review { Author = "Test Author", Date = DateTime.Today, Description = "Film Description", ReviewScore = "10", Title = "Film title" };
