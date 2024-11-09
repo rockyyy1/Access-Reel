@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AccessReel.TrailerPage"
+             Title="TrailerPage">
+    <ScrollView>
+
+        <StackLayout>
+        <!-- Title/Score -->
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Label x:Name="LblTitle" Text="{Binding Title}" HorizontalOptions="Start" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
+        </HorizontalStackLayout>
+
+        <!-- Media Player Goes Here -->
+        <StackLayout x:Name="videoStackLayout"></StackLayout>
+
+            <!-- Film Overview -->
+            <Grid x:Name="FilmOverview" IsVisible="True" Margin="30" HorizontalOptions="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackLayout Grid.Column="2" Grid.Row="0" Margin="20">
+                    <Label x:Name ="AUreleaseDate" Text="In Theaters (AU): " HorizontalTextAlignment="End" TextColor="#a2645f"/>
+                    <Label x:Name ="USreleaseDate" Text="In Theaters (USA):  " HorizontalTextAlignment="End" TextColor="#a2645f"/>
+                </StackLayout>
+                <VerticalStackLayout Grid.Column="0" Grid.Row="1">
+                    <Image x:Name="ImagePoster" />
+                </VerticalStackLayout>
+                <Label Grid.Column="1" Grid.Row="1" x:Name="LblDesc" Margin="50,10,0,0"/>
+
+                <!-- Film Details-->
+                <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="50,0,0,50" Grid.ColumnSpan="2" BackgroundColor="#f9f9f9">
+                    <StackLayout x:Name="GenreStackLayout" Padding="10">
+                        <Label Text="Genre"/>
+                        <!-- Genre items will be added by code -->
+                    </StackLayout>
+
+                    <StackLayout x:Name="CastStackLayout" Padding="10">
+                        <Label Text="Cast"/>
+                        <!-- Cast items will be added by code -->
+                    </StackLayout>
+
+                    <StackLayout x:Name="DirectorStackLayout" Padding="10">
+                        <Label Text="Directors"/>
+                        <!-- Director items will be added by code -->
+                    </StackLayout>
+
+                    <StackLayout x:Name="StudioStackLayout" Padding="10">
+                        <Label Text="Studio"/>
+                        <!-- Director items will be added by code -->
+                    </StackLayout>
+
+
+                    <StackLayout x:Name="HomepageStackLayout" Padding="10">
+                        <Label Text="Homepage"/>
+                        <!-- Director items will be added by code -->
+                    </StackLayout>
+
+                </VerticalStackLayout>
+            </Grid>
+    </StackLayout>
+    </ScrollView>
+
+</ContentPage>

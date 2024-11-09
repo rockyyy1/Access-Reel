@@ -295,7 +295,7 @@ namespace AccessReel
         // If the user taps on a Post's/Article's Author
         // should bring up a list of all the reviews that Author has done e.g: https://accessreel.com/author/accessreel/
         // I think we use ListPage for this?? -Rocky
-        private void AuthorTapped(object sender, TappedEventArgs e)
+        private async void AuthorTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label)
             {
@@ -303,7 +303,13 @@ namespace AccessReel
                 var article = (Posts)label.BindingContext;
 
                 // Debug
+                Debug.WriteLine(article.Author);
                 Debug.WriteLine(article.AuthorUrl);
+
+                //create new listpage:
+                NavigationPage authorListPage = new NavigationPage(new ListPage("Author"));
+                await Navigation.PushAsync(authorListPage);
+
             }
         }
 
@@ -324,12 +330,17 @@ namespace AccessReel
         }
 
         // If the user taps on a trailer on the bottom carousel
-        private void TrailerTapped(object sender, TappedEventArgs e)
+        private async void TrailerTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label || sender is Image image)
             {
                 var film = (Review)((VisualElement)sender).BindingContext;
-                Debug.WriteLine(film.Url);
+                //Debug.WriteLine(film.Url);
+                //Debug.WriteLine(film.Title);
+                TrailerPage trailerItem = new TrailerPage(film);
+
+                await Navigation.PushAsync(trailerItem);
+
             }
         }
     }
