@@ -46,6 +46,7 @@ public partial class ArticlePage : ContentPage
             #region CONTENT
             FilmReviewContainer.IsVisible = true;
             var reviewContent = new FilmReviewContent(webpage);
+            reviewContent.ActionOnTagTapped += this.NavigateToTags;
             FilmReviewContainer.Content = reviewContent.Content;
             #endregion
         }
@@ -144,5 +145,12 @@ public partial class ArticlePage : ContentPage
     private void Button_Clicked(object sender, EventArgs e)
     {
         // DO LATER
+    }
+
+    private async void NavigateToTags(string pageType, string? tagurl)
+    {
+        ListPage page = new ListPage(pageType, tagurl);
+
+        await Navigation.PushAsync(page);
     }
 }

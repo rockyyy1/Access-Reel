@@ -11,10 +11,13 @@ public partial class ListPage : ContentPage
     public List<Review> reviewList { get; set; }
     public List<Posts> postList { get; set; }
 
+    private string? tagurl;
+
     public ListPage() //Used for xaml to prevent error, might be removed later
     {
         InitializeComponent();
     }
+
     //FILMS, REVIEWS, AUTHORS AND TAGS HAVE RED RATINGS IN THEIR LISTS
     // USE TEMPLATE DTMovieArticle
 
@@ -27,16 +30,24 @@ public partial class ListPage : ContentPage
     // https://accessreel.com/genre/comedy/
     //https://accessreel.com/cast/cooper-hoffman/
     //https://accessreel.com/director/jason-reitman/
-    public ListPage(string pageType = "")
+    public ListPage(string pageType = "", string? tagurl = null)
     {
         InitializeComponent();
 
-        if (pageType == "Author" || pageType == "Tags")
+        this.tagurl = tagurl;
+
+        if ( tagurl != null )
+        {
+            // GetTagInfo(tagurl);
+        }
+
+        if (pageType == "Author" /*|| pageType == "Tags"*/)
         {
             Title.Text = pageType;
         }
 
-        else if (pageType == "News" || pageType == "Interviews" || pageType == "Films" || pageType == "Reviews")
+        else if (pageType == "News" || pageType == "Interviews" || pageType == "Films" 
+            || pageType == "Reviews" || pageType == "Tags")
 
         {
             Title.Text = pageType;
@@ -44,13 +55,37 @@ public partial class ListPage : ContentPage
         }
     }
 
+    private void GetTagInfo(string url, out string group, out string title)
+    {
+        //int index1 = url.IndexOf(".com/") + 4;
+        //string group = url.Substring(index1, url.Length - 1);
+
+        List<string> items = url.Split("/").ToList();
+
+        group = items[3] + "/";
+        title = items[4];
+
+
+
+        Debug.WriteLine("INDEX - " + items[2]);
+    }
+
     // function loads data from all pages
-    private async Task LoadDataOnAllPages(string pageType)
+    private void LoadDataOnAllPages(string pageType, string _url = "")
     {
         List<Posts> newsList = new List<Posts>();
 
         int page = 1;
+
         string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
+        if ( this.tagurl != null )
+        {
+            string taggroup;
+            this.GetTagInfo(this.tagurl, out taggroup, out pageType);
+
+            group = taggroup;
+        }
+
         while (true)
         {
             var url = "https://accessreel.com/" + group + pageType + "/page/" + (page > 0 ? page.ToString() : "");
@@ -89,10 +124,18 @@ public partial class ListPage : ContentPage
 
                     // Extract the main link
                     var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
+
+                    if ( linkNode == null )
+                    {
+                        linkNode = node.SelectSingleNode(".//div[@class='gp-post-thumbnail gp-loop-featured']/div/a");
+                    }
                     post.Url = linkNode?.GetAttributeValue("href", string.Empty);
 
                     var imageNode = linkNode?.SelectSingleNode(".//img");
+
                     post.Image = imageNode?.GetAttributeValue("src", string.Empty);
+
+
 
                     // Extract Author
                     var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
@@ -122,7 +165,7 @@ public partial class ListPage : ContentPage
                 }
             }
         }
-        if (group == "categories/")
+        if (group == "categories/" || this.tagurl != null)
         {
             CVArticles.ItemTemplate = DTArticle;
             CVArticles.ItemsSource = newsList;
@@ -136,7 +179,7 @@ public partial class ListPage : ContentPage
 
     private async void LoadData(string pageType)
     {
-        await LoadDataOnAllPages(pageType);
+       LoadDataOnAllPages(pageType);
 
         #region ROCKY'S CODE - BACKUP
         // sorry i commented out your standard code, just testing getting data from all the pages at once :)
