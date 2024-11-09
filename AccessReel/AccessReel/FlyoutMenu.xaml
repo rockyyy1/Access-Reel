@@ -12,8 +12,7 @@
             <StackLayout>
                 <Button x:Name="BtnCloseMenu" Text="X" 
                         Clicked="BtnCloseMenu_Clicked" HorizontalOptions="End"
-                        FontAttributes="Bold" FontSize="Medium"
-                        BackgroundColor="MediumVioletRed"/>
+                        FontAttributes="Bold" FontSize="Medium"/>
                 <Button x:Name="BtnHomePage" Text="Home" Clicked="BtnHomePage_Clicked" HorizontalOptions="Fill" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnNewsPage" Text="News" Clicked="BtnNewsPage_Clicked" HorizontalOptions="Fill" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnReviewPage" Text="Reviews" Clicked="BtnReviewPage_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
