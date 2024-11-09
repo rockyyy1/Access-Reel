@@ -324,12 +324,17 @@ namespace AccessReel
         }
 
         // If the user taps on a trailer on the bottom carousel
-        private void TrailerTapped(object sender, TappedEventArgs e)
+        private async void TrailerTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label || sender is Image image)
             {
                 var film = (Review)((VisualElement)sender).BindingContext;
-                Debug.WriteLine(film.Url);
+                //Debug.WriteLine(film.Url);
+                //Debug.WriteLine(film.Title);
+                TrailerPage trailerItem = new TrailerPage(film);
+
+                await Navigation.PushAsync(trailerItem);
+
             }
         }
     }

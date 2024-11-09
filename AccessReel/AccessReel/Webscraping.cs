@@ -132,7 +132,7 @@ namespace AccessReel
             document.LoadHtml(text);
         }
 
-        private string ReadWebsite()
+        public string ReadWebsite(string? url)
         {
             var web = new HtmlWeb();
             text = web.Load("https://accessreel.com/").Text;
