@@ -15,7 +15,7 @@ public partial class ListPage : ContentPage
     List<string> sortPickerIfReviews = new List<string> { "Top Site Rated" };
 
     private string? tagurl;
-    private string? authorurl;
+    string? Authorurl;
 
     public ListPage() //Used for xaml to prevent error, might be removed later
     {
@@ -42,7 +42,7 @@ public partial class ListPage : ContentPage
         Sorter.SelectedIndex = 0;
 
         this.tagurl = tagurl;
-        this.authorurl = authorurl;
+        Authorurl = authorurl;
 
         if (tagurl != null)
         {
@@ -67,9 +67,10 @@ public partial class ListPage : ContentPage
     }
     private string GetAuthorName(string url)
     {
-        List<string> items = url.Split("/").ToList();
+        List<string> items = url.Split("/").Where(item => !string.IsNullOrEmpty(item)).ToList();
         string authorName = items.LastOrDefault();
-        return authorName; //has hyphens
+        //Debug.WriteLine("GetAuthorName returns: " + authorName);
+        return authorName; 
     }
 
     // function loads data from all pages
@@ -78,6 +79,7 @@ public partial class ListPage : ContentPage
         //List<Posts> newsList = new List<Posts>();
 
         int page = 1;
+        int lastPage = 1;
 
         string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
         if (this.tagurl != null)
@@ -90,16 +92,30 @@ public partial class ListPage : ContentPage
             //change title
             Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-"," ");
         }
-        if (this.authorurl != null)
+        if (Authorurl != null)
         {
             group = "author/";
-            pageType = GetAuthorName(this.authorurl);
+            pageType = GetAuthorName(Authorurl);
             //change title
             Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
         }
-        while (true)
+        #region FIND LAST PAGE NUMBER
+        var urlp = "https://accessreel.com/" + group + pageType;
+        var webp = new HtmlWeb();
+        var documentp = webp.Load(urlp);
+        var pageLinks = documentp.DocumentNode.SelectNodes("//a[@class='page-numbers']");
+        if (pageLinks != null && pageLinks.Count > 0)
         {
-            var url = "https://accessreel.com/" + group + pageType + "/page/" + (page > 0 ? page.ToString() : "");
+            // Get the last page number
+            string lastPageUrl = pageLinks[pageLinks.Count - 1].GetAttributeValue("href", string.Empty);
+            // Extract the last page number from the URL
+            lastPage = int.Parse(lastPageUrl.Split('/')[^2]);
+            //Debug.WriteLine($"Number of pages: {lastPage}");
+        }
+        #endregion
+        while (page < lastPage)
+        {
+            var url = "https://accessreel.com/" + group + pageType + "/page/" + page.ToString();
             Debug.WriteLine(url);
             var web = new HtmlWeb();            
             var document = web.Load(url);
@@ -110,13 +126,17 @@ public partial class ListPage : ContentPage
                 break;
             }
             var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
+            if (nodes == null || nodes.Count == 0)
+            {
+                break;
+            }
             if (nodes != null)
             {
 
                 foreach (var node in nodes)
                 {
                     var post = new Posts();
-                    if (pageType == "Reviews" || pageType == "Films")
+                    if (pageType == "Reviews" || pageType == "Films" || this.tagurl != null || Authorurl != null)
                     {
                         post = new Review();
                     }
@@ -173,6 +193,10 @@ public partial class ListPage : ContentPage
 
                     newsList.Add(post);
 
+                    if (page == lastPage)
+                    {
+                        break;
+                    }
                     page += 1;
                 }
             }
@@ -182,7 +206,7 @@ public partial class ListPage : ContentPage
             CVArticles.ItemTemplate = DTArticle;
             CVArticles.ItemsSource = newsList;
         }
-        else if (group == "hubs/" || this.tagurl != null || this.authorurl != null)
+        else if (group == "hubs/" || this.tagurl != null || Authorurl != null)
         {
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = newsList;
@@ -281,7 +305,7 @@ public partial class ListPage : ContentPage
     {
         if (sender is Label label)
         {
-            var item = (Posts)((VisualElement)sender).BindingContext;
+            var item = (Review)((VisualElement)sender).BindingContext;
             NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: item.AuthorUrl));
             await Navigation.PushAsync(authorListPage);
         }

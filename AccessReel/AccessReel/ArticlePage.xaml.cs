@@ -144,7 +144,7 @@ public partial class ArticlePage : ContentPage
     //Clicking the button will navigate to AccessReel Author Page (ListPage)
     private async void Button_Clicked(object sender, EventArgs e)
     {
-        NavigationPage authorListPage = new NavigationPage(new ListPage("Author", "AccessReel"));
+        NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: "https://accessreel.com/author/accessreel"));
         await Navigation.PushAsync(authorListPage);
     }
 

@@ -45,7 +45,6 @@
             <HorizontalStackLayout HorizontalOptions="CenterAndExpand" >
                 <Button x:Name="BtnOverview" Text="{Binding Title}" Clicked="BtnOverview_Clicked" WidthRequest="300"/>
                 <Button x:Name="BtnReviews" Text="Review" Clicked="BtnReview_Clicked" WidthRequest="300"/>
-                <Button x:Name="BtnVideos" Text="Videos" Clicked="BtnVideos_Clicked"  WidthRequest="300"/>
             </HorizontalStackLayout>
             
             <!-- Film Overview -->

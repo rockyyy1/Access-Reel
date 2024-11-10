@@ -338,6 +338,7 @@ public partial class FilmPage : ContentPage
         FilmReview.IsVisible = true;
 
         var filmReviewContent = new FilmReviewContent(reviewURL);
+        filmReviewContent.BindingContext = this;
         FilmReviewContainer.Content = filmReviewContent.Content;
     }
 
@@ -356,19 +357,17 @@ public partial class FilmPage : ContentPage
         }
     }
 
-    private void BtnVideos_Clicked(object sender, EventArgs e)
-    {
-
-    }
-
     private async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
         {
-            // Access the DataContext of the Label
-            var article = (Posts)label.BindingContext;
-            ListPage author = new ListPage("Author", authorurl: article.AuthorUrl);
-            await Navigation.PushAsync(author);
+            //var article = (Review)label.BindingContext;
+            //ListPage author = new ListPage("Author", authorurl: article.AuthorUrl);
+            //await Navigation.PushAsync(author);
+
+            //Joel's version that works for Tags:
+            ListPage tag = new ListPage("Author", authorurl: authorURL);
+            await Navigation.PushAsync(tag);
 
         }
     }

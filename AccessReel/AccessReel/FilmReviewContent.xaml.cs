@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using Microsoft.Maui.Controls;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Text;
@@ -49,7 +50,7 @@ public partial class FilmReviewContent : ContentPage
         // Extract the author's name and URL from the <a> tag
         var authorNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-name']//a");
         review.Author = authorNode.InnerText;
-        //authorURL = authorNode.GetAttributeValue("href", string.Empty);
+        review.AuthorUrl = authorNode.GetAttributeValue("href", string.Empty);
         //Debug.WriteLine(authorName);
         //Debug.WriteLine(authorURL);
         //Debug.WriteLine(authorImageUrl);
@@ -115,15 +116,15 @@ public partial class FilmReviewContent : ContentPage
     {
         if (sender is Label label)
         {
-            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: review.AuthorUrl));
-            await Navigation.PushAsync(authorListPage);
+            Debug.WriteLine("this is the authors url:" + review.AuthorUrl);
+            ListPage author = new ListPage("Author", authorurl: review.AuthorUrl);
+            await Navigation.PushAsync(author);
         }
     }
 
     private async void OnTagTapped(string tagUrl)
     {
         ListPage page = new ListPage("Tags", tagUrl);
-
         ActionOnTagTapped.Invoke("Tags", tagUrl);
         // Debug.WriteLine(tagUrl);
     }
