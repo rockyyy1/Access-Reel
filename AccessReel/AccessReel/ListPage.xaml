@@ -17,12 +17,12 @@
                         <ColumnDefinition Width="500"/>
                         <ColumnDefinition Width="120"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="{Binding Image}">
+                    <Image Grid.Column="0" Margin="5" Source="{Binding Image}">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ItemTapped"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    
+
                     <VerticalStackLayout Grid.Column="1" Margin="5">
                         <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5">
                             <Label.GestureRecognizers>

@@ -7,6 +7,7 @@ namespace AccessReel;
 
 public partial class FilmReviewContent : ContentPage
 {
+    public Action<string, string> ActionOnTagTapped;
 	public FilmReviewContent()
 	{
 		InitializeComponent();
@@ -133,11 +134,9 @@ public partial class FilmReviewContent : ContentPage
 
     private async void OnTagTapped(string tagUrl)
     {
-        Debug.WriteLine(tagUrl);
-        //NavigationPage tagListPage = new NavigationPage(new ListPage("Tag", null, tagUrl));
-        //await Navigation.PushAsync(tagListPage);
+        ListPage page = new ListPage("Tags", tagUrl);
 
-        await Navigation.PushAsync(new ListPage("Tag", null, tagUrl));
-
+        ActionOnTagTapped.Invoke("Tags", tagUrl);
+        // Debug.WriteLine(tagUrl);
     }
 }

@@ -381,7 +381,8 @@ public partial class FilmPage : ContentPage
 
     private async void OnTagTapped(string tagUrl)
     {
-        NavigationPage tagListPage = new NavigationPage(new ListPage("Tag", null, tagUrl));
-        await Navigation.PushAsync(tagListPage);
+        ListPage tag = new ListPage("Tags", tagUrl);
+        await Navigation.PushAsync(tag);
+        Debug.WriteLine(tagUrl);
     }
 }

@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
-using System.Reflection.Metadata;
 using HtmlAgilityPack;
 using Microsoft.Maui.Controls;
 
@@ -13,10 +11,13 @@ public partial class ListPage : ContentPage
     public List<Review> reviewList { get; set; }
     public List<Posts> postList { get; set; }
 
+    private string? tagurl;
+
     public ListPage() //Used for xaml to prevent error, might be removed later
     {
         InitializeComponent();
     }
+
     //FILMS, REVIEWS, AUTHORS AND TAGS HAVE RED RATINGS IN THEIR LISTS
     // USE TEMPLATE DTMovieArticle
 
@@ -25,86 +26,69 @@ public partial class ListPage : ContentPage
 
 
     // TAGS ARE OPENED WHEN USER CLICKS ON THE THINGS E.G https://accessreel.com/saturday-night/ IN THE BOTTOM RIGHT.
-    // TAGS MIGHT BE A BIT TRICKY AS THEY HAVE DIFFERENT URL paths 'genre' 'cast' and 'director' 
+    // TAGS MIGHT BE A BIT TRICKY AS THEY HAVE DIFFERENT URL paths 'genre' 'cast' and 'director'
     // https://accessreel.com/genre/comedy/
     //https://accessreel.com/cast/cooper-hoffman/
     //https://accessreel.com/director/jason-reitman/
-    // THERE IS ALSO A /tag/ paths FOUND ON REVIEWS E.G : https://accessreel.com/venom-the-last-dance/venom-the-last-dance-review/
-    // https://accessreel.com/tag/alanna-ubach/
-    // https://accessreel.com/tag/kelly-marcel/
-    // ALL WILL USE A DTArticle ListPage, it's just how arrange the path Urls
-
-    string Author;
-    string Tag;
-    string Group;
-    public ListPage(string pageType = "", string? authorName = null, string? tagUrl = null)
+    public ListPage(string pageType = "", string? tagurl = null)
     {
         InitializeComponent();
-        Title.Text = pageType;
-        if (authorName != null)
+
+        this.tagurl = tagurl;
+
+        if (tagurl != null)
         {
-            Author = authorName;
+            // GetTagInfo(tagurl);
         }
-        if (tagUrl != null)
+
+        if (pageType == "Author" /*|| pageType == "Tags"*/)
         {
-            Tag = ProcessUrl(tagUrl);
-            Group = ExtractGroup(tagUrl);
-            Title.Text = Tag;
-            //Debug.WriteLine("group is: " + Group);
-            //Debug.WriteLine(tagUrl);
-            //Debug.WriteLine(Tag);
+            Title.Text = pageType;
         }
-        LoadData(pageType);
-        
+
+        else if (pageType == "News" || pageType == "Interviews" || pageType == "Films"
+            || pageType == "Reviews" || pageType == "Tags")
+
+        {
+            Title.Text = pageType;
+            LoadData(pageType);
+        }
+    }
+
+    private void GetTagInfo(string url, out string group, out string title)
+    {
+        //int index1 = url.IndexOf(".com/") + 4;
+        //string group = url.Substring(index1, url.Length - 1);
+
+        List<string> items = url.Split("/").ToList();
+
+        group = items[3] + "/";
+        title = items[4];
+
+
+
+        Debug.WriteLine("INDEX - " + items[2]);
     }
 
     // function loads data from all pages
-    private async Task LoadDataOnAllPages(string pageType)
+    private void LoadDataOnAllPages(string pageType, string _url = "")
     {
         List<Posts> newsList = new List<Posts>();
 
         int page = 1;
-        int lastPage = 1;
+
         string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
-
-        if (pageType == "Author")
+        if (this.tagurl != null)
         {
-            group = "author/";
-            pageType = Author;
-            Title.Text = Author;
+            string taggroup;
+            this.GetTagInfo(this.tagurl, out taggroup, out pageType);
+
+            group = taggroup;
         }
 
-        if (pageType == "Tag")
+        while (true)
         {
-            group = Group + "/";
-            pageType = Tag;
-        }
-
-        #region FIND LAST PAGE NUMBER
-        var urlp = "https://accessreel.com/" + group + pageType.Replace(" ", "-");
-        var webp = new HtmlWeb();
-        var documentp = webp.Load(urlp);
-        var pageLinks = documentp.DocumentNode.SelectNodes("//a[@class='page-numbers']");
-
-        if (pageLinks != null && pageLinks.Count > 0)
-        {
-            // Get the last page number
-            string lastPageUrl = pageLinks[pageLinks.Count - 1].GetAttributeValue("href", string.Empty);
-            // Extract the last page number from the URL
-            lastPage = int.Parse(lastPageUrl.Split('/')[^2]);
-            //Debug.WriteLine($"Number of pages: {lastPage}");
-        }
-        else
-        {
-            lastPage = 1;
-        }
-        #endregion
-        
-        while (page <= lastPage)
-        {
-            //loop until last page number
-            var url = "https://accessreel.com/" + group + pageType.Replace(" ", "-") + "/page/" + page.ToString();
-            //Debug.WriteLine(url);
+            var url = "https://accessreel.com/" + group + pageType + "/page/" + (page > 0 ? page.ToString() : "");
             var web = new HtmlWeb();
             var document = web.Load(url);
 
@@ -114,16 +98,13 @@ public partial class ListPage : ContentPage
                 break;
             }
             var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
-            if (nodes == null || nodes.Count == 0)
-            {
-                break;
-            }
             if (nodes != null)
             {
+
                 foreach (var node in nodes)
                 {
                     var post = new Posts();
-                    if (pageType == "Reviews" || pageType == "Films" || pageType == Author || pageType == Tag)
+                    if (pageType == "Reviews" || pageType == "Films")
                     {
                         post = new Review();
                     }
@@ -137,16 +118,24 @@ public partial class ListPage : ContentPage
 
                     // Extract Paragraph
                     var paragraphNode = node.SelectSingleNode(".//div[@class='gp-loop-text']/p");
-                    string para = paragraphNode?.InnerText.Trim();
+                    string para = paragraphNode.InnerText.Trim();
                     para = HtmlEntity.DeEntitize(para);
                     post.Description = para;
 
                     // Extract the main link
                     var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
+
+                    if (linkNode == null)
+                    {
+                        linkNode = node.SelectSingleNode(".//div[@class='gp-post-thumbnail gp-loop-featured']/div/a");
+                    }
                     post.Url = linkNode?.GetAttributeValue("href", string.Empty);
 
                     var imageNode = linkNode?.SelectSingleNode(".//img");
+
                     post.Image = imageNode?.GetAttributeValue("src", string.Empty);
+
+
 
                     // Extract Author
                     var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
@@ -173,21 +162,15 @@ public partial class ListPage : ContentPage
                     newsList.Add(post);
 
                     page += 1;
-
-                    if (page > lastPage)  
-                    {
-                        break;
-                    }
                 }
             }
-            //Debug.WriteLine(url);
         }
-        if (group == "categories/")
+        if (group == "categories/" || this.tagurl != null)
         {
             CVArticles.ItemTemplate = DTArticle;
             CVArticles.ItemsSource = newsList;
         }
-        else if (group == "hubs/" || group == "author/" || group == Group + "/")
+        else if (group == "hubs/")
         {
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = newsList;
@@ -196,7 +179,7 @@ public partial class ListPage : ContentPage
 
     private async void LoadData(string pageType)
     {
-        await LoadDataOnAllPages(pageType);
+        LoadDataOnAllPages(pageType);
 
         #region ROCKY'S CODE - BACKUP
         // sorry i commented out your standard code, just testing getting data from all the pages at once :)
@@ -288,52 +271,13 @@ public partial class ListPage : ContentPage
     }
 
     // When the user taps on an user it should bring up the Author Page
-    private async void AuthorTapped(object sender, TappedEventArgs e)
+    private void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
         {
-            // Access the DataContext of the Label
-            var article = (Posts)label.BindingContext;
-
-            // Debug
-            //Debug.WriteLine(article.Author);
-            //Debug.WriteLine(article.AuthorUrl);
-
-            //create new listpage:
-            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", article.Author));
-            await Navigation.PushAsync(authorListPage);
-
+            var item = (Posts)((VisualElement)sender).BindingContext;
+            Debug.WriteLine(item.AuthorUrl);
         }
-    }
-
-    public string ProcessUrl(string url)
-    {
-        string lastPart = url.TrimEnd('/').Split('/').Last();
-        // Replace any spaces with hyphens and capitalize the result
-        string formatted = lastPart.Replace("-", " ");
-        string tag = string.Join(" ", formatted.Split(' ').Select(word => char.ToUpper(word[0]) + word.Substring(1).ToLower()));
-        //Debug.WriteLine("tag is:" + tag);
-        return tag;
-    }
-
-    public string ExtractGroup(string url)
-    {
-        url = url.TrimEnd('/');
-
-        // Find the index after ".com/"
-        int startIndex = url.IndexOf(".com/") + 5;  // Add 5 to get the position after ".com/"
-
-        // Extract the substring between ".com/" and the next "/"
-        int endIndex = url.IndexOf('/', startIndex);
-
-        // If there is no further slash, take the rest of the string after ".com/"
-        if (endIndex == -1)
-        {
-            return url.Substring(startIndex);
-        }
-
-        // Extract and return the category part of the URL
-        return url.Substring(startIndex, endIndex - startIndex);
     }
 }
 
@@ -348,11 +292,11 @@ public class ReviewScoreToAbsLayoutConverter : IValueConverter
         {
             if (text.Length == 2)
             {
-                return new Rect(0.22, 0.10, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+                return new Rect(0.22, 0.15, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
             else
             {
-                return new Rect(0.28, 0.10, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+                return new Rect(0.28, 0.15, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
         }
         return null; //new Rect(0.5, 0.5, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
@@ -360,21 +304,6 @@ public class ReviewScoreToAbsLayoutConverter : IValueConverter
     }
 
     public Object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        throw new NotImplementedException();
-    }  
-}
-
-public class NotEmptyStringConverters : IValueConverter
-{
-    public object Convert(object value, Type targetType, object parameter, CultureInfo
- culture)
-    {
-        return !string.IsNullOrEmpty((string)value);
-    }
-
-    public object ConvertBack(object value, Type targetType,
- object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
     }
