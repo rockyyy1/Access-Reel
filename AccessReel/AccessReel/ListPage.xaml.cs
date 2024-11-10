@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
+using System.Security.AccessControl;
 using HtmlAgilityPack;
 using Microsoft.Maui.Controls;
 
@@ -56,11 +57,10 @@ public partial class ListPage : ContentPage
         //Debug.WriteLine("GetAuthorName returns: " + authorName);
         return authorName; 
     }
+    
     // LOAD ALL DATA V2
-    private void LoadDataOnAllPages(string pageType, string _url = "")
+    private void LoadDataOnAllPages(string pageType)
     {
-        //List<Posts> newsList = new List<Posts>();
-
         int page = 1;
         int lastPage = 1;
 
@@ -82,6 +82,7 @@ public partial class ListPage : ContentPage
             //change title
             Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
         }
+
         #region FIND LAST PAGE NUMBER
         var urlp = "https://accessreel.com/" + group + pageType;
         var webp = new HtmlWeb();
@@ -96,7 +97,9 @@ public partial class ListPage : ContentPage
             //Debug.WriteLine($"Number of pages: {lastPage}");
         }
         #endregion
-        while (page < lastPage)
+
+        //while (page < lastPage)
+        while (page < 10)
         {
             var url = "https://accessreel.com/" + group + pageType + "/page/" + page.ToString();
             Debug.WriteLine(url);
@@ -176,12 +179,12 @@ public partial class ListPage : ContentPage
 
                     newsList.Add(post);
 
-                    if (page == lastPage)
+                    if (page > lastPage)
                     {
                         break;
                     }
-                    page += 1;
                 }
+                page += 1;
             }
         }
         if (group == "categories/")
@@ -197,6 +200,7 @@ public partial class ListPage : ContentPage
             Sorter.ItemsSource = SortOptions;          
         }
     }
+
     // LOAD ALL DATA V1 - BACKUP
     private async void LoadData(string pageType)
     {
