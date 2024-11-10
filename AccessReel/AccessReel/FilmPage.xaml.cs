@@ -14,6 +14,8 @@ public partial class FilmPage : ContentPage
     string text;
     private string? authorURL;
     string reviewURL;
+    public Action<string, string> ActionOnTagTapped;
+    public Action<string, string> ActionOnAuthorTapped;
     public FilmPage()
 	{
 		InitializeComponent();
@@ -337,7 +339,25 @@ public partial class FilmPage : ContentPage
         FilmOverview.IsVisible = false;
         FilmReview.IsVisible = true;
 
+        // Create an instance of FilmReviewContent
         var filmReviewContent = new FilmReviewContent(reviewURL);
+
+        // Set delegates
+        filmReviewContent.ActionOnTagTapped = (pageType, url) =>
+        {
+            // Pass the page type and URL to ListPage
+            var page = new ListPage(pageType, url);
+            Navigation.PushAsync(page);
+        };
+
+        // Delegate for author
+        filmReviewContent.ActionOnAuthorTapped = (pageType, url) =>
+        {
+            // Pass the page type and URL to ListPage
+            var page = new ListPage(pageType, url);
+            Navigation.PushAsync(page);
+        };
+
         filmReviewContent.BindingContext = this;
         FilmReviewContainer.Content = filmReviewContent.Content;
     }
@@ -361,21 +381,18 @@ public partial class FilmPage : ContentPage
     {
         if (sender is Label label)
         {
-            //var article = (Review)label.BindingContext;
-            //ListPage author = new ListPage("Author", authorurl: article.AuthorUrl);
+            //ListPage author = new ListPage("Author", authorurl: authorURL);
             //await Navigation.PushAsync(author);
-
-            //Joel's version that works for Tags:
-            ListPage tag = new ListPage("Author", authorurl: authorURL);
-            await Navigation.PushAsync(tag);
-
+            ActionOnAuthorTapped?.Invoke("Author", authorURL);
         }
     }
 
     private async void OnTagTapped(string tagUrl)
     {
-        ListPage tag = new ListPage("Tags", tagUrl);
-        await Navigation.PushAsync(tag);
-        Debug.WriteLine(tagUrl);
+        //ListPage tag = new ListPage("Tags", tagUrl);
+        //await Navigation.PushAsync(tag);
+        ActionOnTagTapped?.Invoke("Tags", tagUrl);
+
+        //Debug.WriteLine(tagUrl);
     }
 }

@@ -48,6 +48,7 @@ public partial class ArticlePage : ContentPage
             FilmReviewContainer.IsVisible = true;
             var reviewContent = new FilmReviewContent(webpage);
             reviewContent.ActionOnTagTapped += this.NavigateToTags;
+            reviewContent.ActionOnAuthorTapped += this.NavigateToAuthor;
             FilmReviewContainer.Content = reviewContent.Content;
             #endregion
         }
@@ -151,6 +152,12 @@ public partial class ArticlePage : ContentPage
     private async void NavigateToTags(string pageType, string? tagurl)
     {
         ListPage page = new ListPage(pageType, tagurl);
+
+        await Navigation.PushAsync(page);
+    }
+    private async void NavigateToAuthor(string pageType, string? tagurl)
+    {
+        ListPage page = new ListPage(pageType, authorurl: tagurl);
 
         await Navigation.PushAsync(page);
     }

@@ -9,7 +9,9 @@ namespace AccessReel;
 public partial class FilmReviewContent : ContentPage
 {
     public Action<string, string> ActionOnTagTapped;
-	public FilmReviewContent()
+    public Action<string, string> ActionOnAuthorTapped;
+
+    public FilmReviewContent()
 	{
 		InitializeComponent();
 	}
@@ -112,20 +114,18 @@ public partial class FilmReviewContent : ContentPage
         #endregion
     }
     //THIS DOESNT WORK :(
-    private async void AuthorTapped(object sender, TappedEventArgs e)
+    public async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
         {
-            Debug.WriteLine("this is the authors url:" + review.AuthorUrl);
-            ListPage author = new ListPage("Author", authorurl: review.AuthorUrl);
-            await Navigation.PushAsync(author);
+            ListPage page = new ListPage("Author", authorurl: review.AuthorUrl);
+            ActionOnAuthorTapped?.Invoke("Author", review.AuthorUrl);
         }
     }
 
-    private async void OnTagTapped(string tagUrl)
+    public async void OnTagTapped(string tagUrl)
     {
         ListPage page = new ListPage("Tags", tagUrl);
         ActionOnTagTapped.Invoke("Tags", tagUrl);
-        // Debug.WriteLine(tagUrl);
     }
 }
