@@ -10,11 +10,14 @@ public partial class TrailerListPage : ContentPage
 	{
 		InitializeComponent();
 
-		List<Posts> trailers = new List<Posts>();
+        #region SETUP
+        List<Posts> trailers = new List<Posts>();
         var url = "https://accessreel.com/categories/trailers/";
         var web = new HtmlWeb();
         var document = web.Load(url);
+        #endregion
 
+        #region SCRAPE
         var containers = document.DocumentNode.SelectNodes("//div[contains(@class, 'gp-blog-wrapper')]");
 
         if (containers != null)
@@ -50,9 +53,10 @@ public partial class TrailerListPage : ContentPage
             }
         }
             CVTrailers.ItemsSource = trailers;
-
+        #endregion
     }
 
+    //NAVIGATE TO FILMPAGE
     private async void FilmTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label || sender is Image image)
@@ -71,25 +75,5 @@ public partial class TrailerListPage : ContentPage
 
         }
     }
-
-    //input: https://accessreel.com/article/saturday-night-trailer/
-    //returns: https://accessreel.com/saturday-night
-    // might use, might not we'll see
-    static string ConvertUrl(string url)
-    {
-        if (string.IsNullOrEmpty(url))
-            return string.Empty;
-
-        Uri uri = new Uri(url);
-        string path = uri.AbsolutePath;
-
-        // Remove the '/article/' part and the '-trailer/' suffix
-        var title = path.Replace("/article/", "").Replace("-trailer/", "");
-
-        // Rebuild the URL (only the domain and title)
-        string newUrl = $"{uri.Scheme}://{uri.Host}/{title}";
-        return newUrl;
-    }
-
 
 }

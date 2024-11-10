@@ -19,6 +19,8 @@ public partial class FilmReviewContent : ContentPage
     public FilmReviewContent(string reviewUrl)
     {
         InitializeComponent();
+
+        #region SETUP
         FilmPage page = new FilmPage();
 
         string reviewHtmlText = page.ReadWebsite(reviewUrl);
@@ -26,9 +28,9 @@ public partial class FilmReviewContent : ContentPage
 
         HtmlDocument reviewDocument = new HtmlDocument();
         reviewDocument.LoadHtml(reviewHtmlText);
+        #endregion
 
-        // FILM REVIEW CONTENT:
-        #region REVIEWS
+        #region REVIEW CONTENT
         var paragraphNodes = reviewDocument.DocumentNode.SelectNodes("//div[@class='gp-entry-text']//p");
         if (paragraphNodes != null)
         {
@@ -66,6 +68,7 @@ public partial class FilmReviewContent : ContentPage
         {
             string ratingText = ratingNode.InnerText.Trim();
             review.ReviewScore = ratingText;
+            ReviewScoreLabel.Text = ratingText;
         }
             #endregion
 
@@ -113,7 +116,8 @@ public partial class FilmReviewContent : ContentPage
         }
         #endregion
     }
-    //THIS DOESNT WORK :(
+
+    // NAVIGATE TO AUTHOR LISTPAGE
     public async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
@@ -123,6 +127,7 @@ public partial class FilmReviewContent : ContentPage
         }
     }
 
+    // NAVIGATE TO TAG LISTPAGE
     public async void OnTagTapped(string tagUrl)
     {
         ListPage page = new ListPage("Tags", tagUrl);

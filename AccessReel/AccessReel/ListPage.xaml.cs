@@ -17,43 +17,26 @@ public partial class ListPage : ContentPage
     private string? tagurl;
     string? Authorurl;
 
-    public ListPage() //Used for xaml to prevent error, might be removed later
+    public ListPage() 
     {
         InitializeComponent();
     }
 
-    //FILMS, REVIEWS, AUTHORS AND TAGS HAVE RED RATINGS IN THEIR LISTS
-    // USE TEMPLATE DTMovieArticle
-
-    // NEWS, INTERVIEWS AND TAGS (GENRE, CASTS, DIRECTORS) DO NOT HAVE RATINGS
-    // USE TEMPLATE DTArticle
-
-
-    // TAGS ARE OPENED WHEN USER CLICKS ON THE THINGS E.G https://accessreel.com/saturday-night/ IN THE BOTTOM RIGHT.
-    // TAGS MIGHT BE A BIT TRICKY AS THEY HAVE DIFFERENT URL paths 'genre' 'cast' and 'director'
-    // https://accessreel.com/genre/comedy/
-    //https://accessreel.com/cast/cooper-hoffman/
-    //https://accessreel.com/director/jason-reitman/
     public ListPage(string pageType = "", string? tagurl = null, string? authorurl = null)
     {
         InitializeComponent();
 
+        #region SETUP
         Sorter.ItemsSource = sortPickerItems;
         Sorter.SelectedIndex = 0;
-
         this.tagurl = tagurl;
         Authorurl = authorurl;
-
-        if (tagurl != null)
-        {
-            // GetTagInfo(tagurl);
-        }
-
         Title.Text = pageType;
         LoadData(pageType);
-        
+        #endregion
     }
 
+    // EXTRACT GROUP AND TITLE FROM URL
     private void GetTagInfo(string url, out string group, out string title)
     {
         //int index1 = url.IndexOf(".com/") + 4;
@@ -65,6 +48,7 @@ public partial class ListPage : ContentPage
         title = items[4];
         //Debug.WriteLine("INDEX - " + items[2]);
     }
+    // EXTRACT AUTHOR NAME FROM URL
     private string GetAuthorName(string url)
     {
         List<string> items = url.Split("/").Where(item => !string.IsNullOrEmpty(item)).ToList();
@@ -72,8 +56,7 @@ public partial class ListPage : ContentPage
         //Debug.WriteLine("GetAuthorName returns: " + authorName);
         return authorName; 
     }
-
-    // function loads data from all pages
+    // LOAD ALL DATA V2
     private void LoadDataOnAllPages(string pageType, string _url = "")
     {
         //List<Posts> newsList = new List<Posts>();
@@ -214,7 +197,7 @@ public partial class ListPage : ContentPage
             Sorter.ItemsSource = SortOptions;          
         }
     }
-
+    // LOAD ALL DATA V1 - BACKUP
     private async void LoadData(string pageType)
     {
         LoadDataOnAllPages(pageType);
@@ -284,7 +267,7 @@ public partial class ListPage : ContentPage
         #endregion
     }
 
-    // When the user taps on a Article Title/Image, brings them to an Article Page
+    // NAVIGATE TO ARTICLE PAGE
     private async void ItemTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label || sender is Image image)
@@ -300,7 +283,7 @@ public partial class ListPage : ContentPage
         }
     }
 
-    // When the user taps on an user it should bring up the Author Page
+    // NAVIGATE TO AUTHOR LISTPAGE
     private async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
@@ -310,7 +293,7 @@ public partial class ListPage : ContentPage
             await Navigation.PushAsync(authorListPage);
         }
     }
-
+    // SORTER CHANGE
     private void Sorter_SelectedIndexChanged(object sender, EventArgs e)
     {
         int index = Sorter.SelectedIndex;
@@ -376,8 +359,7 @@ public partial class ListPage : ContentPage
 }
 
 
-
-//This changes the postion of the label within the circle for the review score
+// This changes the postion of the label within the circle for the review score
 public class ReviewScoreToAbsLayoutConverter : IValueConverter
 {
     public Object? Convert(object value, Type targetType, object parameter, CultureInfo culture)

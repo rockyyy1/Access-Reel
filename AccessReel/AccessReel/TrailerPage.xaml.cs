@@ -24,11 +24,14 @@ public partial class TrailerPage : ContentPage
     public TrailerPage(Review film)
 	{
         InitializeComponent();
+
+        #region SETUP
         Webscraping scrape = new Webscraping();
         string htmlText = ReadWebsite(film.Url);
         HtmlDocument document = new HtmlDocument();
         document.LoadHtml(htmlText);
         BindingContext = film;
+        #endregion
 
         #region VIDEO
         var iframeNode = document.DocumentNode.SelectSingleNode("//iframe");
@@ -305,9 +308,8 @@ public partial class TrailerPage : ContentPage
         }
         #endregion
 
-
-
     }
+    // NAVIGATE TO TAG LISTPAGE
     private async void OnTagTapped(string tagUrl)
     {
         ListPage tag = new ListPage("Tags", tagUrl);

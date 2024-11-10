@@ -27,9 +27,12 @@ public partial class ArticlePage : ContentPage
     public ArticlePage(string webpage = "")
     {
         InitializeComponent();
+
+        #region SCRAPE
         string htmlText = ReadWebsite(webpage);
         HtmlDocument document = new HtmlDocument();
         document.LoadHtml(htmlText);
+        #endregion
 
         #region REVIEW
         if (webpage.Contains("-review"))
@@ -142,19 +145,20 @@ public partial class ArticlePage : ContentPage
         #endregion
     }
 
-    //Clicking the button will navigate to AccessReel Author Page (ListPage)
+    // Navigate to AccessReel AccessReel ListPage
     private async void Button_Clicked(object sender, EventArgs e)
     {
         NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: "https://accessreel.com/author/accessreel"));
         await Navigation.PushAsync(authorListPage);
     }
-
+    // Navigate to AccessReel Tags ListPage
     private async void NavigateToTags(string pageType, string? tagurl)
     {
         ListPage page = new ListPage(pageType, tagurl);
 
         await Navigation.PushAsync(page);
     }
+    // Navigate to AccessReel Author ListPage
     private async void NavigateToAuthor(string pageType, string? tagurl)
     {
         ListPage page = new ListPage(pageType, authorurl: tagurl);

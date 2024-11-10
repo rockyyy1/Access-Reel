@@ -21,15 +21,24 @@ public partial class FilmPage : ContentPage
 		InitializeComponent();
     }
 
-    //Receive the url
     public FilmPage(Review film)
     {
         InitializeComponent();
 
+        #region SET UP DELEGATE
+        ActionOnTagTapped = (pageType, url) =>
+        {
+            var page = new ListPage(pageType, url);
+            Navigation.PushAsync(page);
+        };
+        #endregion
+
+        #region SCRAPE
         string htmlText = ReadWebsite(film.Url);
         HtmlDocument document = new HtmlDocument();
         document.LoadHtml(htmlText);
         BindingContext = film;
+        #endregion
 
         #region VIDEO
         // Just getthing the snapshot of video for now.
@@ -191,24 +200,17 @@ public partial class FilmPage : ContentPage
                     // Add each genre as a label with a TapGestureRecognizer
                     foreach (var genre in genreLinks)
                     {
-                        var genreSpan = new Span
-                        {
-                            Text = genre.Text,
-                            TextColor = Colors.DarkGray,
-                            BackgroundColor = Color.FromArgb("#edeef2"),
-                        };
-
                         var genreLabel = new Label
                         {
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
                             LineBreakMode = LineBreakMode.NoWrap,
-                            FormattedText = new FormattedString()
+                            FormattedText = new FormattedString(),
+                            Text = genre.Text,
+                            BackgroundColor = Colors.LightGray,
+                            TextColor = Colors.Black
                         };
-
-                        genreLabel.FormattedText.Spans.Add(genreSpan);
-
                         var genreTapGesture = new TapGestureRecognizer();
                         //genreTapGesture.Tapped += (s, e) => Launcher.OpenAsync(genre.Url);
                         genreTapGesture.Tapped += (s, e) => OnTagTapped(genre.Url);
@@ -245,23 +247,17 @@ public partial class FilmPage : ContentPage
                     // Add each cast as a label with a TapGestureRecognizer
                     foreach (var cast in castLinks)
                     {
-                        var castSpan = new Span
-                        {
-                            Text = cast.Text,
-                            TextColor = Colors.DarkGray,
-                            BackgroundColor = Color.FromArgb("#edeef2"),
-                        };
-
                         var castLabel = new Label
                         {
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
                             LineBreakMode = LineBreakMode.NoWrap,
-                            FormattedText = new FormattedString()
+                            FormattedText = new FormattedString(),
+                            Text = cast.Text,
+                            BackgroundColor = Colors.LightGray,
+                            TextColor = Colors.Black
                         };
-
-                        castLabel.FormattedText.Spans.Add(castSpan);
 
                         var castTapGesture = new TapGestureRecognizer();
                         //castTapGesture.Tapped += (s, e) => Launcher.OpenAsync(cast.Url);
@@ -289,24 +285,18 @@ public partial class FilmPage : ContentPage
                         var directorUrl = directorLink.GetAttributeValue("href", string.Empty);
 
                         // Create a label for Director with a TapGestureRecognizer
-                        var directorSpan = new Span
-                        {
-                            Text = directorText,
-                            TextColor = Colors.DarkGray, 
-                            BackgroundColor = Color.FromArgb("#edeef2"), 
-                        };
-
                         var directorLabel = new Label
                         {
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
                             LineBreakMode = LineBreakMode.NoWrap,
-                            FormattedText = new FormattedString()
+                            FormattedText = new FormattedString(),
+                            Text = directorText,
+                            BackgroundColor = Colors.LightGray,
+                            TextColor = Colors.Black,
+                            HorizontalOptions = LayoutOptions.Start
                         };
-
-                        directorLabel.FormattedText.Spans.Add(directorSpan);
-
                         var directorTapGesture = new TapGestureRecognizer();
                         //directorTapGesture.Tapped += (s, e) => Launcher.OpenAsync(directorUrl);
                         directorTapGesture.Tapped += (s, e) => OnTagTapped(directorUrl);
@@ -321,19 +311,20 @@ public partial class FilmPage : ContentPage
 
     }
 
+    // SCRAPE WEBSITE
     public string ReadWebsite(string webpage)
     {
         var web = new HtmlWeb();
         text = web.Load(webpage).Text;
         return text;
     }
-
+    // REVEAL OVERVIEW
     private void BtnOverview_Clicked(object sender, EventArgs e)
     {
         FilmOverview.IsVisible = true;
         FilmReview.IsVisible = false;
     }
-
+    // REVEAL REVIEW CONTENTPAGE
     private void BtnReview_Clicked(object sender, EventArgs e)
     {
         FilmOverview.IsVisible = false;
@@ -361,7 +352,7 @@ public partial class FilmPage : ContentPage
         filmReviewContent.BindingContext = this;
         FilmReviewContainer.Content = filmReviewContent.Content;
     }
-
+    // FOLLOW BUTTON
     private void FollowBtn_Clicked(object sender, EventArgs e)
     {
         Button button = (Button)sender;
@@ -376,7 +367,7 @@ public partial class FilmPage : ContentPage
             button.Text = "Follow +";
         }
     }
-
+    // NAVIGATE TO AUTHOR LISTPAGE
     private async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
@@ -387,12 +378,10 @@ public partial class FilmPage : ContentPage
         }
     }
 
+    // NAVIGATE TO TAG LISTPAGE
     private async void OnTagTapped(string tagUrl)
     {
-        //ListPage tag = new ListPage("Tags", tagUrl);
-        //await Navigation.PushAsync(tag);
-        ActionOnTagTapped?.Invoke("Tags", tagUrl);
-
-        //Debug.WriteLine(tagUrl);
+        ListPage page = new ListPage("Tags", tagUrl);
+        ActionOnTagTapped.Invoke("Tags", tagUrl);
     }
 }

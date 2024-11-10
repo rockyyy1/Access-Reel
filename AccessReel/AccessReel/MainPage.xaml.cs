@@ -25,7 +25,7 @@ namespace AccessReel
             Homepage homepage = webscraping.GetHomepage();
         }
 
-        // Returns the html
+        // RETURN HTML DOC
         private string ReadWebsite()
         {
             var web = new HtmlWeb();
@@ -33,7 +33,7 @@ namespace AccessReel
             return text;
         }
 
-        // Extracts the details of details details we need from the node
+        // EXTRACT NODE
         private void RetrieveItemDetails(HtmlNode item, out string title, out string image, out string paragraph,
             out string user, out string datetime, out string href, out string userHref)
         {
@@ -270,8 +270,7 @@ namespace AccessReel
 
         }
 
-        // If the user taps on a Post's/Article's Title or Image
-        // It will scrape from that article's page e.g https://accessreel.com/article/rachel-griffiths-heads-up-cinefestoz-100000-film-prize-jury/
+        // NAVIGATE TO ARTICLE ITEM
         private async void ArticleTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label || sender  is Image image)
@@ -292,9 +291,7 @@ namespace AccessReel
             }
         }
 
-        // If the user taps on a Post's/Article's Author
-        // should bring up a list of all the reviews that Author has done e.g: https://accessreel.com/author/accessreel/
-        // I think we use ListPage for this?? -Rocky
+        // NAVIGATE TO AUTHOR LISTPAGE
         private async void AuthorTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label)
@@ -307,7 +304,7 @@ namespace AccessReel
             }
         }
 
-        // If the user taps on a Film's image/label will go that individual Film Page e.g: https://accessreel.com/saturday-night/
+        // NAVIGATE TO FILMPAGE
         private async void FilmTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label || sender is Image image)
@@ -323,7 +320,7 @@ namespace AccessReel
             }
         }
 
-        // If the user taps on a trailer on the bottom carousel
+        // NAVIGATE TO TRAILERPAGE
         private async void TrailerTapped(object sender, TappedEventArgs e)
         {
             if (sender is Label label || sender is Image image)
@@ -339,7 +336,7 @@ namespace AccessReel
         }
     }
 
-    // This shows/hides the Member's rating for the top carousel if there is no member's review 
+    // SHOW/HIDE MEMBER RATING IF NULL
     public class NotEmptyStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo
