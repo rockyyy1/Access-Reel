@@ -110,27 +110,15 @@ public partial class FilmReviewContent : ContentPage
         }
         #endregion
     }
-
-    // WHY ARENT YOU WORKING!!
-    // WHY ARENT YOU WORKING!!
-    // WHY ARENT YOU WORKING!!
-    // WHY ARENT YOU WORKING!!
-
+    //THIS DOESNT WORK :(
     private async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
         {
-            Debug.WriteLine(review.Author);
-            Debug.WriteLine("author rating:" + review.ReviewScore);
             NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: review.AuthorUrl));
             await Navigation.PushAsync(authorListPage);
-
         }
     }
-    // WHY ARENT YOU WORKING!!
-    // WHY ARENT YOU WORKING!!
-    // WHY ARENT YOU WORKING!!
-    // WHY ARENT YOU WORKING!!
 
     private async void OnTagTapped(string tagUrl)
     {

@@ -12,7 +12,7 @@ namespace AccessReel;
 public partial class FilmPage : ContentPage
 {
     string text;
-    private string authorURL;
+    private string? authorURL;
     string reviewURL;
     public FilmPage()
 	{
