@@ -122,7 +122,7 @@ public partial class FilmReviewContent : ContentPage
         {
             Debug.WriteLine(review.Author);
             Debug.WriteLine("author rating:" + review.ReviewScore);
-            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", review.Author));
+            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: review.AuthorUrl));
             await Navigation.PushAsync(authorListPage);
 
         }

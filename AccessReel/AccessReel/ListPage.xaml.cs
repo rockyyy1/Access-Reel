@@ -12,6 +12,7 @@ public partial class ListPage : ContentPage
     public List<Posts> postList { get; set; }
 
     private string? tagurl;
+    private string? authorurl;
 
     public ListPage() //Used for xaml to prevent error, might be removed later
     {
@@ -30,29 +31,21 @@ public partial class ListPage : ContentPage
     // https://accessreel.com/genre/comedy/
     //https://accessreel.com/cast/cooper-hoffman/
     //https://accessreel.com/director/jason-reitman/
-    public ListPage(string pageType = "", string? tagurl = null)
+    public ListPage(string pageType = "", string? tagurl = null, string? authorurl = null)
     {
         InitializeComponent();
 
         this.tagurl = tagurl;
+        this.authorurl = authorurl;
 
         if (tagurl != null)
         {
             // GetTagInfo(tagurl);
         }
 
-        if (pageType == "Author" /*|| pageType == "Tags"*/)
-        {
-            Title.Text = pageType;
-        }
-
-        else if (pageType == "News" || pageType == "Interviews" || pageType == "Films"
-            || pageType == "Reviews" || pageType == "Tags")
-
-        {
-            Title.Text = pageType;
-            LoadData(pageType);
-        }
+        Title.Text = pageType;
+        LoadData(pageType);
+        
     }
 
     private void GetTagInfo(string url, out string group, out string title)
@@ -64,10 +57,13 @@ public partial class ListPage : ContentPage
 
         group = items[3] + "/";
         title = items[4];
-
-
-
-        Debug.WriteLine("INDEX - " + items[2]);
+        //Debug.WriteLine("INDEX - " + items[2]);
+    }
+    private string GetAuthorName(string url)
+    {
+        List<string> items = url.Split("/").ToList();
+        string authorName = items.LastOrDefault();
+        return authorName; //has hyphens
     }
 
     // function loads data from all pages
@@ -84,11 +80,21 @@ public partial class ListPage : ContentPage
             this.GetTagInfo(this.tagurl, out taggroup, out pageType);
 
             group = taggroup;
-        }
 
+            //change title
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-"," ");
+        }
+        if (this.authorurl != null)
+        {
+            group = "author/";
+            pageType = GetAuthorName(this.authorurl);
+            //change title
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
+        }
         while (true)
         {
             var url = "https://accessreel.com/" + group + pageType + "/page/" + (page > 0 ? page.ToString() : "");
+            Debug.WriteLine(url);
             var web = new HtmlWeb();
             var document = web.Load(url);
 
@@ -165,12 +171,12 @@ public partial class ListPage : ContentPage
                 }
             }
         }
-        if (group == "categories/" || this.tagurl != null)
+        if (group == "categories/")
         {
             CVArticles.ItemTemplate = DTArticle;
             CVArticles.ItemsSource = newsList;
         }
-        else if (group == "hubs/")
+        else if (group == "hubs/" || this.tagurl != null || this.authorurl != null)
         {
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = newsList;
@@ -271,12 +277,13 @@ public partial class ListPage : ContentPage
     }
 
     // When the user taps on an user it should bring up the Author Page
-    private void AuthorTapped(object sender, TappedEventArgs e)
+    private async void AuthorTapped(object sender, TappedEventArgs e)
     {
         if (sender is Label label)
         {
             var item = (Posts)((VisualElement)sender).BindingContext;
-            Debug.WriteLine(item.AuthorUrl);
+            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: item.AuthorUrl));
+            await Navigation.PushAsync(authorListPage);
         }
     }
 }

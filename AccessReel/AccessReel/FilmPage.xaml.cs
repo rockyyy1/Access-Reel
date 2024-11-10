@@ -367,14 +367,8 @@ public partial class FilmPage : ContentPage
         {
             // Access the DataContext of the Label
             var article = (Posts)label.BindingContext;
-
-            // Debug
-            //Debug.WriteLine(article.Author);
-            //Debug.WriteLine(article.AuthorUrl);
-
-            //create new listpage:
-            NavigationPage authorListPage = new NavigationPage(new ListPage("Author", article.Author));
-            await Navigation.PushAsync(authorListPage);
+            ListPage author = new ListPage("Author", authorurl: article.AuthorUrl);
+            await Navigation.PushAsync(author);
 
         }
     }
