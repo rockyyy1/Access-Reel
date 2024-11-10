@@ -97,7 +97,21 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </AbsoluteLayout>
-                <!-- {Binding Image}-->
+                <Picker x:Name="Sorter" SelectedIndexChanged="Sorter_SelectedIndexChanged" SelectedIndex="0" HorizontalOptions="Center" WidthRequest="400" BackgroundColor="LightGray" SelectedItem="0">
+                    <Picker.Shadow>
+                        <Shadow Brush="Black" Offset="10,10" Radius="20" Opacity="0"/>
+                    </Picker.Shadow>
+                    <!--<Picker.Items>
+                        <x:String>Newest</x:String>
+                        <x:String>Oldest</x:String>
+                        <x:String>Title (A-Z)</x:String>
+                        <x:String>Title (Z-A)</x:String>
+                        <x:String>Author (A-Z)</x:String>
+                        <x:String>Author (Z-A)</x:String>
+                        <x:String>Top Site Rated</x:String>
+                        --><!--<x:String>Top Member Rated</x:String>--><!--
+                    </Picker.Items>-->
+                </Picker>
                 <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >
 
                 </CollectionView>

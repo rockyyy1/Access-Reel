@@ -8,8 +8,11 @@ namespace AccessReel;
 
 public partial class ListPage : ContentPage
 {
-    public List<Review> reviewList { get; set; }
-    public List<Posts> postList { get; set; }
+    List<Posts> newsList = new List<Posts>();
+
+    List<string> sortPickerItems = new List<string> { "Newest", "Oldest", "Title (A-Z)", "Title (Z-A)",
+        "Author (A-Z)", "Author (Z-A)"  };
+    List<string> sortPickerIfReviews = new List<string> { "Top Site Rated" };
 
     private string? tagurl;
     private string? authorurl;
@@ -34,6 +37,9 @@ public partial class ListPage : ContentPage
     public ListPage(string pageType = "", string? tagurl = null, string? authorurl = null)
     {
         InitializeComponent();
+
+        Sorter.ItemsSource = sortPickerItems;
+        Sorter.SelectedIndex = 0;
 
         this.tagurl = tagurl;
         this.authorurl = authorurl;
@@ -69,7 +75,7 @@ public partial class ListPage : ContentPage
     // function loads data from all pages
     private void LoadDataOnAllPages(string pageType, string _url = "")
     {
-        List<Posts> newsList = new List<Posts>();
+        //List<Posts> newsList = new List<Posts>();
 
         int page = 1;
 
@@ -95,7 +101,7 @@ public partial class ListPage : ContentPage
         {
             var url = "https://accessreel.com/" + group + pageType + "/page/" + (page > 0 ? page.ToString() : "");
             Debug.WriteLine(url);
-            var web = new HtmlWeb();
+            var web = new HtmlWeb();            
             var document = web.Load(url);
 
             var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
@@ -180,6 +186,8 @@ public partial class ListPage : ContentPage
         {
             CVArticles.ItemTemplate = DTMovieArticle;
             CVArticles.ItemsSource = newsList;
+            List<string> SortOptions = sortPickerItems.Concat(sortPickerIfReviews).ToList();
+            Sorter.ItemsSource = SortOptions;          
         }
     }
 
@@ -252,14 +260,6 @@ public partial class ListPage : ContentPage
         #endregion
     }
 
-    private void BtnFlyoutMenu_Clicked(object sender, EventArgs e)
-    {
-        if (Application.Current.MainPage is FlyoutMenu flyoutPage)
-        {
-            flyoutPage.IsPresented = true;
-        }
-    }
-
     // When the user taps on a Article Title/Image, brings them to an Article Page
     private async void ItemTapped(object sender, TappedEventArgs e)
     {
@@ -284,6 +284,69 @@ public partial class ListPage : ContentPage
             var item = (Posts)((VisualElement)sender).BindingContext;
             NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: item.AuthorUrl));
             await Navigation.PushAsync(authorListPage);
+        }
+    }
+
+    private void Sorter_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        int index = Sorter.SelectedIndex;
+        List<Review> reviewList = newsList.ConvertAll(post => post as Review);
+        switch (index)
+        {
+            case 0:
+                Debug.WriteLine("Sorted by Newest");
+                Posts.SortByDate compNewest = new Posts.SortByDate(ascending : false);
+                newsList.Sort(compNewest);
+                break;
+            case 1:
+                Debug.WriteLine("Sorted by Oldest");
+                Posts.SortByDate compOldest = new Posts.SortByDate(ascending: true);
+                newsList.Sort(compOldest);
+                break;
+            case 2:
+                Debug.WriteLine("Sorted by Title (A-Z)");
+                Posts.SortByTitle compTitleDesc = new Posts.SortByTitle(ascending: true);
+                newsList.Sort(compTitleDesc);
+                break;
+            case 3:
+                Debug.WriteLine("Sorted by Title (Z-A)");
+                Posts.SortByTitle compTitle = new Posts.SortByTitle();
+                newsList.Sort(compTitle);
+                break;
+            case 4:
+                Debug.WriteLine("Sorted by Author (A-Z)");
+                Posts.SortByAuthor compAuthor = new Posts.SortByAuthor(ascending: true);
+                newsList.Sort(compAuthor);
+                break;
+            case 5:
+                Debug.WriteLine("Sorted by Author (Z-A)");
+                Posts.SortByAuthor compAuthor2 = new Posts.SortByAuthor();
+                newsList.Sort(compAuthor2);               
+                break;
+            case 6:
+                Debug.WriteLine("Sorted by Review Score");                
+                Review.SortbyReviewScore compReview = new Review.SortbyReviewScore();
+                reviewList.Sort(compReview);
+                CVArticles.ItemsSource = null;
+                CVArticles.ItemsSource = reviewList;
+                break;
+            case 7:
+                Debug.WriteLine("Sorted by Member Review Score");
+                Review.SortbyReviewScore compMember = new Review.SortbyReviewScore();
+                reviewList.Sort(compMember);
+                CVArticles.ItemsSource = null;
+                CVArticles.ItemsSource = reviewList;
+                break;
+        }
+        if(index >= 0 && index < 6)
+        {
+            CVArticles.ItemsSource = null;
+            CVArticles.ItemsSource = newsList;
+        }
+        else if(index < 8)
+        {
+            CVArticles.ItemsSource = null;
+            CVArticles.ItemsSource = reviewList;
         }
     }
 }
