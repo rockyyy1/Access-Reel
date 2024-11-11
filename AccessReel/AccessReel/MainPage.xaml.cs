@@ -18,9 +18,7 @@ namespace AccessReel
         public MainPage()
         {
             InitializeComponent();
-            // Retrieve(ReadWebsite());
-
-
+            //Retrieve(ReadWebsite());
         }
 
         protected override async void OnAppearing()
@@ -33,9 +31,15 @@ namespace AccessReel
         private async Task<string> ReadWebsite()
         {
             var web = new HtmlWeb();
-            text = (await web.LoadFromWebAsync("https://accessreel.com/")).Text;            
+            text = (await web.LoadFromWebAsync("https://accessreel.com/")).Text;
             return text;
         }
+        /*        private string ReadWebsite()
+                {
+                    var web = new HtmlWeb();
+                    text = web.Load("https://accessreel.com/").Text;
+                    return text;
+                }*/
 
         // EXTRACT NODE
         private void RetrieveItemDetails(HtmlNode item, out string title, out string image, out string paragraph,

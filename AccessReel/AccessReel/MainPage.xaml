@@ -25,13 +25,13 @@
                     </Label>
                     <Label Text="{Binding Description}" FontSize="Body" Margin="5" LineBreakMode="TailTruncation" MaxLines="4"/>
                     <HorizontalStackLayout>
-                        <Label Text="{x:Static icons:Icon.User}"/>
+                        <Image Source="user.png"/>
                         <Label Text="{Binding Author}" FontSize="Caption" TextColor="DimGray" Margin="5">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="AuthorTapped"/>
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label Text="{x:Static icons:Icon.Clock}"/>
+                        <Image Source="clock.png"/>
                         <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="Gray" Margin="5"/>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
