@@ -1,5 +1,6 @@
 using HtmlAgilityPack;
 using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Layouts;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
@@ -52,8 +53,8 @@ public partial class TrailerPage : ContentPage
             var webView = new WebView
             {
                 //Source = new HtmlWebViewSource { Html = iframeHtml },
-                HeightRequest = 405,
-                WidthRequest = 720,
+                HeightRequest = 225,
+                WidthRequest = 400,
             };
             webView.Source = new Uri(iframeSrc);
 
@@ -183,10 +184,11 @@ public partial class TrailerPage : ContentPage
                                             }).ToList();
 
                     // Create a stack layout for Cast
-                    var castStackLayout = new StackLayout
+                    var castStackLayout = new FlexLayout
                     {
-                        Orientation = StackOrientation.Horizontal,
-                        Spacing = 10,
+                        Direction = FlexDirection.Row,
+                        Wrap = FlexWrap.Wrap,
+                        
                     };
 
                     // Add each cast as a label with a TapGestureRecognizer
@@ -204,8 +206,9 @@ public partial class TrailerPage : ContentPage
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
-                            LineBreakMode = LineBreakMode.NoWrap,
-                            FormattedText = new FormattedString()
+                            LineBreakMode = LineBreakMode.WordWrap,
+                            FormattedText = new FormattedString(),
+                            Padding = 5
                         };
 
                         castLabel.FormattedText.Spans.Add(castSpan);
