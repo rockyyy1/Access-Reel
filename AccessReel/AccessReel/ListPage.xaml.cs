@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Security.AccessControl;
@@ -9,7 +10,7 @@ namespace AccessReel;
 
 public partial class ListPage : ContentPage
 {
-    List<Posts> newsList = new List<Posts>();
+    ObservableCollection<Posts> newsList = new ObservableCollection<Posts>();
 
     List<string> sortPickerItems = new List<string> { "Newest", "Oldest", "Title (A-Z)", "Title (Z-A)",
         "Author (A-Z)", "Author (Z-A)"  };
@@ -301,74 +302,51 @@ public partial class ListPage : ContentPage
     private void Sorter_SelectedIndexChanged(object sender, EventArgs e)
     {
         int index = Sorter.SelectedIndex;
-        List<Review> reviewList = newsList.ConvertAll(post => post as Review);
-        foreach (Review review in reviewList)
-        {
-            if(review.ReviewScore == null )
-            {
-                review.ReviewScore = "0";
-            }
-            if (review.MemberReviewScore == null)
-            {
-                review.MemberReviewScore = "0";
-            }
-        }
+
+        List<Posts> sortedList = new List<Posts>();
         switch (index)
         {
             case 0:
                 Debug.WriteLine("Sorted by Newest");
-                Posts.SortByDate compNewest = new Posts.SortByDate(ascending : false);
-                newsList.Sort(compNewest);
+                sortedList = newsList.OrderBy(p => p, new Posts.SortByDate()).ToList();
                 break;
             case 1:
                 Debug.WriteLine("Sorted by Oldest");
-                Posts.SortByDate compOldest = new Posts.SortByDate(ascending: true);
-                newsList.Sort(compOldest);
+                sortedList = newsList.OrderBy(p => p, new Posts.SortByDate(ascending: true)).ToList();
                 break;
             case 2:
                 Debug.WriteLine("Sorted by Title (A-Z)");
-                Posts.SortByTitle compTitleDesc = new Posts.SortByTitle(ascending: true);
-                newsList.Sort(compTitleDesc);
+                sortedList = newsList.OrderBy(p => p, new Posts.SortByTitle(ascending: true)).ToList();
                 break;
             case 3:
                 Debug.WriteLine("Sorted by Title (Z-A)");
-                Posts.SortByTitle compTitle = new Posts.SortByTitle();
-                newsList.Sort(compTitle);
+                sortedList = newsList.OrderBy(p => p, new Posts.SortByTitle()).ToList();
                 break;
             case 4:
                 Debug.WriteLine("Sorted by Author (A-Z)");
-                Posts.SortByAuthor compAuthor = new Posts.SortByAuthor(ascending: true);
-                newsList.Sort(compAuthor);
+                sortedList = newsList.OrderBy(p => p, new Posts.SortByAuthor(ascending: true)).ToList();
                 break;
             case 5:
                 Debug.WriteLine("Sorted by Author (Z-A)");
-                Posts.SortByAuthor compAuthor2 = new Posts.SortByAuthor();
-                newsList.Sort(compAuthor2);               
+                sortedList = newsList.OrderBy(p => p, new Posts.SortByAuthor()).ToList();
                 break;
             case 6:
-                Debug.WriteLine("Sorted by Review Score");                
-                Review.SortbyReviewScore compReview = new Review.SortbyReviewScore();
-                reviewList.Sort(compReview);
-                CVArticles.ItemsSource = null;
-                CVArticles.ItemsSource = reviewList;
-                break;
+                Debug.WriteLine("Sorted by Review Score");
+                sortedList = newsList.Where(post => post is Review review && review.ReviewScore != null).OrderBy(p => (Review)p, new Review.SortbyReviewScore()).ThenBy(post => post.Title).ToList();
+                break;/*
             case 7:
                 Debug.WriteLine("Sorted by Member Review Score");
                 Review.SortbyReviewScore compMember = new Review.SortbyReviewScore();
                 reviewList.Sort(compMember);
-                CVArticles.ItemsSource = null;
-                CVArticles.ItemsSource = reviewList;
-                break;
+                break;*/
         }
-        if(index >= 0 && index < 6)
+        if(index >= 0 && index < 8)
         {
-            CVArticles.ItemsSource = null;
-            CVArticles.ItemsSource = newsList;
-        }
-        else if(index < 8)
-        {
-            CVArticles.ItemsSource = null;
-            CVArticles.ItemsSource = reviewList;
+            newsList.Clear();
+            foreach (var item in sortedList)
+            {
+                newsList.Add(item);
+            }
         }
     }
 }
