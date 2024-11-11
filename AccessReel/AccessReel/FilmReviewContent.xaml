@@ -26,12 +26,12 @@
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
             <!-- Review -->
-            <Label Grid.Row="0" Grid.Column="1" x:Name="LblReview" Text="ReviewPlaceholder" TextType="Html" HorizontalOptions="Center" Margin="0,40,0,0"/>
+            <Label Grid.Row="0" Grid.Column="1" x:Name="LblReview" Text="ReviewPlaceholder" TextType="Html" HorizontalOptions="Center" Margin="0,40,0,0" LineBreakMode="WordWrap"/>
 
             <!-- Tags -->
-            <HorizontalStackLayout Grid.Row="1" Grid.Column="1" x:Name="TagsStackLayout" Padding="10" >
+            <StackLayout Grid.Row="1" Grid.Column="1" x:Name="TagsStackLayout" Margin="0,20,0,0">
                 <!-- Tags will be added here by code-->
-            </HorizontalStackLayout>
+            </StackLayout>
 
             <HorizontalStackLayout Grid.Row="2" Grid.Column="1" HorizontalOptions="Center" >
                 <HorizontalStackLayout>

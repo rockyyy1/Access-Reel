@@ -6,9 +6,9 @@
     
     <ScrollView>
         <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="800">
-            <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="Center" FontSize="Header" FontAttributes="Bold"/>
-            <Image x:Name="banner" Margin="0,20,0,20"/>
-            <StackLayout x:Name="contentStackLayout">
+            <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="Start" FontAttributes="Bold" LineBreakMode="WordWrap" VerticalOptions="StartAndExpand" WidthRequest="400" Margin="10"/>
+            <Image x:Name="banner" Margin="10" HeightRequest="200" Aspect="AspectFit" HorizontalOptions="Start"/>
+            <StackLayout x:Name="contentStackLayout" Margin="10" WidthRequest="380" HorizontalOptions="Start">
                 <ContentView x:Name="FilmReviewContainer" />
             </StackLayout>
             <Button Text="AccessReel" 
@@ -17,8 +17,8 @@
                     WidthRequest="100"
                     TextColor="White"
                     Clicked="Button_Clicked"
-                    Margin="00,50,0,0"/>
-            <Label Text="AccessReel is the Western Australian movie-lovers website."/>
+                    Margin="10,50,0,0"/>
+            <Label Text="AccessReel is the Western Australian movie-lovers website." Margin="10"/>
         </VerticalStackLayout>               
     </ScrollView>
 </ContentPage>

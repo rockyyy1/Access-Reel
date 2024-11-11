@@ -152,7 +152,7 @@ public partial class TrailerPage : ContentPage
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
-                            LineBreakMode = LineBreakMode.NoWrap,
+                            LineBreakMode = LineBreakMode.WordWrap,
                             FormattedText = new FormattedString()
                         };
 
@@ -250,7 +250,7 @@ public partial class TrailerPage : ContentPage
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
-                            LineBreakMode = LineBreakMode.NoWrap,
+                            LineBreakMode = LineBreakMode.WordWrap,
                             FormattedText = new FormattedString()
                         };
 

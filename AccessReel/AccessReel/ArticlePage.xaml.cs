@@ -128,8 +128,8 @@ public partial class ArticlePage : ContentPage
             var webView = new WebView
             {
                 Source = new HtmlWebViewSource { Html = iframeHtml },
-                HeightRequest = 405,
-                WidthRequest = 720
+                HeightRequest = 255,
+                WidthRequest = 400
             };
 
             // Add the WebView to the StackLayout

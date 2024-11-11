@@ -1,4 +1,5 @@
 using HtmlAgilityPack;
+using Microsoft.Maui.Layouts;
 using System.Diagnostics;
 using System.Net.Http;
 using System.Text;
@@ -64,8 +65,8 @@ public partial class FilmPage : ContentPage
             var webView = new WebView
             {
                 Source = new HtmlWebViewSource { Html = iframeHtml },
-                HeightRequest = 405,
-                WidthRequest = 720
+                HeightRequest = 225,
+                WidthRequest = 400
             };
 
             // Add the WebView to the StackLayout
@@ -191,10 +192,10 @@ public partial class FilmPage : ContentPage
                                               }).ToList();
 
                     // Create a stack layout for Genre
-                    var genreStackLayout = new StackLayout
+                    var genreStackLayout = new FlexLayout
                     {
-                        Orientation = StackOrientation.Horizontal,
-                        Spacing = 10,
+                        Direction = FlexDirection.Row,
+                        Wrap = FlexWrap.Wrap,
                     };
 
                     // Add each genre as a label with a TapGestureRecognizer
@@ -205,11 +206,13 @@ public partial class FilmPage : ContentPage
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
-                            LineBreakMode = LineBreakMode.NoWrap,
+                            LineBreakMode = LineBreakMode.WordWrap,
                             FormattedText = new FormattedString(),
                             Text = genre.Text,
                             BackgroundColor = Colors.LightGray,
-                            TextColor = Colors.Black
+                            TextColor = Colors.Black,
+                            Margin = 1
+
                         };
                         var genreTapGesture = new TapGestureRecognizer();
                         //genreTapGesture.Tapped += (s, e) => Launcher.OpenAsync(genre.Url);
@@ -238,10 +241,10 @@ public partial class FilmPage : ContentPage
                                             }).ToList();
 
                     // Create a stack layout for Cast
-                    var castStackLayout = new StackLayout
+                    var castStackLayout = new FlexLayout
                     {
-                        Orientation = StackOrientation.Horizontal,
-                        Spacing = 10,
+                        Direction = FlexDirection.Row,
+                        Wrap = FlexWrap.Wrap,
                     };
 
                     // Add each cast as a label with a TapGestureRecognizer
@@ -252,11 +255,12 @@ public partial class FilmPage : ContentPage
                             VerticalTextAlignment = TextAlignment.Center,
                             HorizontalTextAlignment = TextAlignment.Start,
                             FontSize = 14,
-                            LineBreakMode = LineBreakMode.NoWrap,
+                            LineBreakMode = LineBreakMode.WordWrap,
                             FormattedText = new FormattedString(),
-                            Text = cast.Text,
+                            Text = HtmlEntity.DeEntitize(cast.Text),
                             BackgroundColor = Colors.LightGray,
-                            TextColor = Colors.Black
+                            TextColor = Colors.Black,
+                            Margin = 1
                         };
 
                         var castTapGesture = new TapGestureRecognizer();

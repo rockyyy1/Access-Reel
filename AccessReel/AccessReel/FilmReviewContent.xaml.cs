@@ -1,5 +1,6 @@
 using HtmlAgilityPack;
 using Microsoft.Maui.Controls;
+using Microsoft.Maui.Layouts;
 using System.Diagnostics;
 using System.Reflection.Metadata;
 using System.Text;
@@ -78,11 +79,10 @@ public partial class FilmReviewContent : ContentPage
         if (tagNodes != null)
         {
             // horizontal StackLayout to hold the tags
-            var horizontalStackLayout = new StackLayout
+            var horizontalStackLayout = new FlexLayout
             {
-                Orientation = StackOrientation.Horizontal,
-                Spacing = 10,
-                VerticalOptions = LayoutOptions.Center
+                Direction = FlexDirection.Row,
+                Wrap = FlexWrap.Wrap,
             };
 
             foreach (var tagNode in tagNodes)
@@ -95,10 +95,12 @@ public partial class FilmReviewContent : ContentPage
                 var tagLabel = new Label
                 {
                     VerticalTextAlignment = TextAlignment.Center,
-                    HorizontalTextAlignment = TextAlignment.Center,
+                    HorizontalTextAlignment = TextAlignment.Start,
+                    LineBreakMode = LineBreakMode.WordWrap,
                     FontSize = 14,
                     BackgroundColor = Colors.LightGray,
-                    TextColor = Colors.Black
+                    TextColor = Colors.Black,
+                    Margin = 1,
                 };
 
                 tagLabel.Text = tagName;
