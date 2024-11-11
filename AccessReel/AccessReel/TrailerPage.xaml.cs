@@ -1,4 +1,6 @@
 using HtmlAgilityPack;
+using Microsoft.Maui.ApplicationModel;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Diagnostics;
 using static System.Net.WebRequestMethods;
@@ -22,7 +24,7 @@ public partial class TrailerPage : ContentPage
     }
 
     public TrailerPage(Review film)
-	{
+    {
         InitializeComponent();
 
         #region SETUP
@@ -38,15 +40,22 @@ public partial class TrailerPage : ContentPage
         if (iframeNode != null)
         {
             // Extract the iframe HTML
-            var iframeHtml = iframeNode.OuterHtml;
+            ///var iframeHtml = iframeNode.OuterHtml;
 
+            var iframeSrc = iframeNode.GetAttributeValue("src", "");
+            if (!iframeSrc.StartsWith("http://") && !iframeSrc.StartsWith("https://"))
+            {
+                iframeSrc = "https:" + iframeSrc;  // Add protocol
+            }
+            //Debug.WriteLine(iframeSrc);
             // Create a WebView to render the iframe
             var webView = new WebView
             {
-                Source = new HtmlWebViewSource { Html = iframeHtml },
+                //Source = new HtmlWebViewSource { Html = iframeHtml },
                 HeightRequest = 405,
-                WidthRequest = 720
+                WidthRequest = 720,
             };
+            webView.Source = new Uri(iframeSrc);
 
             // Add the WebView to the StackLayout
             var VideostackLayout = new StackLayout
@@ -56,6 +65,10 @@ public partial class TrailerPage : ContentPage
 
             videoStackLayout.Children.Add(VideostackLayout);
         }
+
+  
+
+   
 
         #endregion
 
