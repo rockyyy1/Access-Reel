@@ -302,6 +302,17 @@ public partial class ListPage : ContentPage
     {
         int index = Sorter.SelectedIndex;
         List<Review> reviewList = newsList.ConvertAll(post => post as Review);
+        foreach (Review review in reviewList)
+        {
+            if(review.ReviewScore == null )
+            {
+                review.ReviewScore = "0";
+            }
+            if (review.MemberReviewScore == null)
+            {
+                review.MemberReviewScore = "0";
+            }
+        }
         switch (index)
         {
             case 0:
