@@ -115,6 +115,7 @@
                 <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >
 
                 </CollectionView>
+                <Button x:Name="LoadMoreContentButton" Text="Load More" Clicked="LoadMoreContentButton_Clicked"/>
             </VerticalStackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -18,6 +18,7 @@ public partial class ListPage : ContentPage
 
     private string? tagurl;
     string? Authorurl;
+    public int currentPage = 1;
 
     public ListPage() 
     {
@@ -60,7 +61,7 @@ public partial class ListPage : ContentPage
     }
     
     // LOAD ALL DATA V2
-    private void LoadDataOnAllPages(string pageType)
+    private async void LoadDataOnAllPages(string pageType)
     {
         int page = 1;
         int lastPage = 1;
@@ -84,23 +85,8 @@ public partial class ListPage : ContentPage
             Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
         }
 
-        #region FIND LAST PAGE NUMBER
-        var urlp = "https://accessreel.com/" + group + pageType;
-        var webp = new HtmlWeb();
-        var documentp = webp.Load(urlp);
-        var pageLinks = documentp.DocumentNode.SelectNodes("//a[@class='page-numbers']");
-        if (pageLinks != null && pageLinks.Count > 0)
-        {
-            // Get the last page number
-            string lastPageUrl = pageLinks[pageLinks.Count - 1].GetAttributeValue("href", string.Empty);
-            // Extract the last page number from the URL
-            lastPage = int.Parse(lastPageUrl.Split('/')[^2]);
-            //Debug.WriteLine($"Number of pages: {lastPage}");
-        }
-        #endregion
 
-        //while (page < lastPage)
-        while (page < 10)
+        while (page <= 1)
         {
             var url = "https://accessreel.com/" + group + pageType + "/page/" + page.ToString();
             Debug.WriteLine(url);
@@ -202,6 +188,23 @@ public partial class ListPage : ContentPage
         }
     }
 
+    // FIND LAST PAGE NUMBER
+    private async Task<int> FindLastPageNumber(string group, string pageType)
+    {
+        var urlp = "https://accessreel.com/" + group + pageType;
+        var webp = new HtmlWeb();
+        var documentp = await webp.LoadFromWebAsync(urlp);
+        var pageLinks = documentp.DocumentNode.SelectNodes("//a[@class='page-numbers']");
+        if (pageLinks != null && pageLinks.Count > 0)
+        {
+            // Get the last page number
+            string lastPageUrl = pageLinks[pageLinks.Count - 1].GetAttributeValue("href", string.Empty);
+            // Extract the last page number from the URL
+            return int.Parse(lastPageUrl.Split('/')[^2]);
+            //Debug.WriteLine($"Number of pages: {lastPage}");
+        }
+        return -1;
+    }
     // LOAD ALL DATA V1 - BACKUP
     private async void LoadData(string pageType)
     {
@@ -348,6 +351,11 @@ public partial class ListPage : ContentPage
                 newsList.Add(item);
             }
         }
+    }
+
+    private void LoadMoreContentButton_Clicked(object sender, EventArgs e)
+    {
+        
     }
 }
 

@@ -18,18 +18,22 @@ namespace AccessReel
         public MainPage()
         {
             InitializeComponent();
-            Retrieve(ReadWebsite());
+            // Retrieve(ReadWebsite());
 
-            Webscraping webscraping = new Webscraping();
 
-            Homepage homepage = webscraping.GetHomepage();
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            Retrieve(await ReadWebsite());
         }
 
         // RETURN HTML DOC
-        private string ReadWebsite()
+        private async Task<string> ReadWebsite()
         {
             var web = new HtmlWeb();
-            text = web.Load("https://accessreel.com/").Text;            
+            text = (await web.LoadFromWebAsync("https://accessreel.com/")).Text;            
             return text;
         }
 
