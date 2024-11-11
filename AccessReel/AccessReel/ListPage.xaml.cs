@@ -373,7 +373,7 @@ public class ReviewScoreToAbsLayoutConverter : IValueConverter
             }
             else
             {
-                return new Rect(0.28, 0.15, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+                return new Rect(0.35, 0.10, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
         }
         return null; //new Rect(0.5, 0.5, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);

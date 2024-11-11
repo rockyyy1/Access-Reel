@@ -13,23 +13,23 @@
             <DataTemplate x:Name="DTMovieArticle" x:Key="templateMA">
                 <Grid HorizontalOptions="CenterAndExpand" Padding="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="500"/>
-                        <ColumnDefinition Width="120"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Margin="5" Source="{Binding Image}">
+                    <Image Grid.Column="0" Margin="1" Source="{Binding Image}" HeightRequest="100" VerticalOptions="Start">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ItemTapped"/>
                         </Image.GestureRecognizers>
                     </Image>
 
                     <VerticalStackLayout Grid.Column="1" Margin="5">
-                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5">
+                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="0,10,0,0">
                             <Label.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="ItemTapped"/>
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
+                        <Label Text="{Binding Description}" FontSize="Body" Margin="5" MaxLines="6"/>
                         <HorizontalStackLayout>
                             <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5">
                                 <Label.GestureRecognizers>
@@ -43,7 +43,8 @@
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" IsVisible="{Binding ReviewScore, Converter={StaticResource NotEmptyStringConverters}}"/>
                         <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="{Binding ReviewScore, Converter={StaticResource ReviewScoreToAbsLayoutConverter}}" 
                                AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" 
-                               TextColor="White" FontAttributes="Bold"  />
+                               TextColor="White" FontAttributes="Bold"  
+                               Margin="15,-10,0,0"/>
                     </AbsoluteLayout>
                 </Grid>
             </DataTemplate>
@@ -51,11 +52,11 @@
             <DataTemplate x:Name="DTArticle" x:Key="templateArticle">
                 <Grid HorizontalOptions="CenterAndExpand" Padding="5">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="500"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Margin="5" Source="{Binding Image}">
+                    <Image Grid.Column="0" Source="{Binding Image}" VerticalOptions="Start" Margin="0,15,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ItemTapped"/>
                         </Image.GestureRecognizers>
@@ -66,7 +67,7 @@
                                 <TapGestureRecognizer Tapped="ItemTapped"/>
                             </Label.GestureRecognizers>
                         </Label>
-                        <Label Text="{Binding Description}" FontSize="Body" Margin="5"/>
+                        <Label Text="{Binding Description}" FontSize="Body" Margin="5" MaxLines="6"/>
                         <HorizontalStackLayout>
                             <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5">
                                 <Label.GestureRecognizers>
@@ -97,7 +98,7 @@
                         </Label.GestureRecognizers>
                     </Label>
                 </AbsoluteLayout>
-                <Picker x:Name="Sorter" SelectedIndexChanged="Sorter_SelectedIndexChanged" SelectedIndex="0" HorizontalOptions="Center" WidthRequest="400" BackgroundColor="LightGray" SelectedItem="0">
+                <Picker x:Name="Sorter" SelectedIndexChanged="Sorter_SelectedIndexChanged" SelectedIndex="0" HorizontalOptions="CenterAndExpand" WidthRequest="375"  BackgroundColor="LightGray" SelectedItem="0">
                     <Picker.Shadow>
                         <Shadow Brush="Black" Offset="10,10" Radius="20" Opacity="0"/>
                     </Picker.Shadow>
