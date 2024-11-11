@@ -11,14 +11,13 @@
 
             <!-- Template for articles on the home page. Used by Latest News, Latest Interviews, Latest Reviews -->
             <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">
-                <VerticalStackLayout>
-                    <ImageButton />
-                    <Image Source="{Binding Image}" HeightRequest="250" Aspect="AspectFit">
+                <VerticalStackLayout Padding="0,10" >
+                    <Image Source="{Binding Image}" HeightRequest="150" Aspect="AspectFit" WidthRequest="300" HorizontalOptions="Start">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ArticleTapped"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5">
+                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5" LineBreakMode="WordWrap">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ArticleTapped"/>
                         </Label.GestureRecognizers>
@@ -77,7 +76,8 @@
                     <DataTemplate>
                         <Frame HorizontalOptions="Center" BackgroundColor="White" BorderColor="White" HeightRequest="380" WidthRequest="1150">
                             <AbsoluteLayout HorizontalOptions="Center">
-                                <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="350" WidthRequest="1110">
+                                <Image Source="{Binding Image}" Aspect="Center" >
+                                    <!-- HeightRequest="350" WidthRequest="1110"-->
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Image.GestureRecognizers>
@@ -117,7 +117,7 @@
                        BackgroundColor="#68ccde" Style="{StaticResource HomePageHeaders}"/>
                 <CollectionView x:Name="CVNews" ItemTemplate="{StaticResource TemplateArticle}" >
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                        <GridItemsLayout Orientation="Vertical" Span="1"/>
                     </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>
@@ -127,7 +127,7 @@
                        BackgroundColor="Black" Style="{StaticResource HomePageHeaders}"/>
                 <CollectionView x:Name="CVInterviews" ItemTemplate="{StaticResource TemplateArticle}">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                        <GridItemsLayout Orientation="Vertical" Span="1"/>
                     </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>
@@ -137,7 +137,7 @@
                        BackgroundColor="#66ccdc" Style="{StaticResource HomePageHeaders}"/>
                 <CollectionView x:Name="CVReviews" ItemTemplate="{StaticResource TemplateArticle}">
                     <CollectionView.ItemsLayout>
-                        <GridItemsLayout Orientation="Vertical" Span="2"/>
+                        <GridItemsLayout Orientation="Vertical" Span="1"/>
                     </CollectionView.ItemsLayout>
                 </CollectionView>
             </VerticalStackLayout>
