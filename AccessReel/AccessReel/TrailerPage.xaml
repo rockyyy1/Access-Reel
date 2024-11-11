@@ -8,7 +8,7 @@
         <StackLayout>
         <!-- Title/Score -->
         <HorizontalStackLayout HorizontalOptions="Center">
-            <Label x:Name="LblTitle" Text="{Binding Title}" HorizontalOptions="Start" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
+            <Label x:Name="LblTitle" Text="{Binding Title}" HorizontalOptions="Center" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
         </HorizontalStackLayout>
 
         <!-- Media Player Goes Here -->
