@@ -7,15 +7,15 @@
         <VerticalStackLayout HorizontalOptions="FillAndExpand">
             <!-- Banner -->
             <AbsoluteLayout HorizontalOptions="CenterAndExpand"> 
-                <Image Source="dotnet_bot.png" />
-                <Label Text="Trailers"/>
+                <Image Source="trailers_banner.jpg" Margin="10" WidthRequest="400" Aspect="AspectFit" />
+                <Label Text="Trailers" AbsoluteLayout.LayoutBounds="00,100" FontAttributes="Bold" FontSize="25" TextColor="White" BackgroundColor="DarkGray"/>
             </AbsoluteLayout>
             <!-- Trailers -->
             <CollectionView x:Name="CVTrailers">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <VerticalStackLayout>
-                            <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="297" WidthRequest="200">
+                            <Image Source="{Binding Image}" HeightRequest="200" Aspect="AspectFit">
                                 <Image.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="FilmTapped"/>
                                 </Image.GestureRecognizers>
@@ -29,7 +29,7 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="50" VerticalItemSpacing="50"/>
+                    <GridItemsLayout Orientation="Vertical" Span="3" HorizontalItemSpacing="10" VerticalItemSpacing="15"/>
                 </CollectionView.ItemsLayout>
             </CollectionView>
         </VerticalStackLayout>

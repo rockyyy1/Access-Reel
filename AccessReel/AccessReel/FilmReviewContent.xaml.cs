@@ -42,8 +42,8 @@ public partial class FilmReviewContent : ContentPage
             {
                 string p = paragraph.InnerText.Trim() + "\n";
                 p = HtmlEntity.DeEntitize(p);
-                reviewParagraphs.AppendLine(p);
-                reviewParagraphs.AppendLine("");
+                reviewParagraphs.AppendLine(p + "<br>");
+                reviewParagraphs.AppendLine("<br>");
             }
             review.Description = reviewParagraphs.ToString();
             LblReview.Text = reviewParagraphs.ToString();

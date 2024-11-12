@@ -34,6 +34,7 @@ public partial class ListPage : ContentPage
         Sorter.SelectedIndex = 0;
         this.tagurl = tagurl;
         Authorurl = authorurl;
+        Banner.Source = pageType + ".jpg";
         Title.Text = pageType;
         LoadData(pageType);
         #endregion
@@ -76,6 +77,9 @@ public partial class ListPage : ContentPage
 
             //change title
             Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-"," ");
+
+            //change banner
+            Banner.Source = null;
         }
         if (Authorurl != null)
         {
@@ -83,6 +87,7 @@ public partial class ListPage : ContentPage
             pageType = GetAuthorName(Authorurl);
             //change title
             Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
+            Banner.Source = null;
         }
 
 

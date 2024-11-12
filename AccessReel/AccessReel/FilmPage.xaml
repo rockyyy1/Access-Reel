@@ -23,11 +23,11 @@
             <HorizontalStackLayout HorizontalOptions="Center">
                 <Label x:Name="LblTitle" Text="{Binding Title}" HorizontalOptions="StartAndExpand" FontSize="Title" VerticalOptions="Center"/>
                 <VerticalStackLayout> <!-- Critic review score -->
-                    <AbsoluteLayout Grid.Column="2" x:Name="AbsLayoutReviewScore" HorizontalOptions="End" Margin="150,20,0,0">
+                    <AbsoluteLayout Grid.Column="2" x:Name="AbsLayoutReviewScore" HorizontalOptions="End" Margin="100,20,0,0">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" />
                         <Label Text="{Binding ReviewScore}" TextColor="White" AbsoluteLayout.LayoutBounds="0.5,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" />
                     </AbsoluteLayout>
-                    <Label Text="CRITIC" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="145,0,0,0"/>
+                    <Label Text="CRITIC" FontAttributes="Bold" HorizontalTextAlignment="Center" Margin="95,0,0,0"/>
                 </VerticalStackLayout>
                 <VerticalStackLayout> <!-- Member review score -->
                     <AbsoluteLayout Grid.Column="2" x:Name="AbsLayoutMemberScore" HorizontalOptions="End" Margin="0,20,0,0" 
@@ -37,7 +37,6 @@
                     </AbsoluteLayout>
                     <Label Text="MEMBERS" FontAttributes="Bold" HorizontalTextAlignment="Center"
                     IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}"/>
-
                 </VerticalStackLayout>
             </HorizontalStackLayout>    
 	
@@ -64,7 +63,7 @@
                     <Label x:Name ="USreleaseDate" Text="In Theaters (USA):  " HorizontalTextAlignment="End" TextColor="#a2645f"/>
                 </StackLayout>
                 <VerticalStackLayout Grid.Column="0" Grid.Row="1">
-                    <Image x:Name="ImagePoster" WidthRequest="150" Margin="0,10,0,0"/>
+                    <Image x:Name="ImagePoster" WidthRequest="150" Margin="0,25,0,0"/>
                     <!-- <Button Text="Follow +" TextColor="White" BackgroundColor="#00d0e5" HorizontalOptions="Center" x:Name="FollowBtn" Clicked="FollowBtn_Clicked" /> -->
                 </VerticalStackLayout>
 
@@ -85,7 +84,7 @@
                 </VerticalStackLayout>
 
 	        <!-- Film Details-->
-                <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="50,10,0,0" Grid.ColumnSpan="2" BackgroundColor="#f9f9f9">
+                <VerticalStackLayout Grid.Column="2" Grid.Row="1" Margin="50,0,0,0" Grid.ColumnSpan="2" BackgroundColor="#f9f9f9">
                     <Label x:Name="LblDesc" Text="{Binding Description}" Padding="10" Margin="0,10,0,0"/>
                     
                     <StackLayout x:Name="GenreStackLayout" Padding="10">

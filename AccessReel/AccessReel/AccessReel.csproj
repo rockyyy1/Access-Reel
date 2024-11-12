@@ -62,7 +62,12 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\fa-regular-400.ttf" />
 	  <None Remove="Resources\Images\clock.png" />
+	  <None Remove="Resources\Images\films.jpg" />
+	  <None Remove="Resources\Images\interviews.jpg" />
 	  <None Remove="Resources\Images\logo.jpg" />
+	  <None Remove="Resources\Images\news.jpg" />
+	  <None Remove="Resources\Images\reviews.jpg" />
+	  <None Remove="Resources\Images\trailers.jpg" />
 	  <None Remove="Resources\Images\user.png" />
 	</ItemGroup>
 
