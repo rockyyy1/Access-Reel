@@ -374,11 +374,11 @@ public class ReviewScoreToAbsLayoutConverter : IValueConverter
         {
             if (text.Length == 2)
             {
-                return new Rect(0.22, 0.15, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+                return new Rect(0.22, 0.20, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
             else
             {
-                return new Rect(0.35, 0.10, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
+                return new Rect(0.35, 0.20, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
             }
         }
         return null; //new Rect(0.5, 0.5, AbsoluteLayout.AutoSize, AbsoluteLayout.AutoSize);
