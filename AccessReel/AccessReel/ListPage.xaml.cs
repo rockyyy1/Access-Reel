@@ -19,6 +19,9 @@ public partial class ListPage : ContentPage
     private string? tagurl;
     string? Authorurl;
     public int currentPage = 1;
+    public int lastPage = 0;
+    public string group;
+    public string pageType;
 
     public ListPage() 
     {
@@ -30,12 +33,13 @@ public partial class ListPage : ContentPage
         InitializeComponent();
 
         #region SETUP
+        this.pageType = pageType;
         Sorter.ItemsSource = sortPickerItems;
         Sorter.SelectedIndex = 0;
         this.tagurl = tagurl;
         Authorurl = authorurl;
         Banner.Source = pageType + ".jpg";
-        Title.Text = pageType;
+        Title.Text = pageType;;
         LoadData(pageType);
         #endregion
     }
@@ -58,9 +62,136 @@ public partial class ListPage : ContentPage
         List<string> items = url.Split("/").Where(item => !string.IsNullOrEmpty(item)).ToList();
         string authorName = items.LastOrDefault();
         //Debug.WriteLine("GetAuthorName returns: " + authorName);
-        return authorName; 
+        return authorName;
     }
-    
+
+    // LOAD THE DATA FROM AN SINGLE PAGE
+    private async void LoadDataOnAnPage(int page, string group, string pageType)
+    {
+        #region SETUP
+        /*int page = 1;
+        int lastPage = 1;
+
+        string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
+        if (this.tagurl != null)
+        {
+            string taggroup;
+            this.GetTagInfo(this.tagurl, out taggroup, out pageType);
+
+            group = taggroup;
+
+            //change title
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
+
+            //change banner
+            Banner.Source = null;
+        }
+        if (Authorurl != null)
+        {
+            group = "author/";
+            pageType = GetAuthorName(Authorurl);
+            //change title
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
+            Banner.Source = null;
+        }*/
+        #endregion
+
+        var url = "https://accessreel.com/" + group + pageType + "/page/" + page.ToString();
+        Debug.WriteLine(url);
+        var web = new HtmlWeb();
+        var document = await web.LoadFromWebAsync(url);
+
+        var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
+        if (parentContainer == null)
+        {
+            return;
+        }
+        var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
+        if (nodes == null || nodes.Count == 0)
+        {
+            return;
+        }
+        if (nodes != null)
+        {
+
+            foreach (var node in nodes)
+            {
+                var post = new Posts();
+                if (pageType == "Reviews" || pageType == "Films" || this.tagurl != null || Authorurl != null)
+                {
+                    post = new Review();
+                }
+
+
+                // Extract Title
+                var titleNode = node.SelectSingleNode(".//h2[@class='gp-loop-title']/a");
+                string title = titleNode.InnerText.Trim();
+                title = HtmlEntity.DeEntitize(title);
+                post.Title = title;
+
+                // Extract Paragraph
+                var paragraphNode = node.SelectSingleNode(".//div[@class='gp-loop-text']/p");
+                string para = paragraphNode.InnerText.Trim();
+                para = HtmlEntity.DeEntitize(para);
+                post.Description = para;
+
+                // Extract the main link
+                var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
+
+                if (linkNode == null)
+                {
+                    linkNode = node.SelectSingleNode(".//div[@class='gp-post-thumbnail gp-loop-featured']/div/a");
+                }
+                post.Url = linkNode?.GetAttributeValue("href", string.Empty);
+
+                var imageNode = linkNode?.SelectSingleNode(".//img");
+
+                post.Image = imageNode?.GetAttributeValue("src", string.Empty);
+
+
+
+                // Extract Author
+                var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
+                post.Author = authorNode?.InnerText.Trim();
+                post.AuthorUrl = authorNode?.GetAttributeValue("href", string.Empty);
+
+                // Extract Date Published
+                var dateNode = node.SelectSingleNode(".//time[@class='gp-post-meta gp-meta-date']");
+                var dateText = dateNode?.InnerText.Trim();
+                if (DateTime.TryParse(dateText, out var parsedDate))
+                {
+                    post.Date = parsedDate;
+                }
+
+                if (post.GetType() == typeof(Review))
+                {
+                    var review = (Review)post;
+
+                    var reviewScoreNode = node.SelectSingleNode(".//div[@class='gp-rating-inner']");
+                    string reviewScore = reviewScoreNode?.InnerText.Trim();
+                    review.ReviewScore = reviewScore;
+                }
+
+                newsList.Add(post);
+            }
+            this.currentPage += 1;
+
+            if (group == "categories/")
+            {
+                CVArticles.ItemTemplate = DTArticle;
+                CVArticles.ItemsSource = newsList;
+            }
+            else if (group == "hubs/" || this.tagurl != null || Authorurl != null)
+            {
+                CVArticles.ItemTemplate = DTMovieArticle;
+                CVArticles.ItemsSource = newsList;
+                List<string> SortOptions = sortPickerItems.Concat(sortPickerIfReviews).ToList();
+                Sorter.ItemsSource = SortOptions;
+            }
+
+        }
+    }
+
     // LOAD ALL DATA V2
     private async void LoadDataOnAllPages(string pageType)
     {
@@ -212,7 +343,36 @@ public partial class ListPage : ContentPage
     // LOAD ALL DATA V1 - BACKUP
     private async void LoadData(string pageType)
     {
-        LoadDataOnAllPages(pageType);
+
+        #region SETUP
+
+        string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
+        if (this.tagurl != null)
+        {
+            string taggroup;
+            this.GetTagInfo(this.tagurl, out taggroup, out pageType);
+
+            group = taggroup;
+
+            //change title
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
+
+            //change banner
+            Banner.Source = null;
+        }
+        if (Authorurl != null)
+        {
+            group = "author/";
+            pageType = GetAuthorName(Authorurl);
+            //change title
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
+            Banner.Source = null;
+        }
+        #endregion
+        this.lastPage = await this.FindLastPageNumber(group, pageType);
+
+        this.group = group;
+        LoadDataOnAnPage(this.currentPage, this.group, this.pageType);
 
         #region ROCKY'S CODE - BACKUP
         // sorry i commented out your standard code, just testing getting data from all the pages at once :)
@@ -359,7 +519,13 @@ public partial class ListPage : ContentPage
 
     private void LoadMoreContentButton_Clicked(object sender, EventArgs e)
     {
-        
+        Button button = (Button)sender;
+
+        LoadDataOnAnPage(this.currentPage, this.group, this.pageType);
+        if ( this.currentPage >= this.lastPage )
+        {
+            button.IsEnabled = false;
+        }
     }
 }
 
