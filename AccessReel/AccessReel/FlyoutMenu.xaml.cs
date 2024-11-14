@@ -71,4 +71,16 @@ public partial class FlyoutMenu : FlyoutPage
         Detail = new NavigationPage(new FindNearby());
         IsPresented = false;
     }
+
+    private void AccessReelSearchbar_SearchButtonPressed(object sender, EventArgs e)
+    {
+        string url = "https://accessreel.com/?s=" + AccessReelSearchbar.Text;
+
+        url = url.Replace(" ", "+");
+
+        Detail = new NavigationPage(new ListPage("Search", url));
+        IsPresented = false;
+
+
+    }
 }

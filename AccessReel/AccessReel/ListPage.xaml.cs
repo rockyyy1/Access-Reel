@@ -95,8 +95,14 @@ public partial class ListPage : ContentPage
             Banner.Source = null;
         }*/
         #endregion
-
+        
         var url = "https://accessreel.com/" + group + pageType + "/page/" + page.ToString();
+
+        if ( this.pageType == "Search" )
+        {
+            Title.Text = "Search results:";
+            url = this.tagurl;
+        }
         Debug.WriteLine(url);
         var web = new HtmlWeb();
         var document = await web.LoadFromWebAsync(url);
@@ -348,7 +354,7 @@ public partial class ListPage : ContentPage
 
         string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
         this.group = group;
-        if (this.tagurl != null)
+        if (this.tagurl != null && this.pageType != "Search")
         {
             string taggroup;
             this.GetTagInfo(this.tagurl, out taggroup, out this.pageType);
@@ -448,15 +454,20 @@ public partial class ListPage : ContentPage
         {
             // Access the DataContext of the Label
             var item = (Posts)((VisualElement)sender).BindingContext;
-
-            //Debug.WriteLine(item.Url);
+            
+            Debug.WriteLine(item.Url);
             Page page;
-            if( pageType == "Films" ) {
-                page = new FilmPage((Review)item);
+            if ( item.Url.Contains("trailer") )
+            {
+                page = new TrailerPage((Review)item);
+            }
+            else if (item.Url.Contains("review") || item.Url.Contains("article"))
+            {
+                page = new ArticlePage(item.Url);
             }
             else
             {
-                page = new ArticlePage(item.Url);
+                page = new FilmPage((Review)item);
             }
 
             await Navigation.PushAsync(page)  ;
