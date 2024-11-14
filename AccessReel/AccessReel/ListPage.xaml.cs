@@ -74,7 +74,6 @@ public partial class ListPage : ContentPage
             this.GetTagInfo(this.tagurl, out taggroup, out pageType);
 
             group = taggroup;
-
             //change title
             Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-"," ");
 
@@ -301,7 +300,7 @@ public partial class ListPage : ContentPage
     {
         if (sender is Label label)
         {
-            var item = (Review)((VisualElement)sender).BindingContext;
+            var item = (Posts)((VisualElement)sender).BindingContext;
             NavigationPage authorListPage = new NavigationPage(new ListPage("Author", authorurl: item.AuthorUrl));
             await Navigation.PushAsync(authorListPage);
         }

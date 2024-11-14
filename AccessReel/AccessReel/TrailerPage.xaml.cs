@@ -40,23 +40,38 @@ public partial class TrailerPage : ContentPage
         var iframeNode = document.DocumentNode.SelectSingleNode("//iframe");
         if (iframeNode != null)
         {
-            // Extract the iframe HTML
-            ///var iframeHtml = iframeNode.OuterHtml;
 
             var iframeSrc = iframeNode.GetAttributeValue("src", "");
             if (!iframeSrc.StartsWith("http://") && !iframeSrc.StartsWith("https://"))
             {
-                iframeSrc = "https:" + iframeSrc;  // Add protocol
+                iframeSrc = "https:" + iframeSrc; 
             }
-            //Debug.WriteLine(iframeSrc);
-            // Create a WebView to render the iframe
+            string htmlContent = $@"
+        <html>
+            <head>
+                <style>
+                    body, html {{
+                        margin: 0;
+                        padding: 0;
+                        overflow: hidden;
+                    }}
+                    iframe {{
+                        width: 100% !important;
+                        height: 100% !important;
+                    }}
+                </style>
+            </head>
+            <body>
+                <iframe src='{iframeSrc}' frameborder='0' allowfullscreen></iframe>
+            </body>
+        </html>";
+
             var webView = new WebView
             {
-                //Source = new HtmlWebViewSource { Html = iframeHtml },
                 HeightRequest = 225,
                 WidthRequest = 400,
+                Source = new HtmlWebViewSource { Html = htmlContent }
             };
-            webView.Source = new Uri(iframeSrc);
 
             // Add the WebView to the StackLayout
             var VideostackLayout = new StackLayout

@@ -7,7 +7,7 @@
     <ScrollView>
         <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="800">
             <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="Start" FontAttributes="Bold" LineBreakMode="WordWrap" VerticalOptions="StartAndExpand" WidthRequest="400" Margin="10"/>
-            <Image x:Name="banner" Margin="10" HeightRequest="200" Aspect="AspectFit" HorizontalOptions="Start"/>
+            <Image x:Name="banner" Margin="10" WidthRequest="380" Aspect="AspectFit" HorizontalOptions="Start"/>
             <StackLayout x:Name="contentStackLayout" Margin="10" WidthRequest="380" HorizontalOptions="Start">
                 <ContentView x:Name="FilmReviewContainer" />
             </StackLayout>

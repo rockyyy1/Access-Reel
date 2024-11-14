@@ -7,8 +7,8 @@
         <VerticalStackLayout HorizontalOptions="FillAndExpand">
             <!-- Banner -->
             <AbsoluteLayout HorizontalOptions="CenterAndExpand"> 
-                <Image Source="trailers_banner.jpg" Margin="10" WidthRequest="400" Aspect="AspectFit" />
-                <Label Text="Trailers" AbsoluteLayout.LayoutBounds="00,100" FontAttributes="Bold" FontSize="25" TextColor="White" BackgroundColor="DarkGray"/>
+                <Image Source="trailers.jpg" Margin="10" WidthRequest="400" Aspect="AspectFit" />
+                <Label Text="Trailers" AbsoluteLayout.LayoutBounds="20,130" FontAttributes="Bold" FontSize="25" TextColor="White"/>
             </AbsoluteLayout>
             <!-- Trailers -->
             <CollectionView x:Name="CVTrailers">

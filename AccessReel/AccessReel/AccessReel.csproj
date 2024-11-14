@@ -43,10 +43,10 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" color="#ffffff" />
+		<MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" color="#ffffff" BaseSize="16,16" />
 
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+		<MauiSplashScreen Include="Resources\Splash\logosplash.jpg" Color="#ffffff" />
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
@@ -69,6 +69,11 @@
 	  <None Remove="Resources\Images\reviews.jpg" />
 	  <None Remove="Resources\Images\trailers.jpg" />
 	  <None Remove="Resources\Images\user.png" />
+	  <None Remove="Resources\Splash\logosplash.jpg" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <MauiImage Include="Resources\Splash\logosplash.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>

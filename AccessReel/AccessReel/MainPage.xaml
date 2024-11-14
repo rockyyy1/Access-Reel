@@ -56,13 +56,13 @@
                         </Label.GestureRecognizers>
                     </Label>
 
-                    <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="270,55, AutoSize,AutoSize">
+                    <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="250,55, AutoSize,AutoSize">
                         <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="0,0" />
                         <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds=".5,0.3" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold" />
                         <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="6,65" FontAttributes="Bold"/>
                     </AbsoluteLayout>
 
-                    <AbsoluteLayout Margin="10" x:Name="UserReviewScore" AbsoluteLayout.LayoutBounds="220,115, AutoSize,AutoSize">
+                    <AbsoluteLayout Margin="10" x:Name="UserReviewScore" AbsoluteLayout.LayoutBounds="200,115, AutoSize,AutoSize">
                         <RoundRectangle WidthRequest="40" HeightRequest="23" Fill="#00d1e4" CornerRadius="5" AbsoluteLayout.LayoutBounds="70,25" />
                         <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0.875,0.90" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="15" TextColor="white" FontAttributes="Bold" />
                         <Label Text="Members" AbsoluteLayout.LayoutBounds="0,25" />
@@ -82,7 +82,7 @@
                     <DataTemplate>
                         <Frame HorizontalOptions="Center" BackgroundColor="White" BorderColor="White" HeightRequest="350" WidthRequest="1450">
                             <AbsoluteLayout HorizontalOptions="Center">
-                                <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="300" WidthRequest="400">
+                                <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="300" WidthRequest="380">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Image.GestureRecognizers>
@@ -94,9 +94,9 @@
                                 </Label>
                                 <!--Critic-->
                                 <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="200,0, AutoSize,AutoSize">
-                                    <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="0,0" FontAttributes="Bold" TextColor="White"/>
+                                    <!--<Label Text="CRITIC" AbsoluteLayout.LayoutBounds="0,60" FontAttributes="Bold" TextColor="White"/> -->
                                     <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.39" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
                                 </AbsoluteLayout>
 
                                 <!--Member-->
