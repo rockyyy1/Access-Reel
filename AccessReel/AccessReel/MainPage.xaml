@@ -80,31 +80,31 @@
             <CarouselView x:Name="CVImageheader" IndicatorView="IImageHeader" HorizontalOptions="FillAndExpand" >
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
-                        <Frame HorizontalOptions="Center" BackgroundColor="White" BorderColor="White" HeightRequest="350" WidthRequest="1450">
+                        <Frame HorizontalOptions="Center" BackgroundColor="White" BorderColor="White" MaximumHeightRequest="120" Padding="0" CornerRadius="0">
                             <AbsoluteLayout HorizontalOptions="Center">
-                                <Image Source="{Binding Image}" Aspect="AspectFill" HeightRequest="300" WidthRequest="380">
+                                <Image Source="{Binding Image}" Aspect="AspectFit"  HorizontalOptions="Center" VerticalOptions="Center" HeightRequest="110">
                                     <Image.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Image.GestureRecognizers>
                                 </Image>
-                                <Label Text="{Binding Title}" TextColor="White" Opacity="50"  AbsoluteLayout.LayoutBounds="40,240" FontSize="Large" Margin="10">
+                                <Label Text="{Binding Title}" TextColor="White" Opacity="50"  AbsoluteLayout.LayoutBounds="10,60" FontSize="Large" Margin="10">
                                     <Label.GestureRecognizers>
                                         <TapGestureRecognizer Tapped="FilmTapped"/>
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <!--Critic-->
-                                <AbsoluteLayout Margin="10" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="200,0, AutoSize,AutoSize">
+                                <AbsoluteLayout Margin="0" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="215,0, AutoSize,AutoSize">
                                     <!--<Label Text="CRITIC" AbsoluteLayout.LayoutBounds="0,60" FontAttributes="Bold" TextColor="White"/> -->
-                                    <Ellipse WidthRequest="60" HeightRequest="60" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.82,0.39" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                    <Ellipse WidthRequest="50" HeightRequest="50" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
+                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.83,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
                                 </AbsoluteLayout>
 
                                 <!--Member-->
-                                <AbsoluteLayout Margin="10" x:Name="MemberReviewScore" AbsoluteLayout.LayoutBounds="920,200, AutoSize,AutoSize"
+                                <AbsoluteLayout Margin="0" x:Name="MemberReviewScore" AbsoluteLayout.LayoutBounds="215,55, AutoSize,AutoSize"
                                                 IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}">
-                                    <Label Text="MEMBERS" AbsoluteLayout.LayoutBounds="75,60" FontAttributes="Bold" TextColor="White"/>
-                                    <Ellipse WidthRequest="60" HeightRequest="60" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                    <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0.84,0.35" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                    <!--<Label Text="MEMBERS" AbsoluteLayout.LayoutBounds="75,60" FontAttributes="Bold" TextColor="White"/>-->
+                                    <Ellipse WidthRequest="50" HeightRequest="50" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
+                                    <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0.87,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
                                 </AbsoluteLayout>
 
                             </AbsoluteLayout>
@@ -112,7 +112,7 @@
                     </DataTemplate>
                 </CarouselView.ItemTemplate>
                 <CarouselView.ItemsLayout>
-                    <LinearItemsLayout Orientation="Horizontal" SnapPointsType="MandatorySingle" SnapPointsAlignment="Center" ItemSpacing="10"/>
+                    <LinearItemsLayout Orientation="Horizontal" SnapPointsType="None" SnapPointsAlignment="Start" ItemSpacing="0"/>
                 </CarouselView.ItemsLayout>
             </CarouselView>
             <IndicatorView x:Name="IImageHeader" HorizontalOptions="Center"/>
@@ -159,8 +159,8 @@
             <VerticalStackLayout BackgroundColor="#f8f8f8">
                 <Label x:Name="LblTrailers" Text="New Trailers" 
                        BackgroundColor="#e17132" Style="{StaticResource HomePageHeaders}"/>
-                
-                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand">
+
+                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" PeekAreaInsets="200">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <HorizontalStackLayout HorizontalOptions="Center">
@@ -170,7 +170,7 @@
                                             <TapGestureRecognizer Tapped="TrailerTapped"/>
                                         </Image.GestureRecognizers>
                                     </Image>
-                                    <Label Text="{Binding Title}" HorizontalOptions="Center" FontAttributes="Bold">
+                                    <Label Text="{Binding Title}" HorizontalOptions="Center" FontAttributes="Bold" LineBreakMode="TailTruncation">
                                         <Label.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="TrailerTapped"/>
                                         </Label.GestureRecognizers>
