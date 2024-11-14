@@ -54,7 +54,7 @@ public partial class ListPage : ContentPage
 
         group = items[3] + "/";
         title = items[4];
-        //Debug.WriteLine("INDEX - " + items[2]);
+        Debug.WriteLine("INDEX - " + items[2]);
     }
     // EXTRACT AUTHOR NAME FROM URL
     private string GetAuthorName(string url)
@@ -347,31 +347,33 @@ public partial class ListPage : ContentPage
         #region SETUP
 
         string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
+        this.group = group;
         if (this.tagurl != null)
         {
             string taggroup;
-            this.GetTagInfo(this.tagurl, out taggroup, out pageType);
+            this.GetTagInfo(this.tagurl, out taggroup, out this.pageType);
 
-            group = taggroup;
+            this.group = taggroup;
 
             //change title
-            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
-
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(this.pageType.ToLower()).Replace("-", " ");
+            Title.TextColor = Colors.Black;
             //change banner
-            Banner.Source = null;
+            //Banner.Source = "films.jpg";
         }
         if (Authorurl != null)
         {
-            group = "author/";
-            pageType = GetAuthorName(Authorurl);
+            this.group = "author/";
+            this.pageType = GetAuthorName(Authorurl);
             //change title
-            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
-            Banner.Source = null;
+            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(this.pageType.ToLower()).Replace("-", " ");
+            Title.TextColor = Colors.Black;
+
+            //Banner.Source = "films.jpg";
         }
         #endregion
-        this.lastPage = await this.FindLastPageNumber(group, pageType);
+        this.lastPage = await this.FindLastPageNumber(this.group, this.pageType);
 
-        this.group = group;
         LoadDataOnAnPage(this.currentPage, this.group, this.pageType);
 
         #region ROCKY'S CODE - BACKUP
@@ -448,10 +450,16 @@ public partial class ListPage : ContentPage
             var item = (Posts)((VisualElement)sender).BindingContext;
 
             //Debug.WriteLine(item.Url);
+            Page page;
+            if( pageType == "Films" ) {
+                page = new FilmPage((Review)item);
+            }
+            else
+            {
+                page = new ArticlePage(item.Url);
+            }
 
-            ArticlePage newArticle = new ArticlePage(item.Url);
-
-            await Navigation.PushAsync(newArticle);
+            await Navigation.PushAsync(page)  ;
         }
     }
 

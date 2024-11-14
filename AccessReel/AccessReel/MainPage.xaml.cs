@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Xml;
 
 
+
 namespace AccessReel
 {
     public partial class MainPage : ContentPage
@@ -24,6 +25,7 @@ namespace AccessReel
         protected override async void OnAppearing()
         {
             base.OnAppearing();
+            CheckForNewPostsSendNotification();
             Retrieve(await ReadWebsite());
         }
 
@@ -341,6 +343,12 @@ namespace AccessReel
                 await Navigation.PushAsync(trailerItem);
 
             }
+        }
+
+        //SEND PUSH NOTIFICATION
+        private void CheckForNewPostsSendNotification()
+        {
+
         }
     }
 
