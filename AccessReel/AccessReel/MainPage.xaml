@@ -160,7 +160,7 @@
                 <Label x:Name="LblTrailers" Text="New Trailers" 
                        BackgroundColor="#e17132" Style="{StaticResource HomePageHeaders}"/>
 
-                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" PeekAreaInsets="200">
+                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" >
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <HorizontalStackLayout HorizontalOptions="Center">
