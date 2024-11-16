@@ -278,6 +278,10 @@ namespace AccessReel
                 newTrailersList.Add(newTrailerItem);
             }
             CVTrailers.ItemsSource = newTrailersList;
+            if(DeviceInfo.Current.Platform == DevicePlatform.Android)
+            {
+                CVTrailers.PeekAreaInsets = 200;
+            }
 
             #endregion
 
