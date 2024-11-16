@@ -13,13 +13,13 @@
     
     <VerticalStackLayout>
         <Button x:Name="BtnFindTheaters" Text="Find Nearby Theaters Via GPS" Clicked="BtnFindTheaters_Clicked"/>
-        <Button x:Name="BtnFindWithPreset" Text="Find theaters with a preset location. (FOR TESTING PURPOSES)" Clicked="BtnFindWithPreset_Clicked"/>
+        <!-- <Button x:Name="BtnFindWithPreset" Text="Find theaters with a preset location. (FOR TESTING PURPOSES)" Clicked="BtnFindWithPreset_Clicked"/> -->
         <Label x:Name="LblTheaters" VerticalOptions="Center" 
                                     HorizontalOptions="Center" />
         <CollectionView x:Name="CVTheaters" HorizontalOptions="Center" VerticalOptions="Center">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="500">
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="400" Margin="40,0,10,0">
                         <Label Text="{Binding name}"  FontAttributes="Bold" FontSize="Small"/>
                         <Label Text="{Binding address}" FontAttributes="Italic" TextColor="DarkGray" FontSize="Subtitle"/>                        
                         <HorizontalStackLayout>
