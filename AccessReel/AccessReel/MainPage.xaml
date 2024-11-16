@@ -11,8 +11,7 @@
 
             <!-- Template for articles on the home page. Used by Latest News, Latest Interviews, Latest Reviews -->
             <DataTemplate x:Name="DTHomePageArticle" x:Key="TemplateArticle">
-                <VerticalStackLayout>
-                    <ImageButton />
+                <VerticalStackLayout Margin="0,10">
                     <Image Source="{Binding Image}" HeightRequest="100" Aspect="AspectFit" Margin="1">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ArticleTapped"/>

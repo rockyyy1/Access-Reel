@@ -52,25 +52,29 @@
                 </Grid>
             </DataTemplate>
             <!-- Template for regular articles -->
-            <DataTemplate x:Name="DTArticle" x:Key="templateArticle">
-                <Grid HorizontalOptions="CenterAndExpand" Padding="5">
+            <DataTemplate x:Name="DTArticle" x:Key="templateArticle" >
+                <Grid HorizontalOptions="CenterAndExpand" Padding="5" BackgroundColor="#f8f8f8">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="3*"/>
                         <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
-                    <Image Grid.Column="0" Source="{Binding Image}" VerticalOptions="Start" Margin="0,15,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Image Grid.Column="0" Grid.Row="0" Source="{Binding Image}" VerticalOptions="Start" Margin="5,10,0,0">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ItemTapped"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <VerticalStackLayout Grid.Column="1" Margin="5">
-                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="5">
-                            <Label.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="ItemTapped"/>
-                            </Label.GestureRecognizers>
-                        </Label>
-                        <Label Text="{Binding Description}" FontSize="Body" Margin="5" MaxLines="6"/>
+                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="10,5">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="ItemTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Margin="5" >
+                        <Label Text="{Binding Description}" FontSize="Body" Margin="0" MaxLines="6"/>
                         <HorizontalStackLayout>
                             <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5">
                                 <Label.GestureRecognizers>
@@ -88,7 +92,7 @@
     
     <ContentPage.Content>
         <ScrollView>
-            <VerticalStackLayout>
+            <VerticalStackLayout Spacing="5">
                 <AbsoluteLayout HorizontalOptions="Center">
                     <Image Source="{Binding Image}" HorizontalOptions="Center" HeightRequest="200" Aspect="AspectFit">
                         <Image.GestureRecognizers>
@@ -96,26 +100,13 @@
                         </Image.GestureRecognizers>
                     </Image>
                     <AbsoluteLayout HorizontalOptions="CenterAndExpand">
-                        <Image x:Name="Banner" Margin="10" WidthRequest="400"  HeightRequest="200" Aspect="AspectFit" />
-                        <Label x:Name="Title" Text="" AbsoluteLayout.LayoutBounds="20,160" FontAttributes="Bold" FontSize="25" TextColor="White" />
+                        <Image x:Name="Banner" Margin="0" WidthRequest="400"  HeightRequest="200" Aspect="AspectFit" />
+                        <Label x:Name="Title" Text="" AbsoluteLayout.LayoutBounds="15,160" FontAttributes="Bold" FontSize="25" TextColor="White" />
                     </AbsoluteLayout>
                 </AbsoluteLayout>
-                <Picker x:Name="Sorter" SelectedIndexChanged="Sorter_SelectedIndexChanged" SelectedIndex="0" HorizontalOptions="CenterAndExpand" WidthRequest="375"  BackgroundColor="LightGray" SelectedItem="0">
-                    <Picker.Shadow>
-                        <Shadow Brush="Black" Offset="10,10" Radius="20" Opacity="0"/>
-                    </Picker.Shadow>
-                    <!--<Picker.Items>
-                        <x:String>Newest</x:String>
-                        <x:String>Oldest</x:String>
-                        <x:String>Title (A-Z)</x:String>
-                        <x:String>Title (Z-A)</x:String>
-                        <x:String>Author (A-Z)</x:String>
-                        <x:String>Author (Z-A)</x:String>
-                        <x:String>Top Site Rated</x:String>
-                        --><!--<x:String>Top Member Rated</x:String>--><!--
-                    </Picker.Items>-->
+                <Picker x:Name="Sorter" SelectedIndexChanged="Sorter_SelectedIndexChanged" HorizontalOptions="CenterAndExpand" WidthRequest="200" BackgroundColor="GhostWhite" SelectedItem="0">
                 </Picker>
-                <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}" >
+                <CollectionView x:Name="CVArticles" ItemTemplate="{StaticResource templateMA}">
 
                 </CollectionView>
                 <Button x:Name="LoadMoreContentButton" Text="Load More" Clicked="LoadMoreContentButton_Clicked"/>
