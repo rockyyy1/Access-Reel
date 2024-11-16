@@ -1,7 +1,9 @@
 # AccessReel Mobile App
 
-AccessReel for mobile is a cross platform application written in C#, built in [Microsoft Visual Studio](https://visualstudio.microsoft.com/) using [.NET MAUI](https://dotnet.microsoft.com/en-us/apps/maui)
-You can find more information about at the [AccessReel website](https://accessreel.com/).
+AccessReel for Mobile is the dedicated cross-platform mobile version of Australia's premiere film website, AccessReel, providing the latest movie reviews, news, interviews, and more. 
+Built in C# using [Microsoft Visual Studio](https://visualstudio.microsoft.com/) and  [.NET MAUI](https://dotnet.microsoft.com/en-us/apps/maui), this app delivers a portable experience for movie enthusiasts on Android and iOS.
+The app leverages HtmlAgilityPack to efficiently scrape and parse web content, ensuring users stay updated with fresh and accurate information directly from the AccessReel website.
+For more information, visit the [AccessReel website](https://accessreel.com/) website.
 
 ## Getting Started
 
