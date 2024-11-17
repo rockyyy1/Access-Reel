@@ -104,7 +104,7 @@
                         </Image.GestureRecognizers>
                     </Image>
                     <AbsoluteLayout HorizontalOptions="CenterAndExpand">
-                        <Image x:Name="Banner" Margin="0" WidthRequest="400"  HeightRequest="200" Aspect="AspectFit" />
+                        <Image x:Name="Banner" Margin="0" WidthRequest="400"  HeightRequest="230" Aspect="AspectFit" />
                         <Label x:Name="Title" Text="" AbsoluteLayout.LayoutBounds="15,160" FontAttributes="Bold" FontSize="25" TextColor="White" />
                     </AbsoluteLayout>
                 </AbsoluteLayout>

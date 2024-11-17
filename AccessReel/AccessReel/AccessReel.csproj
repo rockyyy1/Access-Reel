@@ -43,7 +43,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" color="#ffffff" BaseSize="16,16" />
+		<MauiIcon Include="Resources\AppIcon\ic_launcher_round.png" color="#ffffff" BaseSize="48,48" />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\logosplash.jpg" Color="#ffffff" />
