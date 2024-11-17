@@ -94,18 +94,18 @@
                                     </Label.GestureRecognizers>
                                 </Label>
                                 <!--Critic-->
-                                <AbsoluteLayout Margin="0" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="200,0, AutoSize,AutoSize">
-                                    <!--<Label Text="CRITIC" AbsoluteLayout.LayoutBounds="0,60" FontAttributes="Bold" TextColor="White"/> -->
+                                <AbsoluteLayout Margin="0" x:Name="CriticReviewScore" AbsoluteLayout.LayoutBounds="-70,0, AutoSize,AutoSize">
+                                    <Label Text="CRITIC" AbsoluteLayout.LayoutBounds="90,50" FontAttributes="Bold" TextColor="White" FontSize="10"/> 
                                     <Ellipse WidthRequest="50" HeightRequest="50" Fill="#c3184a" Stroke="#f61e5b" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.83,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                    <Label Text="{Binding ReviewScore}" AbsoluteLayout.LayoutBounds="0.83,0.3" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
                                 </AbsoluteLayout>
 
                                 <!--Member-->
-                                <AbsoluteLayout Margin="0" x:Name="MemberReviewScore" AbsoluteLayout.LayoutBounds="215,55, AutoSize,AutoSize"
+                                <AbsoluteLayout Margin="0" x:Name="MemberReviewScore" AbsoluteLayout.LayoutBounds="-20,0, AutoSize,AutoSize"
                                                 IsVisible="{Binding MemberReviewScore, Converter={StaticResource NotEmptyStringConverter}}">
-                                    <!--<Label Text="MEMBERS" AbsoluteLayout.LayoutBounds="75,60" FontAttributes="Bold" TextColor="White"/>-->
+                                    <Label Text="MEMBERS" AbsoluteLayout.LayoutBounds="80,50" FontAttributes="Bold" TextColor="White" FontSize="10"/>
                                     <Ellipse WidthRequest="50" HeightRequest="50" Fill="#2d99a1" Stroke="#00d1e4" StrokeThickness="15" AbsoluteLayout.LayoutBounds="80,1"/>
-                                    <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0.87,0.5" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
+                                    <Label Text="{Binding MemberReviewScore}" AbsoluteLayout.LayoutBounds="0.89,0.3" AbsoluteLayout.LayoutFlags="PositionProportional" FontSize="Medium" TextColor="White" FontAttributes="Bold"/>
                                 </AbsoluteLayout>
 
                             </AbsoluteLayout>
