@@ -27,6 +27,7 @@
                 <Button x:Name="BtnFilmsPage" Text="Films" Clicked="BtnFilmsPage_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnTrailers" Text="Trailers" Clicked="BtnTrailers_Clicked" CornerRadius="0"  BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnInterviews" Text="Interviews" Clicked="BtnInterviews_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
+                <Button x:Name="BtnCompetitions" Text="Competitions" Clicked="BtnCompetitions_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Label/> <!-- Used For Visual Seperation Between Buttons -->
                 <Button x:Name="BtnFindTheaters" Text="Find Nearby Theaters" Clicked="BtnFindTheaters_Clicked"/>
                 <Label/>

@@ -221,7 +221,7 @@ public partial class ListPage : ContentPage
 
         #region SETUP
 
-        string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
+        string group = pageType == "News" || pageType == "Interviews" || pageType == "Competition" ? "categories/" : "hubs/";
         this.group = group;
         if (this.tagurl != null && this.pageType != "Search")
         {

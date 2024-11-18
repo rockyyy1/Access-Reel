@@ -73,10 +73,14 @@ public partial class ArticlePage : ContentPage
             var imageNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/div[3]/img");
 
             // Get the image source
-            string imageUrl = imageNode.GetAttributeValue("src", string.Empty);
+            string imageUrl = imageNode?.GetAttributeValue("src", string.Empty);
 
             // Create an Image control and set its source
-            banner.Source = ImageSource.FromUri(new Uri(imageUrl));
+            if (imageUrl != null)
+            {
+                banner.Source = ImageSource.FromUri(new Uri(imageUrl));
+            }
+
 
             #endregion
 
@@ -97,7 +101,8 @@ public partial class ArticlePage : ContentPage
                 }
 
                 var text = paragraph.InnerHtml.Trim();
-                text = Regex.Replace(text, "<(span|a|em|wbr).*?>|</(span|a|em)>", string.Empty);
+                Debug.WriteLine(text);
+                //text = Regex.Replace(text, "<(span|em|wbr).*?>|</(span|em)>", string.Empty);
 
                 if (!string.IsNullOrEmpty(text))
                 {
@@ -105,7 +110,7 @@ public partial class ArticlePage : ContentPage
 
                     contentStackLayout.Children.Add(new Label
                     {
-                        Text = text + "\n",
+                        Text = text + "<br>",
                         FontSize = 14,
                         TextType = TextType.Html
                     });

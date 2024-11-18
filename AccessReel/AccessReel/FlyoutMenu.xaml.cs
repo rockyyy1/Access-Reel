@@ -83,4 +83,10 @@ public partial class FlyoutMenu : FlyoutPage
 
 
     }
+
+    private void BtnCompetitions_Clicked(object sender, EventArgs e)
+    {
+        Detail = new NavigationPage(new ListPage("Competition"));
+        IsPresented = false;
+    }
 }
