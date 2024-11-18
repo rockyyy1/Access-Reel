@@ -68,10 +68,9 @@ public partial class TrailerListPage : ContentPage
             Debug.WriteLine(film.Title);
             Debug.WriteLine(film.Url);
 
-            //make a page - work in progress
-            //FilmPage newFilm = new FilmPage(film); - Doesn't work properly 
-
-            //await Navigation.PushAsync();
+            //make a page 
+            TrailerPage trailer = new TrailerPage(film);
+            await Navigation.PushAsync(trailer);
 
         }
     }

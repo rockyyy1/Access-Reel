@@ -61,12 +61,20 @@ public partial class FilmPage : ContentPage
             // Extract the iframe HTML
             var iframeHtml = iframeNode.OuterHtml;
 
+            string css = @"
+<style>
+    body, html { margin: 0; padding: 0; overflow: hidden; }
+    iframe { width: 100% !important; height: 100% !important; }
+</style>";
+
+            iframeHtml = css + iframeHtml;
+
             // Create a WebView to render the iframe
             var webView = new WebView
             {
                 Source = new HtmlWebViewSource { Html = iframeHtml },
-                HeightRequest = 225,
-                WidthRequest = 400
+                HeightRequest = 255,
+                WidthRequest = 400,
             };
 
             // Add the WebView to the StackLayout

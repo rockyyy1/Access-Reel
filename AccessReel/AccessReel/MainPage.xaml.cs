@@ -1,10 +1,13 @@
 ﻿using HtmlAgilityPack;
 using Microsoft.Maui.Controls;
+using Plugin.LocalNotification;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Xml;
+
+
 
 
 namespace AccessReel
@@ -18,7 +21,9 @@ namespace AccessReel
         public MainPage()
         {
             InitializeComponent();
+            LocalNotificationCenter.Current.NotificationActionTapped += Current_NotificationActionTapped;
             //Retrieve(ReadWebsite());
+
         }
 
         protected override async void OnAppearing()
@@ -273,6 +278,10 @@ namespace AccessReel
                 newTrailersList.Add(newTrailerItem);
             }
             CVTrailers.ItemsSource = newTrailersList;
+            if(DeviceInfo.Current.Platform == DevicePlatform.Android)
+            {
+                CVTrailers.PeekAreaInsets = 200;
+            }
 
             #endregion
 
@@ -281,6 +290,8 @@ namespace AccessReel
         // NAVIGATE TO ARTICLE ITEM
         private async void ArticleTapped(object sender, TappedEventArgs e)
         {
+
+            CheckForNewPostsSendNotification();
             if (sender is Label label || sender  is Image image)
             {
                 // Access the DataContext of the Label
@@ -339,6 +350,37 @@ namespace AccessReel
                 TrailerPage trailerItem = new TrailerPage(film);
 
                 await Navigation.PushAsync(trailerItem);
+
+            }
+        }
+
+        //SEND PUSH NOTIFICATION
+        private void CheckForNewPostsSendNotification()
+        {
+            var request = new NotificationRequest
+            {
+                NotificationId = 1337,
+                Title = "Subscribe to my channel",
+                Subtitle = "Hello",
+                Description = "It's me",
+                BadgeNumber = 42,
+                Schedule = new NotificationRequestSchedule
+                {
+                    NotifyTime = DateTime.Now.AddSeconds(5),
+                    NotifyRepeatInterval = TimeSpan.FromDays(1),
+                }
+            };
+
+            LocalNotificationCenter.Current.Show(request);
+        }
+        private void Current_NotificationActionTapped(Plugin.LocalNotification.EventArgs.NotificationActionEventArgs e)
+        {
+            if (e.IsDismissed)
+            {
+
+            }
+            else if (e.IsTapped)
+            {
 
             }
         }

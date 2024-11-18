@@ -74,10 +74,14 @@ public partial class ArticlePage : ContentPage
             var imageNode = document.DocumentNode.SelectSingleNode("//*[(@id='gp-content')]/article/div[3]/img");
 
             // Get the image source
-            string imageUrl = imageNode.GetAttributeValue("src", string.Empty);
+            string imageUrl = imageNode?.GetAttributeValue("src", string.Empty);
 
             // Create an Image control and set its source
-            banner.Source = ImageSource.FromUri(new Uri(imageUrl));
+            if (imageUrl != null)
+            {
+                banner.Source = ImageSource.FromUri(new Uri(imageUrl));
+            }
+
 
             #endregion
 
@@ -91,28 +95,16 @@ public partial class ArticlePage : ContentPage
             foreach (var paragraph in paragraphs)
             {
                 var text = paragraph.InnerHtml.Trim();
-<<<<<<< Updated upstream
+
                 text = Regex.Replace(text, "<(span|a|em|wbr).*?>|</(span|a|em)>", string.Empty);
-=======
->>>>>>> Stashed changes
 
                 // Process text and hyperlinks
                 if (!string.IsNullOrEmpty(text))
                 {
-<<<<<<< Updated upstream
-                    //text = HtmlEntity.DeEntitize(text);
 
-                    contentStackLayout.Children.Add(new Label
-                    {
-                        Text = text + "\n",
-                        FontSize = 14,
-                        TextType = TextType.Html
-                    });
-=======
                     sb.Append("<p>");
                     sb.Append(text);
                     sb.Append("</p>");
->>>>>>> Stashed changes
                 }
             }
 
@@ -150,12 +142,20 @@ public partial class ArticlePage : ContentPage
             // Extract the iframe HTML
             var iframeHtml = iframeNode.OuterHtml;
 
+            string css = @"
+        <style>
+            body, html { margin: 0; padding: 0; overflow: hidden; }
+            iframe { width: 100% !important; height: 100% !important; }
+        </style>";
+
+            iframeHtml = css + iframeHtml;
+
             // Create a WebView to render the iframe
             var webView = new WebView
             {
                 Source = new HtmlWebViewSource { Html = iframeHtml },
                 HeightRequest = 255,
-                WidthRequest = 400
+                WidthRequest = 400,
             };
 
             // Add the WebView to the StackLayout

@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AccessReel.TrailerPage"
-             Title="TrailerPage">
+             Title="">
     <ScrollView>
 
         <StackLayout>
         <!-- Title/Score -->
         <HorizontalStackLayout HorizontalOptions="Center">
-            <Label x:Name="LblTitle" Text="{Binding Title}" HorizontalOptions="Center" FontSize="Title" VerticalOptions="Center" WidthRequest="400"/>
+            <Label x:Name="LblTitle" Text="{Binding Title}" HorizontalOptions="Center" FontSize="Title" VerticalOptions="Center" WidthRequest="380" LineBreakMode="WordWrap"/>
         </HorizontalStackLayout>
 
         <!-- Media Player Goes Here -->

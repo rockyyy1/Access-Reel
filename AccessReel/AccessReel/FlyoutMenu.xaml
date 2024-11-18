@@ -10,15 +10,24 @@
         
         <ContentPage Title="Flyout Menu">            
             <StackLayout>
-                <Button x:Name="BtnCloseMenu" Text="X" 
-                        Clicked="BtnCloseMenu_Clicked" HorizontalOptions="End"
-                        FontAttributes="Bold" FontSize="Medium"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="85*"/>
+                        <ColumnDefinition Width="15*"/>
+                    </Grid.ColumnDefinitions>
+                    <SearchBar Grid.Column="0" x:Name="AccessReelSearchbar" SearchButtonPressed="AccessReelSearchbar_SearchButtonPressed" Placeholder="search the site" HorizontalOptions="StartAndExpand"/>
+                    <Button Grid.Column="1" x:Name="BtnCloseMenu" Text="X" TextColor="White" BackgroundColor="Red"
+                            Clicked="BtnCloseMenu_Clicked" HorizontalOptions="End"
+                            FontAttributes="Bold" FontSize="Medium"/>
+                </Grid>
+
                 <Button x:Name="BtnHomePage" Text="Home" Clicked="BtnHomePage_Clicked" HorizontalOptions="Fill" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnNewsPage" Text="News" Clicked="BtnNewsPage_Clicked" HorizontalOptions="Fill" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnReviewPage" Text="Reviews" Clicked="BtnReviewPage_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnFilmsPage" Text="Films" Clicked="BtnFilmsPage_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnTrailers" Text="Trailers" Clicked="BtnTrailers_Clicked" CornerRadius="0"  BorderColor="LightGray" BorderWidth="1"/>
                 <Button x:Name="BtnInterviews" Text="Interviews" Clicked="BtnInterviews_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
+                <Button x:Name="BtnCompetitions" Text="Competitions" Clicked="BtnCompetitions_Clicked" CornerRadius="0" BorderColor="LightGray" BorderWidth="1"/>
                 <Label/> <!-- Used For Visual Seperation Between Buttons -->
                 <Button x:Name="BtnFindTheaters" Text="Find Nearby Theaters" Clicked="BtnFindTheaters_Clicked"/>
                 <Label/>

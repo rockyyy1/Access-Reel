@@ -2,14 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AccessReel.ArticlePage"
-             Title="ArticlePage">
+             Title="">
     
     <ScrollView>
-        <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="800">
-            <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="Start" FontAttributes="Bold" LineBreakMode="WordWrap" VerticalOptions="StartAndExpand" WidthRequest="400" Margin="10"/>
-            <Image x:Name="banner" Margin="10" HeightRequest="200" Aspect="AspectFit" HorizontalOptions="Start"/>
-            <StackLayout x:Name="contentStackLayout" Margin="10" WidthRequest="380" HorizontalOptions="Start">
-                <ContentView x:Name="FilmReviewContainer" />
+        <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="360">
+            <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="StartAndExpand" 
+                   FontAttributes="Bold" LineBreakMode="WordWrap" VerticalOptions="StartAndExpand" 
+                    Margin="10" FontSize="20"/>
+            <Image x:Name="banner" Margin="10" WidthRequest="380" Aspect="AspectFit" HorizontalOptions="Start"/>
+            <StackLayout x:Name="contentStackLayout" Margin="10" WidthRequest="350" HorizontalOptions="Start">
+                <ContentView x:Name="FilmReviewContainer" WidthRequest="350" />
             </StackLayout>
             <Button Text="AccessReel" 
                     BackgroundColor="Black" 

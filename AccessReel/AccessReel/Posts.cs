@@ -47,7 +47,7 @@ namespace AccessReel
                 {
                     return 0;
                 }
-                return ascending ? string.Compare(p1.Title, p2.Title) : string.Compare(p2.Title, p1.Title);
+                return ascending ? string.Compare(p1.Title, p2.Title, StringComparison.OrdinalIgnoreCase) : string.Compare(p2.Title, p1.Title, StringComparison.OrdinalIgnoreCase);
             }
             
         }
@@ -65,7 +65,7 @@ namespace AccessReel
                 {
                     return 0;
                 }
-                return ascending ? string.Compare(p1.Author, p2.Author) : string.Compare(p2.Author,p1.Author);
+                return ascending ? string.Compare(p1.Author, p2.Author, StringComparison.OrdinalIgnoreCase) : string.Compare(p2.Author,p1.Author, StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -102,7 +102,7 @@ namespace AccessReel
                 {
                     return 0;
                 }
-                return p2.ReviewScore.CompareTo(p1.ReviewScore);
+                return string.Compare(p2.ReviewScore, p1.ReviewScore, StringComparison.OrdinalIgnoreCase);
             }
         }
 

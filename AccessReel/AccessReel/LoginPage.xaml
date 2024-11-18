@@ -19,7 +19,7 @@
                 <Grid Margin="0,5">
                     <Frame Opacity="0.3" BackgroundColor="White" CornerRadius="5"/>
                     <Entry BackgroundColor="Transparent" Placeholder="Enter username" 
-                           TextColor="White" Margin="5,0"
+                           TextColor="Black" Margin="5,0"
                            PlaceholderColor="Gray" />
 
                 </Grid>
@@ -29,7 +29,7 @@
                 <Grid Margin="0,5">
                     <Frame Opacity="0.3" BackgroundColor="White" CornerRadius="5"/>
                     <Entry BackgroundColor="Transparent" Placeholder="Enter password" 
-                           TextColor="White" Margin="5,0"
+                           TextColor="Black" Margin="5,0"
                            PlaceholderColor="Gray" IsPassword="True"/>
 
                 </Grid>

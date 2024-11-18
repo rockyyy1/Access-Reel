@@ -2,13 +2,13 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AccessReel.TrailerListPage"
-             Title="TrailerListPage">
+             Title="">
     <ScrollView>
         <VerticalStackLayout HorizontalOptions="FillAndExpand">
             <!-- Banner -->
             <AbsoluteLayout HorizontalOptions="CenterAndExpand"> 
-                <Image Source="trailers_banner.jpg" Margin="10" WidthRequest="400" Aspect="AspectFit" />
-                <Label Text="Trailers" AbsoluteLayout.LayoutBounds="00,100" FontAttributes="Bold" FontSize="25" TextColor="White" BackgroundColor="DarkGray"/>
+                <Image Source="trailers.jpg" Margin="0,0,0,20" WidthRequest="400" Aspect="AspectFit" />
+                <Label Text="Trailers" AbsoluteLayout.LayoutBounds="15,120" FontAttributes="Bold" FontSize="25" TextColor="White"/>
             </AbsoluteLayout>
             <!-- Trailers -->
             <CollectionView x:Name="CVTrailers">
