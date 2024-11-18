@@ -2,6 +2,7 @@ using HtmlAgilityPack;
 using System;
 using System.Diagnostics;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace AccessReel;
@@ -82,25 +83,23 @@ public partial class ArticlePage : ContentPage
 
             #region PARAGRAPHS & IMAGES
             var paragraphs = document.DocumentNode.SelectNodes("//div[@class='gp-entry-text']/p");
+            var sb = new StringBuilder();
+            sb.Append("<html><head><style>");
+            sb.Append("img { max-width: 100%; height: auto; }"); // Make images responsive
+            sb.Append("</style></head><body style='font-family: Arial, sans-serif;'>");
 
             foreach (var paragraph in paragraphs)
             {
-                var imageNodes = paragraph.SelectSingleNode(".//img");
-
-                if (imageNodes != null)
-                {
-                    var imageUrls = imageNodes.GetAttributeValue("src", string.Empty);
-                    contentStackLayout.Children.Add(new Image { Source = ImageSource.FromUri(new Uri(imageUrls)) });
-
-                    // Remove the image node from the paragraph
-                    imageNodes.Remove();
-                }
-
                 var text = paragraph.InnerHtml.Trim();
+<<<<<<< Updated upstream
                 text = Regex.Replace(text, "<(span|a|em|wbr).*?>|</(span|a|em)>", string.Empty);
+=======
+>>>>>>> Stashed changes
 
+                // Process text and hyperlinks
                 if (!string.IsNullOrEmpty(text))
                 {
+<<<<<<< Updated upstream
                     //text = HtmlEntity.DeEntitize(text);
 
                     contentStackLayout.Children.Add(new Label
@@ -109,8 +108,35 @@ public partial class ArticlePage : ContentPage
                         FontSize = 14,
                         TextType = TextType.Html
                     });
+=======
+                    sb.Append("<p>");
+                    sb.Append(text);
+                    sb.Append("</p>");
+>>>>>>> Stashed changes
                 }
             }
+
+            sb.Append("</body></html>");
+            string fullHtmlContent = sb.ToString();
+
+            // Debugging the generated HTML
+            Debug.WriteLine("Generated HTML: " + fullHtmlContent);
+
+            // Create WebView to display the HTML content
+            var webView = new WebView
+            {
+                Source = new HtmlWebViewSource
+                {
+                    Html = fullHtmlContent
+                },
+                WidthRequest = 370,  // Full width of the screen
+                HeightRequest = DeviceDisplay.MainDisplayInfo.Height,
+                VerticalOptions = LayoutOptions.Start // This prevents it from taking up too much space
+            };
+
+            // Add the WebView to the contentStackLayout
+            contentStackLayout.Children.Add(webView);
+
 
             #endregion
         }
