@@ -191,141 +191,10 @@ public partial class ListPage : ContentPage
             {
                 CVArticles.ItemTemplate = DTMovieArticle;
                 CVArticles.ItemsSource = newsList;
-                List<string> SortOptions = sortPickerItems.Concat(sortPickerIfReviews).ToList();
-                Sorter.ItemsSource = SortOptions;
+                /*List<string> SortOptions = sortPickerItems.Concat(sortPickerIfReviews).ToList();
+                Sorter.ItemsSource = SortOptions;*/
             }
 
-        }
-    }
-
-    // LOAD ALL DATA V2
-    private async void LoadDataOnAllPages(string pageType)
-    {
-        int page = 1;
-        int lastPage = 1;
-
-        string group = pageType == "News" || pageType == "Interviews" ? "categories/" : "hubs/";
-        if (this.tagurl != null)
-        {
-            string taggroup;
-            this.GetTagInfo(this.tagurl, out taggroup, out pageType);
-
-            group = taggroup;
-            //change title
-            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-"," ");
-
-            //change banner
-            Banner.Source = null;
-        }
-        if (Authorurl != null)
-        {
-            group = "author/";
-            pageType = GetAuthorName(Authorurl);
-            //change title
-            Title.Text = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pageType.ToLower()).Replace("-", " ");
-            Banner.Source = null;
-        }
-
-
-        while (page <= 1)
-        {
-            var url = "https://accessreel.com/" + group + pageType + "/page/" + page.ToString();
-            Debug.WriteLine(url);
-            var web = new HtmlWeb();            
-            var document = web.Load(url);
-
-            var parentContainer = document.DocumentNode.SelectSingleNode("//div[contains(@class, 'gp-blog-wrapper gp-blog-standard')]");
-            if (parentContainer == null)
-            {
-                break;
-            }
-            var nodes = parentContainer.SelectNodes(".//section[contains(@class, 'gp-post-item')]");
-            if (nodes == null || nodes.Count == 0)
-            {
-                break;
-            }
-            if (nodes != null)
-            {
-
-                foreach (var node in nodes)
-                {
-                    var post = new Posts();
-                    if (pageType == "Reviews" || pageType == "Films" || this.tagurl != null || Authorurl != null)
-                    {
-                        post = new Review();
-                    }
-
-
-                    // Extract Title
-                    var titleNode = node.SelectSingleNode(".//h2[@class='gp-loop-title']/a");
-                    string title = titleNode.InnerText.Trim();
-                    title = HtmlEntity.DeEntitize(title);
-                    post.Title = title;
-
-                    // Extract Paragraph
-                    var paragraphNode = node.SelectSingleNode(".//div[@class='gp-loop-text']/p");
-                    string para = paragraphNode.InnerText.Trim();
-                    para = HtmlEntity.DeEntitize(para);
-                    post.Description = para;
-
-                    // Extract the main link
-                    var linkNode = node.SelectSingleNode(".//div[@class='gp-image-align-left']/a");
-
-                    if (linkNode == null)
-                    {
-                        linkNode = node.SelectSingleNode(".//div[@class='gp-post-thumbnail gp-loop-featured']/div/a");
-                    }
-                    post.Url = linkNode?.GetAttributeValue("href", string.Empty);
-
-                    var imageNode = linkNode?.SelectSingleNode(".//img");
-
-                    post.Image = imageNode?.GetAttributeValue("src", string.Empty);
-
-
-
-                    // Extract Author
-                    var authorNode = node.SelectSingleNode(".//span[@class='gp-post-meta gp-meta-author']/a");
-                    post.Author = authorNode?.InnerText.Trim();
-                    post.AuthorUrl = authorNode?.GetAttributeValue("href", string.Empty);
-
-                    // Extract Date Published
-                    var dateNode = node.SelectSingleNode(".//time[@class='gp-post-meta gp-meta-date']");
-                    var dateText = dateNode?.InnerText.Trim();
-                    if (DateTime.TryParse(dateText, out var parsedDate))
-                    {
-                        post.Date = parsedDate;
-                    }
-
-                    if (post.GetType() == typeof(Review))
-                    {
-                        var review = (Review)post;
-
-                        var reviewScoreNode = node.SelectSingleNode(".//div[@class='gp-rating-inner']");
-                        string reviewScore = reviewScoreNode?.InnerText.Trim();
-                        review.ReviewScore = reviewScore;
-                    }
-
-                    newsList.Add(post);
-
-                    if (page > lastPage)
-                    {
-                        break;
-                    }
-                }
-                page += 1;
-            }
-        }
-        if (group == "categories/")
-        {
-            CVArticles.ItemTemplate = DTArticle;
-            CVArticles.ItemsSource = newsList;
-        }
-        else if (group == "hubs/" || this.tagurl != null || Authorurl != null)
-        {
-            CVArticles.ItemTemplate = DTMovieArticle;
-            CVArticles.ItemsSource = newsList;
-            List<string> SortOptions = sortPickerItems.Concat(sortPickerIfReviews).ToList();
-            Sorter.ItemsSource = SortOptions;          
         }
     }
 
@@ -346,7 +215,7 @@ public partial class ListPage : ContentPage
         }
         return -1;
     }
-    // LOAD ALL DATA V1 - BACKUP
+    // LOAD ALL DATA 
     private async void LoadData(string pageType)
     {
 
@@ -457,14 +326,15 @@ public partial class ListPage : ContentPage
             
             Debug.WriteLine(item.Url);
             Page page;
-            if ( item.Url.Contains("trailer") )
-            {
-                page = new TrailerPage((Review)item);
-            }
-            else if (item.Url.Contains("review") || item.Url.Contains("article"))
+            if (item.Url.Contains("review") || item.Url.Contains("article"))
             {
                 page = new ArticlePage(item.Url);
             }
+            else if ( item.Url.Contains("trailer") )
+            {
+                page = new TrailerPage((Review)item);
+            }
+
             else
             {
                 page = new FilmPage((Review)item);

@@ -50,18 +50,25 @@ public partial class FilmReviewContent : ContentPage
         }
 
         // author details
+        string authorImageUrl = "";
         var imgNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-info']//img");
-        string authorImageUrl = imgNode.GetAttributeValue("src", string.Empty);
+        if (imgNode != null)
+        {
+            authorImageUrl = imgNode.GetAttributeValue("src", string.Empty);
+        }
 
         // Extract the author's name and URL from the <a> tag
         var authorNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-author-name']//a");
-        review.Author = authorNode.InnerText;
-        review.AuthorUrl = authorNode.GetAttributeValue("href", string.Empty);
-        //Debug.WriteLine(authorName);
-        //Debug.WriteLine(authorURL);
-        //Debug.WriteLine(authorImageUrl);
-        LblAuthor.Text = review.Author;
-        ImageAuthor.Source = authorImageUrl;
+        if (authorNode != null)
+        {
+            review.Author = authorNode.InnerText;
+            review.AuthorUrl = authorNode.GetAttributeValue("href", string.Empty);
+            //Debug.WriteLine(authorName);
+            //Debug.WriteLine(authorURL);
+            //Debug.WriteLine(authorImageUrl);
+            LblAuthor.Text = review.Author;
+            ImageAuthor.Source = authorImageUrl;
+        }
 
         // review score
         var ratingNode = reviewDocument.DocumentNode.SelectSingleNode("//div[@class='gp-rating-inner']");

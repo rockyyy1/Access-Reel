@@ -161,12 +161,12 @@
                 <Label x:Name="LblTrailers" Text=" New Trailers" 
                        BackgroundColor="#e17132" Style="{StaticResource HomePageHeaders}" Margin="0,0,0,10"/>
 
-                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" WidthRequest="150" VerticalOptions="FillAndExpand" >
+                <CarouselView x:Name="CVTrailers" IndicatorView="ITrailers" HorizontalOptions="CenterAndExpand" VerticalOptions="FillAndExpand" PeekAreaInsets="200">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <HorizontalStackLayout HorizontalOptions="Center">
+                            <HorizontalStackLayout HorizontalOptions="Center" HeightRequest="250">
                                 <VerticalStackLayout>
-                                    <Image Source="{Binding Image}" HeightRequest="250" Aspect="AspectFit">
+                                    <Image Source="{Binding Image}" Aspect="AspectFit" HeightRequest="250" WidthRequest="250">
                                         <Image.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="TrailerTapped"/>
                                         </Image.GestureRecognizers>

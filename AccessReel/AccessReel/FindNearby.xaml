@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:AccessReel"
              x:Class="AccessReel.FindNearby"
-             Title="Find Nearby Theaters">
+             Title="">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -12,15 +12,15 @@
     </ContentPage.Resources>
     
     <VerticalStackLayout>
-        <Button x:Name="BtnFindTheaters" Text="Find Nearby Theaters Via GPS" Clicked="BtnFindTheaters_Clicked"/>
+        <Button x:Name="BtnFindTheaters" Text="Press to Find Nearby Theaters" Clicked="BtnFindTheaters_Clicked"/>
         <!-- <Button x:Name="BtnFindWithPreset" Text="Find theaters with a preset location. (FOR TESTING PURPOSES)" Clicked="BtnFindWithPreset_Clicked"/> -->
         <Label x:Name="LblTheaters" VerticalOptions="Center" 
                                     HorizontalOptions="Center" />
         <CollectionView x:Name="CVTheaters" HorizontalOptions="Center" VerticalOptions="Center">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="400" Margin="40,0,10,0">
-                        <Label Text="{Binding name}"  FontAttributes="Bold" FontSize="Small"/>
+                    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="400" Margin="70,0,10,0">
+                        <Label Text="{Binding name}"  FontAttributes="Bold" FontSize="Small" LineBreakMode="WordWrap"/>
                         <Label Text="{Binding address}" FontAttributes="Italic" TextColor="DarkGray" FontSize="Subtitle"/>                        
                         <HorizontalStackLayout>
                             <Label Text="{Binding openNow, Converter={StaticResource OpenNowConverter}}" WidthRequest="150"/>

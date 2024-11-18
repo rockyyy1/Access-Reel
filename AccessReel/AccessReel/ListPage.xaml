@@ -56,38 +56,39 @@
             <!-- Template for regular articles -->
             <DataTemplate x:Name="DTArticle" x:Key="templateArticle" >
                 <Grid HorizontalOptions="CenterAndExpand" Padding="5" BackgroundColor="#f8f8f8">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
-                        <ColumnDefinition Width="5*"/>
-                        <ColumnDefinition Width="Auto"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                        <RowDefinition />
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Image Grid.Column="0" Grid.Row="0" Source="{Binding Image}" VerticalOptions="Start" Margin="5,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Row="0" Grid.Column="0" Margin="-45,0" Source="{Binding Image}" VerticalOptions="Start" HeightRequest="130" WidthRequest="250">
                         <Image.GestureRecognizers>
                             <TapGestureRecognizer Tapped="ItemTapped"/>
                         </Image.GestureRecognizers>
                     </Image>
-                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="10,5">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Tapped="ItemTapped"/>
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <VerticalStackLayout Grid.Row="1" Grid.ColumnSpan="2" Margin="5" >
-                        <Label Text="{Binding Description}" FontSize="Body" Margin="0" MaxLines="6"/>
-                        <HorizontalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="1" Grid.Column="0" Margin="0" Grid.ColumnSpan="2">
+                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="Medium" Margin="15,5,0,0">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="ItemTapped"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Label Text="{Binding Description}" FontSize="Body" Margin="15,5" MaxLines="6"/>
+                        <HorizontalStackLayout Margin="15,0">
                             <Image Source="user.png"/>
-                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="5">
+                            <Label Text="{Binding Author}" FontSize="Caption" TextColor="DarkGray" Margin="1,0">
                                 <Label.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="AuthorTapped"/>
                                 </Label.GestureRecognizers>
                             </Label>
-                            <Image Source="clock.png" Margin="7.5,0,0,0"/>
-                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="DarkGray" Margin="5"/>
+                            <Image Source="clock.png" Margin="7.5,0,2,0"/>
+                            <Label Text="{Binding FormattedDate}" FontSize="Caption" TextColor="DarkGray" Margin="0,0"/>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
+                   
                 </Grid>
             </DataTemplate>
         </ResourceDictionary>
