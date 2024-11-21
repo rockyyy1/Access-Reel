@@ -11,7 +11,7 @@
                     Margin="10" FontSize="20"/>
             <Image x:Name="banner" Margin="10" WidthRequest="380" Aspect="AspectFit" HorizontalOptions="Start"/>
             <StackLayout x:Name="contentStackLayout" Margin="10" WidthRequest="350" HorizontalOptions="Start">
-                <ContentView x:Name="FilmReviewContainer" WidthRequest="350" />
+                <ContentView x:Name="FilmReviewContainer" WidthRequest="350" IsVisible="False"/>
             </StackLayout>
             <Button Text="AccessReel" 
                     BackgroundColor="Black" 

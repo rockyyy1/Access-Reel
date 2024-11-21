@@ -90,18 +90,22 @@ public partial class ArticlePage : ContentPage
             var sb = new StringBuilder();
             sb.Append("<html><head><style>");
             sb.Append("img { max-width: 100%; height: auto; }"); // Make images responsive
-            sb.Append("</style></head><body style='font-family: Arial, sans-serif;'>");
+            sb.Append("a { color: blue; text-decoration: underline; }"); // Style hyperlinks
+
+            // Style the iframe to make it fully responsive
+            sb.Append("iframe { width: 100%; height: 56.25vw; max-width: 100%; border: none; }"); // 16:9 aspect ratio
+
+            sb.Append("</style></head><body style='font-family: OpenSans-Regular, sans-serif;'>");
 
             foreach (var paragraph in paragraphs)
             {
                 var text = paragraph.InnerHtml.Trim();
 
-                text = Regex.Replace(text, "<(span|a|em|wbr).*?>|</(span|a|em)>", string.Empty);
+                // Remove unnecessary tags but retain iframe and hyperlinks
+                text = Regex.Replace(text, "<(span|em|wbr).*?>|</(span|em)>", string.Empty);
 
-                // Process text and hyperlinks
                 if (!string.IsNullOrEmpty(text))
                 {
-
                     sb.Append("<p>");
                     sb.Append(text);
                     sb.Append("</p>");
@@ -111,9 +115,6 @@ public partial class ArticlePage : ContentPage
             sb.Append("</body></html>");
             string fullHtmlContent = sb.ToString();
 
-            // Debugging the generated HTML
-            Debug.WriteLine("Generated HTML: " + fullHtmlContent);
-
             // Create WebView to display the HTML content
             var webView = new WebView
             {
@@ -121,21 +122,21 @@ public partial class ArticlePage : ContentPage
                 {
                     Html = fullHtmlContent
                 },
-                WidthRequest = 370,  // Full width of the screen
-                HeightRequest = DeviceDisplay.MainDisplayInfo.Height,
-                VerticalOptions = LayoutOptions.Start // This prevents it from taking up too much space
+                WidthRequest = 370, // Full width of the screen
+                HeightRequest = DeviceDisplay.MainDisplayInfo.Height, // Allow dynamic height
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Start
             };
 
             // Add the WebView to the contentStackLayout
             contentStackLayout.Children.Add(webView);
 
-
             #endregion
         }
         #endregion
-        
+
         #region VIDEO
-        var iframeNode = document.DocumentNode.SelectSingleNode("//iframe");
+        /*var iframeNode = document.DocumentNode.SelectSingleNode("//iframe");
 
         if (iframeNode != null)
         {
@@ -167,7 +168,7 @@ public partial class ArticlePage : ContentPage
             contentStackLayout.Children.Add(VideostackLayout);
 
 
-        }
+        }*/
         #endregion
     }
 
