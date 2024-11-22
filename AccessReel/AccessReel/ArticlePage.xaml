@@ -19,7 +19,7 @@
                     WidthRequest="100"
                     TextColor="White"
                     Clicked="Button_Clicked"
-                    Margin="10,50,0,0"/>
+                    Margin="10,20,0,0"/>
             <Label Text="AccessReel is the Western Australian movie-lovers website." Margin="10"/>
         </VerticalStackLayout>               
     </ScrollView>

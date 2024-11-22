@@ -120,11 +120,11 @@ public partial class ArticlePage : ContentPage
             {
                 Source = new HtmlWebViewSource
                 {
-                    Html = fullHtmlContent
+                    Html = fullHtmlContent.Trim()
                 },
                 WidthRequest = 370, // Full width of the screen
-                HeightRequest = DeviceDisplay.MainDisplayInfo.Height, // Allow dynamic height
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                //HeightRequest = DeviceDisplay.MainDisplayInfo.Height, // Allow dynamic height
+                HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.Start
             };
 
