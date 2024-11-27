@@ -86,6 +86,18 @@ public partial class ArticlePage : ContentPage
             #endregion
 
             #region PARAGRAPHS & IMAGES
+            // Create WebView to display the HTML content
+            var webView = new WebView
+            {
+                WidthRequest = 370, // Full width of the screen
+                //HorizontalOptions = LayoutOptions.Start,
+                //VerticalOptions = LayoutOptions.Start
+            };
+            // Add the WebView to the contentStackLayout
+            if (!contentStackLayout.Children.Contains(webView))
+            {
+                contentStackLayout.Children.Add(webView);
+            }
             var paragraphs = document.DocumentNode.SelectNodes("//div[@class='gp-entry-text']/p");
             var sb = new StringBuilder();
             sb.Append("<html><head><style>");
@@ -94,8 +106,24 @@ public partial class ArticlePage : ContentPage
 
             // Style the iframe to make it fully responsive
             sb.Append("iframe { width: 100%; height: 56.25vw; max-width: 100%; border: none; }"); // 16:9 aspect ratio
+            sb.Append("</style>");
 
-            sb.Append("</style></head><body style='font-family: OpenSans-Regular, sans-serif;'>");
+            //Javascript to handle hyperlinks
+            sb.Append("<script>");
+            sb.Append(@"
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Override the behavior of links
+                    document.querySelectorAll('a').forEach(function(link) {
+                        link.addEventListener('click', function(event) {
+                            event.preventDefault(); // Prevent default navigation
+                            window.location.href = this.href; // Redirect through WebView navigation
+                        });
+                    });
+                });
+            ");
+            sb.Append("</script>");
+
+            sb.Append("</head><body style='font-family: OpenSans-Regular, sans-serif;'>");
 
             foreach (var paragraph in paragraphs)
             {
@@ -103,7 +131,6 @@ public partial class ArticlePage : ContentPage
 
                 // Remove unnecessary tags but retain iframe and hyperlinks
                 text = Regex.Replace(text, "<(span|em|wbr).*?>|</(span|em)>", string.Empty);
-
                 if (!string.IsNullOrEmpty(text))
                 {
                     sb.Append("<p>");
@@ -114,22 +141,13 @@ public partial class ArticlePage : ContentPage
 
             sb.Append("</body></html>");
             string fullHtmlContent = sb.ToString();
-
-            // Create WebView to display the HTML content
-            var webView = new WebView
+            webView.Navigating += OnWebViewNavigating;
+            webView.Source = new HtmlWebViewSource
             {
-                Source = new HtmlWebViewSource
-                {
-                    Html = fullHtmlContent.Trim()
-                },
-                WidthRequest = 370, // Full width of the screen
-                //HeightRequest = DeviceDisplay.MainDisplayInfo.Height, // Allow dynamic height
-                HorizontalOptions = LayoutOptions.Start,
-                VerticalOptions = LayoutOptions.Start
+                Html = fullHtmlContent.Trim()
             };
-
-            // Add the WebView to the contentStackLayout
-            contentStackLayout.Children.Add(webView);
+            
+            
 
             #endregion
         }
@@ -170,6 +188,37 @@ public partial class ArticlePage : ContentPage
 
         }*/
         #endregion
+    }
+
+    private async void OnWebViewNavigating(object? sender, WebNavigatingEventArgs e)
+    {
+        e.Cancel = true; //Prevents the WebView from navigating
+        Debug.WriteLine("Opening this link:" + e.Url);
+        if(!e.Url.StartsWith("https://accessreel.com/", StringComparison.OrdinalIgnoreCase))
+        {
+            await Launcher.OpenAsync(e.Url);
+        }
+        else
+        {
+            Page page;
+            if (e.Url.Contains("trailer"))
+            {
+                Review a = new Review { Url = e.Url };
+                page = new TrailerPage(a);
+            }
+            else if (e.Url.Contains("review") || e.Url.Contains("article"))
+            {
+                page = new ArticlePage(e.Url);
+            }
+
+            else
+            {
+                Review a = new Review { Url = e.Url };
+                page = new FilmPage(a);
+            }
+
+            await Navigation.PushAsync(page);
+        }
     }
 
     // Navigate to AccessReel AccessReel ListPage

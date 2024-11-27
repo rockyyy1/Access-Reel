@@ -5,12 +5,12 @@
              Title="">
     
     <ScrollView>
-        <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="360">
+        <VerticalStackLayout x:Name="ArticleLayout" HorizontalOptions="Center" WidthRequest="370">
             <Label x:Name="articleTitle" Text="Article Title" HorizontalOptions="StartAndExpand" 
                    FontAttributes="Bold" LineBreakMode="WordWrap" VerticalOptions="StartAndExpand" 
                     Margin="10" FontSize="20"/>
             <Image x:Name="banner" Margin="10" WidthRequest="380" Aspect="AspectFit" HorizontalOptions="Start"/>
-            <StackLayout x:Name="contentStackLayout" Margin="10" WidthRequest="350" HorizontalOptions="Start">
+            <StackLayout x:Name="contentStackLayout" Margin="10" WidthRequest="360" HorizontalOptions="Start">
                 <ContentView x:Name="FilmReviewContainer" WidthRequest="350" IsVisible="False"/>
             </StackLayout>
             <Button Text="AccessReel" 
