@@ -333,6 +333,8 @@ public partial class TrailerPage : ContentPage
                         await Launcher.OpenAsync(homepageUrl);
                     };
 
+                    homepageLabel.GestureRecognizers.Add(homepageTapGesture);
+
                     HomepageStackLayout.Children.Add(homepageLabel);
                 }
             }
