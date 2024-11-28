@@ -8,7 +8,7 @@ The app leverages HtmlAgilityPack to efficiently scrape and parse web content, e
 For more information, visit the [AccessReel website](https://accessreel.com/).
 
 # To Download the App:
-1. Download [Release v1.0](https://github.com/rockyyy1/Access-Reel/releases/tag/v1.0)
+1. Download [Release v1.0](https://github.com/rockyyy1/Access-Reel/releases/tag/v1.0) onto your Android device.
 2. After download is finished, install onto device
 
 ## Getting Started
