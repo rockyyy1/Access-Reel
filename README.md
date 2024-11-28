@@ -8,8 +8,8 @@ The app leverages HtmlAgilityPack to efficiently scrape and parse web content, e
 For more information, visit the [AccessReel website](https://accessreel.com/).
 
 # To Download the App:
-### Download Release v1.0
-### After download is finished, install onto device
+1. Download Release v1.0
+2. After download is finished, install onto device
 
 ## Getting Started
 
