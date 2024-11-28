@@ -7,6 +7,10 @@ Built in C# using [Microsoft Visual Studio](https://visualstudio.microsoft.com/)
 The app leverages HtmlAgilityPack to efficiently scrape and parse web content, ensuring users stay updated with fresh and accurate information directly from the AccessReel website.
 For more information, visit the [AccessReel website](https://accessreel.com/).
 
+# To Download the App:
+### Download Release v1.0
+### After download is finished, install onto device
+
 ## Getting Started
 
 Follow these instructions to build and run the project
